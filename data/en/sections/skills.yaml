@@ -1,0 +1,41 @@
+# section information
+section:
+  name: Skills
+  id: skills
+  enable: true
+  weight: 2
+  showOnNavbar: false
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+# Your Skills.
+# Give a summary of you each skill in the summary section.
+skills:
+- name: Linux
+  logo: "/images/sections/skills/ubuntu.png"
+  summary: "Familar with using Ubuntu for servers. I am comfortable navigating Linux from the terminal and writing Bash scripts for automation purposes."
+  url: "https://ubuntu.com"
+
+- name: Windows
+  logo: "/images/sections/skills/windows.png"
+  summary: "I have experience managing Windows in an 'Enterprise' environment through the use of tools like Active Directory, Group Policy, and the System Center Configuration Manager"
+  url: "https://docs.microsoft.com/en-us/documentation/"
+
+- name: Prometheus
+  logo: "/images/sections/skills/prometheus.png"
+  summary: "Capable of deploying, configuring, and maintaing a Prometheus monitoring stack. Along with Grafana, Loki and the related nodes for collecting and displaying metrics."
+  url: "https://prometheus.io/"
+
+- name: WordPress
+  logo: "/images/sections/skills/wordpress.png"
+  summary: "I have several years of experience managing WordPress server stacks. I am familiar with securing these servers and troubleshooting most issues."
+  url: "https://wordpress.org"
+
+- name: Hugo
+  logo: "/images/sections/skills/hugo.png"
+  summary: "This has become my focus as of late. I am actively learning more about Hugo and using it to run this website. I'm hoping to create more Hugo related content in the future."
+  url: "https://gohugo.io"
+
+- name: Cloud Computing and Hosting
+  logo: "/images/sections/skills/cloud.png"
+  summary: "Worked with many of the major cloud service providers, such as DigitalOcean, Linode, Amazon Web Services."

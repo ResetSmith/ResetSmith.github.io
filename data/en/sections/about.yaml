@@ -1,0 +1,66 @@
+# section information
+section:
+  name: About
+  id: about
+  enable: true
+  weight: 1
+  showOnNavbar: true
+  template: sections/about.html
+
+# your designation
+designation: Systems Administrator
+# your company information
+company:
+  name: CASAT
+  url: "https://casat.org"
+
+# your resume. this file path should be relative to you "static" directory
+resume: "files/resume.pdf"
+
+# a summary about you
+summary: "I am a Systems Administrator with over 10 years experience in the industry. As I’ve transitioned away from user management and more towards server and remote service management, I have been trying to document as much as possible. I’m creating this blog to help collect my notes in a centralized place and to generally play around with new things.\n
+
+At my workplace we use WordPress to create websites for our various grant projects that we work on. My responsibilities are to deploy and manage the servers for these websites along with a few other web applications that we utilize. A lot of the documentation you find here is related to these processes but should be applicable for other web projects."
+
+# your social links
+# give as many as you want. use font-awesome for the icons.
+socialLinks:
+- name: Email
+  icon: "fas fa-envelope"
+  url: "test@gmail.com"
+
+- name: Github
+  icon: "fab fa-github"
+  url: "https://github.com/ResetSmith"
+
+# your soft skills
+# give the percentage between 50 to 100 with 5 intervals.
+# currently supported colors: blue, yellow, pink, green, sky, orange
+softSkills:
+- name: Linux
+  percentage: 85
+  color: pink
+- name: Apache
+  percentage: 90
+  color: yellow
+- name: Bash
+  percentage: 75
+  color: green
+- name: Windows
+  percentage: 80
+  color: blue
+- name: Nginx
+  percentage: 60
+  color: pink
+- name: Powershell
+  percentage: 60
+  color: blue
+- name: Team Work
+  percentage: 90
+  color: yellow
+- name: Hard Working
+  percentage: 100
+  color: blue
+- name: Leadership
+  percentage: 90
+  color: pink
