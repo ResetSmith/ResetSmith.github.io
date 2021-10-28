@@ -24,9 +24,9 @@ enableEmoji: true
 # Site parameters
 params:
   # GitHub repo URL of your site
-  # gitRepo: https://github.com/hugo-toha/hugo-toha.github.io
+  gitRepo: https://github.com/ResetSmith/resettech.net
 
-  #background image on website
+  # background image on website
   background: "images/site/background.jpg"
 
   # Provide logos for your site. The inverted logo will be used in the initial
