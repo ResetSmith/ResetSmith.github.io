@@ -4,7 +4,7 @@ section:
   id: about
   enable: true
   weight: 1
-  showOnNavbar: true
+  showOnNavbar: false
   template: sections/about.html
 
 # your designation
@@ -15,7 +15,7 @@ company:
   url: "https://casat.org"
 
 # your resume. this file path should be relative to you "static" directory
-resume: "files/resume.pdf"
+resume: "/files/rs_resume.pdf"
 
 # a summary about you
 summary: "I am a Systems Administrator with over 10 years experience in the industry. As I’ve transitioned away from user management and more towards server and remote service management, I have been trying to document as much as possible. I’m creating this blog to help collect my notes in a centralized place and to generally play around with new things.\n

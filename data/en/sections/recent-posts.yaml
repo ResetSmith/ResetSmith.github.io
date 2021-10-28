@@ -6,4 +6,4 @@ section:
   weight: 6 # Order to display section in (default: alphabetical followed by weight)
   showOnNavbar: false # Boolean to determine if a link should be shown for this section on the navbar
   hideTitle: true # Can optionally hide the title in sections (default: false)
-  numShow: 3 # Can optionally increase the number of posts to display (default: 3)
+  numShow: 6 # Can optionally increase the number of posts to display (default: 3)
