@@ -1,9 +1,11 @@
 ---
 title: Apache Notes
+weight: 10
 menu:
   notes:
     name: Apache Notes
     identifier: notes-apache-apache_notes
+    parent: notes-apache
     weight: 10
 ---
 

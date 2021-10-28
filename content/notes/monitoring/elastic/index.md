@@ -15,7 +15,7 @@ install java
 sudo apt install default-jre default-jdk
 ```
 
-Install Elasticsearch
+Install Elasticsearch  
 get public GPG key
 ```
 curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
@@ -118,8 +118,8 @@ test logstash
 ```
 sudo -u logstash /usr/share/logstash/bin/logstash --path.settings /etc/logstash -t
 ```
-need to see
-`Config Validation Result: OK. Exiting Logstash`
+need to see - `Config Validation Result: OK. Exiting Logstash`  
+
 if ok, start and enable
 ```
 sudo systemctl start logstash
@@ -151,16 +151,23 @@ output.logstash:
   hosts: ["localhost:5044"]
 ```
 list filebeat modules
-`sudo filebeat modules list`
+```
+sudo filebeat modules list
+```
 enable filebeat modules
-`sudo filebeat modules enable system apache`
+```
+sudo filebeat modules enable system apache
+```
 create filebeat ingest pipeline
-`sudo filebeat setup --pipelines --modules system`
+```
+sudo filebeat setup --pipelines --modules system
+```
 load template index into elasticsearch
 ```
 sudo filebeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["localhost:9200"]'
 ```
-need to see `Index setup finished.`
+need to see - `Index setup finished.`  
+
 load filebeat dashboards into Kibana
 ```
 sudo filebeat setup -E output.logstash.enabled=false -E output.elasticsearch.hosts=['localhost:9200'] -E setup.kibana.host=localhost:5601

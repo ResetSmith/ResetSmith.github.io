@@ -1,9 +1,11 @@
 ---
 title: Apache Conf Examples
+weight: 20
 menu:
   notes:
     name: Apache Conf Ex
     identifier: notes-apache-ex_configs
+    parent: notes-apache
     weight: 20
 ---
 
