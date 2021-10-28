@@ -54,7 +54,9 @@ sudo systemctl enable node_exporter.service
 ```
 
 open firewall on server
-`sudo ufw allow from $PANOPTICON proto tcp to any port 9100`
+```
+sudo ufw allow from $PANOPTICON proto tcp to any port 9100
+```
 {{< /note >}}
 
 
@@ -94,7 +96,9 @@ scrape_configs:
 ```
 
 create service
-`sudo vim /etc/systemd/system/promtail.service`
+```
+sudo vim /etc/systemd/system/promtail.service
+```
 
 ```
 [Unit]
@@ -118,7 +122,9 @@ sudo systemctl enable promtail.service
 ```
 
 open firewall on LOKI server
-`sudo ufw allow from $REMOTE_IP proto tcp to any port 3100`
+```
+sudo ufw allow from $REMOTE_IP proto tcp to any port 3100
+```
 {{< /note >}}
 
 
@@ -210,7 +216,9 @@ sudo systemctl enable blackbox_exporter.service
 ```
 
 open UFW port on server
-`sudo ufw allow from 137.184.43.210 proto tcp to any port 9115`
+```
+sudo ufw allow from 137.184.43.210 proto tcp to any port 9115
+```
 
 add target to prometheus.yml file on panopticon server
 {{< /note >}}
