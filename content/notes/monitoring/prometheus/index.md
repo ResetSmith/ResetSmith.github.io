@@ -10,7 +10,8 @@ menu:
 ---
 
 {{< note title="Node Exporter installation" >}}
-# create folder for exporter apps
+create folder for exporter apps
+```
 sudo mkdir /usr/local/bin/metrics
 sudo mkdir /etc/metrics
 sudo useradd -rs /bin/false exporter
@@ -18,15 +19,20 @@ sudo chmod -R 777 /usr/local/bin/metrics
 sudo chmod -R 777 /etc/metrics
 sudo chown -R exporter:exporter /usr/local/bin/metrics
 sudo chown -R exporter:exporter /etc/metrics
+```
 
-# Install node_exporter
+Install node_exporter
+```
 curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
 tar xzvf node_exporter-*.*-amd64.tar.gz
 sudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exporter
+```
 
-# create service
+create service
+```
 sudo vim /etc/systemd/system/node_exporter.service
-
+```
+```
 [Unit]
 Description=Node exporter for Prometheus
 After=network.target
@@ -38,26 +44,32 @@ ExecStart=/usr/local/bin/node_exporter/node_exporter
 
 [Install]
 WantedBy=multi-user.target
+```
 
-# start and enable service
+start and enable service
+```
 sudo systemctl start node_exporter.service
 sudo systemctl status node_exporter.service
 sudo systemctl enable node_exporter.service
+```
 
-# open firewall on server
-sudo ufw allow from $PANOPTICON proto tcp to any port 9100
+open firewall on server
+`sudo ufw allow from $PANOPTICON proto tcp to any port 9100`
 {{< /note >}}
 
 
 {{< note title="Install Promtail" >}}
-# Install Promtail
-# from https://github.com/grafana/loki/releases/
+Install Promtail
+from https://github.com/grafana/loki/releases/
+```
 curl -O -L https://github.com/grafana/loki/releases/download/v2.3.0/promtail-linux-amd64.zip
 sudo apt install unzip
 unzip promtail-linux-amd64.zip
 sudo mv promtail-linux-amd64 /usr/local/bin/promtail
+```
 
-# make conf file
+make conf file
+```
 sudo vim /etc/metrics/promtail.yml
 
 server:
@@ -79,10 +91,12 @@ scrape_configs:
       job: system logs
       host: $HOSTNAME
       __path__: /var/log/*log
+```
 
-# create service
-sudo vim /etc/systemd/system/promtail.service
+create service
+`sudo vim /etc/systemd/system/promtail.service`
 
+```
 [Unit]
 Description=Promtail service
 After=network.target
@@ -94,24 +108,30 @@ ExecStart=/usr/local/bin/promtail -config.file /etc/metrics/promtail.yml
 
 [Install]
 WantedBy=multi-user.target
+```
 
-# start and enable service
+start and enable service
+```
 sudo systemctl start promtail.service
 sudo sytemctl status promtail.service
 sudo systemctl enable promtail.service
+```
 
-# open firewall on LOKI server
-sudo ufw allow from $REMOTE_IP proto tcp to any port 3100
+open firewall on LOKI server
+`sudo ufw allow from $REMOTE_IP proto tcp to any port 3100`
 {{< /note >}}
 
 
 {{< note title="Installing Blackbox Exporter" >}}
-# Installing BlackBox Exporter
+Installing BlackBox Exporter
+```
 curl -O -L https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
 tar xzf blackbox_exporter-*.*.linux-amd64.tar.gz
 sudo mv /blackbox_exporter /usr/local/bin/metrics/blackbox_exporter
+```
 
-# make conf file
+make conf file
+```
 sudo vim /etc/metrics/blackbox.yml
 
 modules:
@@ -159,8 +179,10 @@ modules:
         send: "PONG ${1}"
       - expect: "^:[^ ]+ 001"
   icmp:
+```
 
-# create blackbox service
+create blackbox service
+```
 sudo vim /etc/systemd/system/blackbox_exporter.service
 
 [Unit]
@@ -178,14 +200,17 @@ ExecStart=/usr/local/bin/metrics/blackbox/blackbox_exporter \
 
 [Install]
 WantedBy=multi-user.target
+```
 
-# enable service
+enable service
+```
 sudo systemctl start blackbox_exporter.service
 sudo systemctl status blackbox_exporter.service
 sudo systemctl enable blackbox_exporter.service
+```
 
-# open UFW port on server
-sudo ufw allow from 137.184.43.210 proto tcp to any port 9115
+open UFW port on server
+`sudo ufw allow from 137.184.43.210 proto tcp to any port 9115`
 
-# add target to prometheus.yml file on panopticon server
+add target to prometheus.yml file on panopticon server
 {{< /note >}}
