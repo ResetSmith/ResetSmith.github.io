@@ -4,5 +4,5 @@ menu:
   notes:
     name: Monitoring
     identifier: notes-monitoring
-    weight: 10
+    weight: 50
 ---
