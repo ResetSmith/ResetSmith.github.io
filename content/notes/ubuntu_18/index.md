@@ -1,14 +1,13 @@
 ---
-title: Updating php7.2 to 7.4 on Ubuntu 18
-weight: 800
+title: Ubuntu 18 Notes
 menu:
   notes:
-    name: Updating PHP7.2 to 7.4
-    identifier: notes-ubuntu_18-php72_74
-    parent: notes-ubuntu_18
-    weight: 80
+    name: Ubuntu 18
+    identifier: notes-ubuntu_18
+    weight: 90
 ---
 
+{{< note title="Updating PHP" >}}
 I have had problems getting PHP 7.2 to update to 7.4 on Ubuntu 18.04. Here's what I did to get it working.
 
 1. Manually add PHP repository and check again
@@ -44,3 +43,4 @@ Check PHP version again
 php -v
 ```
 It should now show PHP 7.4
+{{< /note >}}
