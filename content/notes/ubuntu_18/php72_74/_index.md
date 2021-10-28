@@ -4,8 +4,8 @@ weight: 800
 menu:
   notes:
     name: Updating PHP7.2 to 7.4
-    identifier: notes-php72_74
-    parent: notes
+    identifier: notes-ubuntu_18-php72_74
+    parent: notes-ubuntu_18
     weight: 80
 ---
 
