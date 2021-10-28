@@ -4,7 +4,7 @@ menu:
   notes:
     name: Ubuntu 18
     identifier: notes-ubuntu_18
-    weight: 90
+    weight: 12
 ---
 
 {{< note title="Updating PHP" >}}
