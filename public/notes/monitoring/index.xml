@@ -1,39 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Monitoring on Reset_Smith&#39;s Blog</title>
-    <link>https://resetsmith.github.io/notes/monitoring/</link>
-    <description>Recent content in Monitoring on Reset_Smith&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://resetsmith.github.io/notes/monitoring/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Elastic stack notes</title>
-      <link>https://resetsmith.github.io/notes/monitoring/elastic/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://resetsmith.github.io/notes/monitoring/elastic/</guid>
-      <description>Installing ElasticSearch install java
-sudo apt install default-jre default-jdkInstall Elasticsearch
-get public GPG key
-curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -add elastic to sources list
-echo &amp;quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&amp;quot; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.listcheck for updates
-sudo apt updateinstall elasticsearch
-sudo apt install elasticsearchedit elasticsearch.yml config file
-sudo vim /etc/elasticsearch/elasticsearch.ymlupdate network.host to read localhost
-network.host: localhoststart elasticsearch service and then enable</description>
-    </item>
-    
-    <item>
-      <title>Prometheus stack notes</title>
-      <link>https://resetsmith.github.io/notes/monitoring/prometheus/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://resetsmith.github.io/notes/monitoring/prometheus/</guid>
-      <description>Node Exporter installation create folder for exporter apps
-sudo mkdir /usr/local/bin/metricssudo mkdir /etc/metricssudo useradd -rs /bin/false exportersudo chmod -R 777 /usr/local/bin/metricssudo chmod -R 777 /etc/metricssudo chown -R exporter:exporter /usr/local/bin/metricssudo chown -R exporter:exporter /etc/metricsInstall node_exporter
-curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gztar xzvf node_exporter-*.*-amd64.tar.gzsudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exportercreate service
-sudo vim /etc/systemd/system/node_exporter.service[Unit]Description=Node exporter for PrometheusAfter=network.target[Service]User=exporterType=simpleExecStart=/usr/local/bin/node_exporter/node_exporter[Install]WantedBy=multi-user.targetstart and enable service</description>
-    </item>
-    
-  </channel>
-</rss>
