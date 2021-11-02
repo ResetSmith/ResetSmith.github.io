@@ -1,4 +1,4 @@
-baseURL: https://resettech.net
+baseURL: https://resetsmith.github.io
 
 languageCode: en-us
 title: "Reset_Smith's Blog"
@@ -24,7 +24,7 @@ enableEmoji: true
 # Site parameters
 params:
   # GitHub repo URL of your site
-  # gitRepo: https://github.com/ResetSmith/resettech.net
+  gitRepo: https://github.com/ResetSmith/ResetSmith.github.io
 
   # background image on website
   background: "images/site/background.jpg"
