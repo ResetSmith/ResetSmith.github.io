@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Apache Conf Examples</title>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="/css/layouts/main.css"/>
+<link rel="stylesheet" href="/css/navigators/navbar.css"/>
+<link rel="stylesheet" href="/css/plyr.css"/>
+<link rel="stylesheet" href="/css/flag-icon.min.css"/>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
+
+
+
+
+<meta property="og:title" content="Apache Conf Examples" />
+<meta property="og:description" content="HTTP Vhost for WordPress &lt;VirtualHost *:80&gt;ServerAdmin $EMAILServerName $FQDNServerAlias www.$FQDNDocumentRoot /var/www/$HOSTNAME&lt;Directory /var/www/$HOSTNAME/&gt;Options FollowSymLinksAllowOverride AllRequire all granted&lt;/Directory&gt;ErrorLog ${APACHE_LOG_DIR}/error.logCustomLog ${APACHE_LOG_DIR}/access.log combined&lt;/VirtualHost&gt;    HTTPS Vhost for WordPress &lt;VirtualHost *:80&gt;ServerName $FQDNServerAlias www.$FQDNRedirect permanent / https://$FQDN/&lt;/VirtualHost&gt;&lt;VirtualHost *:443&gt;ServerAdmin $EMAILDocumentRoot /var/www/$HOSTNAMEServerName $FQDNServerAlias www.$FQDNSSLEngine onSSLCertificateFile $PATH_TO_CERTIFICATESSLCertificateKeyFile $PATH_TO_PRIVATE_KEY&lt;Directory /var/www/$HOSTNAME/&gt;Options FollowSymLinksAllowOverride AllRequire all granted&lt;/Directory&gt;ErrorLog ${APACHE_LOG_DIR}/error." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://resetsmith.github.io/notes/apache/ex_configs/" /><meta property="article:section" content="notes" />
+
+
+
+
+
+    
+    
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css"
+  />
+  <link rel="stylesheet" href="/css/layouts/notes.css">
+  <link rel="stylesheet" href="/css/navigators/sidebar.css">
+
+
+    
+    
+  </head>
+
+  <body data-spy="scroll" data-target="#TableOfContents" data-offset="80">
+    <div class="container-fluid bg-dimmed wrapper">
+      
+      
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+  <div class="container">
+      <button class="navbar-toggler navbar-light" id="sidebar-toggler" type="button" onclick="toggleSidebar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">
+      Reset_Smith&#39;s Blog</a>
+    <button class="navbar-toggler navbar-light" id="toc-toggler" type="button" onclick="toggleTOC()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse lang-selector" id="top-nav-items">
+      <ul class="navbar-nav ml-auto">
+      
+      </ul>
+    </div>
+  </div>
+  
+  
+  
+</nav>
+
+
+
+      
+      
+  
+  
+
+  <section class="sidebar-section" id="sidebar-section">
+    <div class="sidebar-holder">
+      <div class="sidebar" id="sidebar">
+        <form class="mx-auto" method="get" action="/search">
+          <input type="text" name="keyword" value="" placeholder="Search" data-search="" id="search-box" />
+        </form>
+        <div class="sidebar-tree">
+          <ul class="tree" id="tree">
+            <li id="list-heading"><a href="/notes" data-filter="all">Notes</a></li>
+            <div class="subtree">
+                
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/notes/ubuntu/" title="Ubuntu">Ubuntu</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/notes/ubuntu_18/" title="Ubuntu 18">Ubuntu 18</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/notes/wordpress/" title="WordPress">WordPress</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/notes/hugo/" title="Hugo">Hugo</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li>
+      <i class="fas fa-minus-circle"></i><a class="active" href="/notes/apache/">Apache</a>
+      
+      <ul class="active">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/notes/apache/apache_notes/" title="Apache Notes">Apache Notes</a></li>
+  
+
+  
+  
+  
+  
+    
+    
+  
+  
+    
+    <li><a class="active" href="/notes/apache/ex_configs/" title="Apache Conf Ex">Apache Conf Ex</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li>
+      <i class="fas fa-plus-circle"></i><a class="" href="/notes/monitoring/">Monitoring</a>
+      
+      <ul class="">
+        
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/notes/monitoring/prometheus/" title="Prometheus">Prometheus</a></li>
+  
+
+  
+  
+  
+  
+  
+    
+    <li><a class="" href="/notes/monitoring/elastic/" title="Elastic">Elastic</a></li>
+  
+
+
+      </ul>
+    </li>
+  
+
+
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+      
+      
+<section class="content-section" id="content-section">
+  <div class="content container-fluid" id="content">
+    <div class="container-fluid note-card-holder" id="note-card-holder">
+      <div class="note-card ">
+    <div class="item">
+        <h5 class="note-title"><span>HTTP Vhost for WordPress</span></h5>
+        
+            <div class="card">
+                <div class="card-body"><pre tabindex="0"><code>&lt;VirtualHost *:80&gt;
+  ServerAdmin  $EMAIL
+  ServerName   $FQDN
+  ServerAlias  www.$FQDN
+  DocumentRoot /var/www/$HOSTNAME
+  &lt;Directory /var/www/$HOSTNAME/&gt;
+    Options FollowSymLinks
+    AllowOverride All
+    Require all granted
+  &lt;/Directory&gt;
+ErrorLog  ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+</code></pre></div>
+            </div>
+        
+    </div>
+</div>
+
+<div class="note-card ">
+    <div class="item">
+        <h5 class="note-title"><span>HTTPS Vhost for WordPress</span></h5>
+        
+            <div class="card">
+                <div class="card-body"><pre tabindex="0"><code>&lt;VirtualHost *:80&gt;
+  ServerName  $FQDN
+  ServerAlias www.$FQDN
+  Redirect permanent / https://$FQDN/
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:443&gt;
+  ServerAdmin $EMAIL
+  DocumentRoot /var/www/$HOSTNAME
+  ServerName  $FQDN
+  ServerAlias www.$FQDN
+  SSLEngine on
+  SSLCertificateFile    $PATH_TO_CERTIFICATE
+  SSLCertificateKeyFile $PATH_TO_PRIVATE_KEY
+  &lt;Directory /var/www/$HOSTNAME/&gt;
+    Options FollowSymLinks
+    AllowOverride All
+    Require all granted
+  &lt;/Directory&gt;
+ErrorLog  ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+</code></pre><p>Will need to enable the Apache SSL Mod for HTTPS to work</p>
+<pre tabindex="0"><code>sudo a2enmod ssl
+</code></pre></div>
+            </div>
+        
+    </div>
+</div>
+
+<div class="note-card ">
+    <div class="item">
+        <h5 class="note-title"><span>HTTP Proxy Vhost</span></h5>
+        
+            <div class="card">
+                <div class="card-body"><p>This VHost file will accept requests at $FQDN and then redirect them to the address listed in Proxy/ProxyPass and then applies the $FQDN in the address bar.</p>
+<pre tabindex="0"><code>&lt;VirtualHost *:80&gt;
+  ServerName $FQDN
+  ProxyRequests Off
+  &lt;Location /&gt;
+    ProxyPreserveHost On
+    ProxyPass         http://137.184.11.237:8080/
+    ProxyPassReverse  http://137.184.11.237:8080/
+  &lt;/Location&gt;
+ErrorLog  ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/VirtualHost&gt;
+</code></pre><p>Will need to enable the Apache Proxy Mod for this to work</p>
+<pre tabindex="0"><code>sudo a2enmod proxy proxy_http
+</code></pre></div>
+            </div>
+        
+    </div>
+</div>
+
+<div class="note-card ">
+    <div class="item">
+        <h5 class="note-title"><span>HTTPS Proxy Vhost</span></h5>
+        
+            <div class="card">
+                <div class="card-body"><p>This works similarly to above except it will appply a SSL certificate as well.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Apache" data-lang="Apache"><span style="color:#f92672">&lt;VirtualHost</span> <span style="color:#e6db74">*:80</span><span style="color:#f92672">&gt;</span>
+ServerName storage.casat.org
+Redirect Permanent / https://storage.casat.org/
+<span style="color:#f92672">&lt;/VirtualHost&gt;</span>
+
+<span style="color:#f92672">&lt;VirtualHost</span> <span style="color:#e6db74">*:443</span><span style="color:#f92672">&gt;</span>
+  ServerName storage.casat.org
+  SSLEngine <span style="color:#66d9ef">On</span>
+  SSLCertificateFile    <span style="color:#e6db74">/etc/letsencrypt/live/storage.casat.org/fullchain.pem</span>
+  SSLCertificateKeyFile <span style="color:#e6db74">/etc/letsencrypt/live/storage.casat.org/privkey.pem</span>
+  ProxyRequests <span style="color:#66d9ef">Off</span>
+  <span style="color:#f92672">&lt;Location</span> <span style="color:#e6db74">/</span><span style="color:#f92672">&gt;</span>
+    ProxyPreserveHost <span style="color:#66d9ef">On</span>
+    ProxyPass         http://137.184.11.237:8080/
+    ProxyPassReverse  http://137.184.11.237:8080/
+  <span style="color:#f92672">&lt;/Location&gt;</span>
+  <span style="color:#75715e"># uncomment for SSL</span>
+  SSLProxyEngine <span style="color:#66d9ef">On</span>  
+ErrorLog  ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+<span style="color:#f92672">&lt;/VirtualHost&gt;</span>
+</code></pre></div><p>This requires a few Apache Mods to be enabled to work</p>
+<pre tabindex="0"><code>sudo a2enmod ssl proxy proxy_http
+</code></pre></div>
+            </div>
+        
+    </div>
+</div>
+
+<div class="note-card ">
+    <div class="item">
+        <h5 class="note-title"><span>HTTPS Vhost w/ Basic Authentication</span></h5>
+        
+            <div class="card">
+                <div class="card-body"><p><em>Note This will NOT work while using wordpress with .htaccess file</em>
+Install Apache utils package</p>
+<pre tabindex="0"><code>apt-get update
+apt-get install apache2-utils
+</code></pre><p>create password file and user</p>
+<pre tabindex="0"><code>htpasswd -c /etc/apache2/htpasswd.users $USERNAME
+</code></pre><p>LEAVE OFF -c for additional users</p>
+<pre tabindex="0"><code>htpasswd /etc/apache2/htpasswd.users $USERNAME2
+</code></pre><p><em>Must be added to the &lsquo;Directory&rsquo; section of the Apache VirtualHost file</em></p>
+<pre tabindex="0"><code>  AuthType Basic
+  AuthName &quot;Restricted Content&quot;
+  AuthUserFile /etc/apache2/htpasswd.users
+  Require valid-user
+</code></pre><p>check apache configuration</p>
+<pre tabindex="0"><code>apache2ctl configtest
+</code></pre><p>restart apache</p>
+<pre tabindex="0"><code>systemctl restart apache
+</code></pre><p>if seeing misconfiguration errors, may need to update ownership of .htpasswd</p>
+<pre tabindex="0"><code>chown www-data:www-data /etc/apache2/htpasswd.users
+</code></pre></div>
+            </div>
+        
+    </div>
+</div>
+
+
+    </div>
+  </div>
+</section>
+
+
+      
+       
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+  
+      
+  
+
+
+
+  
+  
+    
+  
+
+  
+  
+    
+  
+
+  
+  
+    
+    
+      
+    
+  
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+    
+  
+  
+
+  
+  
+  
+
+  <footer class="container-fluid text-center align-content-center footer pb-2">
+    <div class="container pt-5">
+      <div class="row text-left">
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Navigation</h5>
+          
+          <ul>
+              
+              
+              
+          </ul>
+          
+        </div>
+        
+        
+        <div class="col-md-4 col-sm-12">
+          <h5>Contact me:</h5>
+          <ul>
+            
+            <li><span>Email: </span> <span>johndoe@example.com</span></li>
+            
+            <li><span>Phone: </span> <span>&#43;0123456789</span></li>
+            
+          </ul>
+        </div>
+        
+        
+        
+      </div>
+    </div>
+    
+    
+    <hr />
+    <div class="container">
+      <div class="row text-left">
+        <div class="col-md-4">
+          <a id="theme" href="https://github.com/hossainemruz/toha" target="_blank" rel="noopener">
+            <img src="/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png" alt="Toha Theme Logo">
+            Toha
+          </a>
+        </div>
+        <div class="col-md-4 text-center">© 2021 Copyright.</div>
+        <div class="col-md-4 text-right">
+          <a id="hugo" href="https://gohugo.io/" target="_blank" rel="noopener">Powered by
+          <img
+            src="/images/hugo-logo.svg"
+            alt="Hugo Logo"
+            height="18"
+          />
+          </a>
+        </div>
+      </div>
+    </div>
+    
+  </footer>
+
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/popper.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/js/navbar.js"></script>
+<script type="text/javascript" src="/js/plyr.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+    
+    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+  <script src="/js/imagesloaded.pkgd.min.js"></script>
+  <script src="/js/note.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  
+
+  </body>
+</html>

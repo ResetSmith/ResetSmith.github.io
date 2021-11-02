@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Monitoring on Reset_Smith&#39;s Blog</title>
+    <link>https://resetsmith.github.io/posts/monitoring/</link>
+    <description>Recent content in Monitoring on Reset_Smith&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Aug 2021 10:03:55 -0700</lastBuildDate><atom:link href="https://resetsmith.github.io/posts/monitoring/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Installing Node Exporter</title>
+      <link>https://resetsmith.github.io/posts/monitoring/node_exporter/</link>
+      <pubDate>Thu, 19 Aug 2021 10:03:55 -0700</pubDate>
+      
+      <guid>https://resetsmith.github.io/posts/monitoring/node_exporter/</guid>
+      <description>create folder for exporter apps sudo mkdir /usr/local/bin/metricssudo mkdir /etc/metricssudo useradd -rs /bin/false exportersudo chmod -R 777 /usr/local/bin/metricssudo chmod -R 777 /etc/metricssudo chown -R exporter:exporter /usr/local/bin/metricssudo chown -R exporter:exporter /etc/metricsInstall node_exporter curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gztar xzvf node_exporter-*.*-amd64.tar.gzsudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exportercreate service sudo vim /etc/systemd/system/node_exporter.service[Unit]Description=Node exporter for PrometheusAfter=network.target[Service]User=exporterType=simpleExecStart=/usr/local/bin/node_exporter/node_exporter[Install]WantedBy=multi-user.targetstart and enable service sudo systemctl start node_exporter.</description>
+    </item>
+    
+    <item>
+      <title>Installing PromTail</title>
+      <link>https://resetsmith.github.io/posts/monitoring/promtail/</link>
+      <pubDate>Tue, 17 Aug 2021 10:03:55 -0700</pubDate>
+      
+      <guid>https://resetsmith.github.io/posts/monitoring/promtail/</guid>
+      <description>Promtail is an app for transferring logs from one server to another. For our use we are transferring logs from our many different VPS to our centralized Loki server.
+Installing Promtail Begin by downloading the promtail app and installing it
+curl -O -L https://github.com/grafana/loki/releases/download/v2.3.0/promtail-linux-amd64.zipsudo apt install unzipunzip promtail-linux-amd64.zipsudo mv promtail-linux-amd64 /usr/local/bin/promtailmake conf file Make a configuration file for Promtail
+sudo vim /etc/metrics/promtail.ymlserver:http_listen_port: 9080grpc_listen_port: 0positions:filename: /etc/metrics/positions.</description>
+    </item>
+    
+  </channel>
+</rss>
