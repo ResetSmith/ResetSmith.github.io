@@ -1,4 +1,0 @@
-[submodule "themes/toha"]
-	path = themes/toha
-	url = https://github.com/ResetSmith/toha.git
-	branch = main
