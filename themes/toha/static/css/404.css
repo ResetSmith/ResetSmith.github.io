@@ -1,4 +1,27 @@
-/* This is empty CSS file intended to be overwritten by user's custom CSS file */
+.navbar-toggler {
+  display: none;
+}
+
+.notFound {
+  padding-top: 5rem;
+  text-align: center;
+  padding-bottom: 8rem;
+}
+
+.notFound img {
+  height: 500px;
+}
+
+.notFound h1 {
+  font-style: italic;
+}
+
+.notFound .message {
+  position: absolute;
+  max-width: 20rem;
+  top: 40%;
+  left: 30%;
+}
 
 /* ============= Device specific fixes ======= */
 
@@ -12,6 +35,10 @@
 }
 
 @media (max-width: 1200px) {
+  .notFound .message {
+    top: 50%;
+    left: 25%;
+  }
 }
 
 /* IPad Pro */
@@ -21,16 +48,36 @@
 /*  Large devices (desktops, 992px and up) */
 
 @media (max-width: 992px) {
+  .notFound .message {
+    top: 46%;
+    left: 25%;
+  }
 }
 
 /* Medium devices (tablets, 768px and up) */
 
 @media only screen and (max-width: 768px) {
+  .notFound img {
+    height: 400px;
+  }
+
+  .notFound .message {
+    top: 20rem;
+    left: 4rem;
+  }
 }
 
 /* Small devices (landscape phones, 576px and up) */
 
 @media only screen and (max-width: 576px) {
+  .notFound img {
+    height: 250px;
+  }
+
+  .notFound .message {
+    top: 20rem;
+    left: 2rem;
+  }
 }
 
 /* iPhoneX, iPhone 6,7,8 */
