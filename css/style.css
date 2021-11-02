@@ -1,5 +1,35 @@
 /* This is empty CSS file intended to be overwritten by user's custom CSS file */
 
+/* Custom alert CSS */
+.alert.alert-success {
+  border-left-color: rgba(0, 200, 83, 1);
+  border-left-width: medium;
+  background-color: rgba(0, 200, 83, 0.05);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.alert.alert-info {
+  border-left-color: rgba(0, 145, 234, 1);
+  border-left-width: medium;
+  background-color: rgba(0, 145, 234, 0.05);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+
+.alert.alert-warning {
+  border-left-color: rgba(255, 171, 0, 1);
+  border-left-width: medium;
+  background-color: rgba(255, 171, 0, 0.05);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.alert.alert-danger {
+  border-left-color: rgba(213, 0, 0, 1);
+  border-left-width: medium;
+  background-color: rgba(213, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.6);
+}
+
 /* ============= Device specific fixes ======= */
 
 /* Large screens such as TV */
