@@ -38,8 +38,10 @@ mysqldump -u root $DATABASE_NAME > /tmp/$HOST_COPY/database.sql
 exit
 ```
 
-> **Database Name**\
-> If you don't know what the database name is you can find it by viewing the wp-config.php file. It can be found in the WordPress root directory, commonly /var/www/$DOMAIN/wp-config.php.
+{{< alert type="info" >}}
+**Database Name**\
+If you don't know what the database name is you can find it by viewing the wp-config.php file. It can be found in the WordPress root directory, commonly /var/www/$DOMAIN/wp-config.php.
+{{< /alert >}}
 
 ---
 
@@ -56,29 +58,31 @@ scp $HOST_COPY.tar.gz $USER@$NEW_SERVER:~
 ```
 An example would look like this `scp casat.tar.gz jmarks@123.56.89.111:~`
 
-> **Allowing Less Secure Connections**\
-> If the 'scp' command is failing, it's likely that the target server (new server) only allows connections with verified SSH keys (as it should). In order to get around this you will likely need to enable 'PasswordAuthentication' to let you scp into the server using your 'sudo' password.
->
-> To enable 'PasswordAuthentication' first connect to the server you want to enable it on, and then open the sshd_config file.
-> ```
-> sudo vim /etc/ssh/sshd_config
-> ```
-> From there you will want to find the line
-> ```
-> PasswordAuthentication no
-> ```
-> Update the 'no' to a 'yes' and then save the file. We then need to reload the sshd module for the changes to take affect.
-> ```
-> sudo systemctl restart sshd.service
-> ```
-> Now we should be able to use the 'scp' command to move our file from our old server to the new. When prompted for a password during the 'scp' you should use your 'sudo' password on the target server.
->
-> **Once the file is copied you need to disable PasswordAuthentication.**\
-> Reopen the sshd_config file and change PasswordAuthentication back to no, and then run the following command to apply the change
-> ```
-> sudo systemctl restart sshd.service
-> ```
-> This disables PasswordAuthentication and restricts access to SSH only again.
+{{< alert type="warning" >}}
+**Allowing Less Secure Connections**\
+If the 'scp' command is failing, it's likely that the target server (new server) only allows connections with verified SSH keys (as it should). In order to get around this you will likely need to enable 'PasswordAuthentication' to let you scp into the server using your 'sudo' password.
+
+To enable 'PasswordAuthentication' first connect to the server you want to enable it on, and then open the sshd_config file.
+```
+sudo vim /etc/ssh/sshd_config
+```
+From there you will want to find the line
+```
+PasswordAuthentication no
+```
+Update the 'no' to a 'yes' and then save the file. We then need to reload the sshd module for the changes to take affect.
+```
+sudo systemctl restart sshd.service
+```
+Now we should be able to use the 'scp' command to move our file from our old server to the new. When prompted for a password during the 'scp' you should use your 'sudo' password on the target server.
+
+**Once the file is copied you need to disable PasswordAuthentication.**\
+Reopen the sshd_config file and change PasswordAuthentication back to no, and then run the following command to apply the change
+```
+sudo systemctl restart sshd.service
+```
+This disables PasswordAuthentication and restricts access to SSH only again.
+{{< /alert >}}
 
 After you have confirmed the files are on the new server you should clean up the files you left in /tmp/. Running the following command from within /tmp/ on the old server will clear both the tarball file and the temporary copy folder we made.
 ```
@@ -142,8 +146,10 @@ The --dry-run flag at the end, is there to say that this is a test. We want to r
 
 It is also possible to update the URL directly within MySql itself, however this should only be done as a last resort if needed.
 
-> **Updating MySql Manually**\
-> Because of the way that WordPress stores information within the MySql database it's possible that this can cause additional issues. Many plugins use 'serialized data' within the database, this means that the data is spaced in a way to create sections. When updating the MySql URL manually it is possible to screw up the spacing of those sequences and potentially break other things. In order to avoid this its recommended to use the wp-cli search and replace function instead.
+{{< alert type="danger" >}}
+**Updating MySql Manually**\
+Because of the way that WordPress stores information within the MySql database it's possible that this can cause additional issues. Many plugins use 'serialized data' within the database, this means that the data is spaced in a way to create sections. When updating the MySql URL manually it is possible to screw up the spacing of those sequences and potentially break other things. In order to avoid this its recommended to use the wp-cli search and replace function instead.
+{{< /alert >}}
 
 Connect to the MySql app using the root account for MySql
 ```

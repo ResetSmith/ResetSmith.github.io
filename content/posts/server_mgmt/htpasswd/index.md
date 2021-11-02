@@ -30,9 +30,11 @@ sudo htpasswd -c /etc/apache2/htpasswd.users $USER_NAME
 ```
 - Immediately after running this command you will be prompted to define the password for the user
 
-> **Additional Users**\
-> When creating additional users after the first for the same ACL (user list) you need to drop the -c flag from the command.\
-> ie: sudo htpasswd /etc/apache2/htpasswd.users $USER_NAME
+{{< alert type="info" >}}
+ **Additional Users**\
+ When creating additional users after the first for the same ACL (user list) you need to drop the -c flag from the command.\
+ ie: sudo htpasswd /etc/apache2/htpasswd.users $USER_NAME
+ {{< /alert >}}
 
 ### Applying the htpasswd ACL with .htaccess files (WordPress)
 
@@ -69,6 +71,7 @@ Require valid-user
 ```
 sudo systemctl restart apache2.service
 ```
-
-> **Not Seeing the login**\
-> If you have recently visited/viewed the website you are updating, you will only see the change after you clear your cache or use an 'incognito window'.
+{{< alert type="warning" >}}
+**Not Seeing the login**\
+If you have recently visited/viewed the website you are updating, you will only see the change after you clear your cache or use an 'incognito window'.
+{{< /alert >}}

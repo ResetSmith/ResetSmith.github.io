@@ -15,8 +15,10 @@ menu:
 
 This tutorial will walkthrough the process of installing Apache, MySql, and PHP on an Ubuntu 20.04 DigitalOcean Droplet. The server created here will eventually host a WordPress website, I will indicate when settings are specific to WordPress and you can alternate from there if you are doing something different. These directions are for DigitalOcean but should be similar for most VPS providers. Before starting this process you should obtain an [Ubuntu 20.04 droplet](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ubuntu-20-04-server-on-a-digitalocean-droplet) from DigitalOcean and make sure your [SSH access is working.](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/)
 
-> **Ubuntu Versions**\
-> I recommend starting with an Ubuntu 20.04 (LTS) server instead of other versions because the LTS version is the 'Long Term Support' version of Ubuntu, meaning it is supported with at least 5 years of updates. Non-LTS releases are only guaranteed to receive 9 months of updates.
+{{< alert type="info" >}}
+**Ubuntu Versions**\
+I recommend starting with an Ubuntu 20.04 (LTS) server instead of other versions because the LTS version is the 'Long Term Support' version of Ubuntu, meaning it is supported with at least 5 years of updates. Non-LTS releases are only guaranteed to receive 9 months of updates.
+{{< /alert >}}
 
 ## Setting up a LAMP server
 
@@ -124,8 +126,10 @@ sudo vim /etc/apache2/sites-available/$VHOSTNAME.conf
 
 Now we will create the VirtualHost content. I'm including a very basic VirtualHost example below that can be copy and pasted. However there are several variables that need to be edited to work with your respective website. In the top section the variable $ADMIN_EMAIL should be replaced with an active email address. The $DOMAIN_NAME variable should be replaced with your domain name (ie: google.com).
 
-> **www vs non-www**\
-> In my example the website is being setup for non-www, if you would prefer your site to be www then you should put www.$DOMAIN_NAME in the ServerName field and the non-www in the ServerAlias field.
+{{< alert type="info" >}}
+**www vs non-www**\
+In my example the website is being setup for non-www, if you would prefer your site to be www then you should put www.$DOMAIN_NAME in the ServerName field and the non-www in the ServerAlias field.
+{{< /alert >}}
 
 The other variable you need to define is $WPFOLDER. This folder does not exist yet, we will create it later when we do our actual WordPress installation. Typically I name this folder the same as my website which helps keeps things straight if you will eventually host multiple sites from the same server. If this is not a concern for you, you can just name this folder wordpress. Whatever you choose make sure you remember what it is, as we will need to reference it later.
 ```
@@ -268,8 +272,10 @@ Now you should be able to navigate to your domain and see the WordPress welcome 
 
 wp-cli is a tool for managing WordPress from the terminal. We use it to manage WordPress when the web interface is inaccessible and to apply bulk changes to the MySQL database after a server migration. You can find more information on the [wp-cli website.](https://wp-cli.org/)
 
-> **Running commands**\
-> To use wp-cli you navigate to the WordPress web root folder, for our websites that should be /var/www/$DOMAIN_NAME/. From there you can run the wp-cli commands in the terminal. You can find a list of commands on the [WordPress website.](https://developer.wordpress.org/cli/commands/)
+{{< alert type="info" >}}
+**Running commands**\
+To use wp-cli you navigate to the WordPress web root folder, for our websites that should be /var/www/$DOMAIN_NAME/. From there you can run the wp-cli commands in the terminal. You can find a list of commands on the [WordPress website.](https://developer.wordpress.org/cli/commands/)
+{{< /alert >}}
 
 Download the wp-cli app
 ```
