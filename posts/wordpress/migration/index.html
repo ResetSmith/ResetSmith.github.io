@@ -1,284 +1,39 @@
-<!doctype html><html>
-<head>
-<title>Migrating a WordPress website</title>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta http-equiv=x-ua-compatible content="ie=edge">
-<link rel=stylesheet href=/css/bootstrap.min.css>
-<link rel=stylesheet href=/css/layouts/main.css>
-<link rel=stylesheet href=/css/navigators/navbar.css>
-<link rel=stylesheet href=/css/plyr.css>
-<link rel=stylesheet href=/css/flag-icon.min.css>
-<link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet>
-<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css>
-<meta property="og:title" content="Migrating a WordPress website">
-<meta property="og:description" content="When migrating a WordPress website from one server/VPS to another there are two things we need to make sure we capture; the MySql database and the wp-content folder. The instructions below will walkthrough copying both the MySql database and the wp-content folders from an existing WordPress installation to another &lsquo;blank&rsquo; WordPress installation on a different VPS.
-Copying the data This should be done on the server you want to copy.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://resettech.net/posts/wordpress/migration/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-04-05T10:03:55-07:00">
-<meta property="article:modified_time" content="2021-04-05T10:03:55-07:00">
-<meta name=description content="Migrating a WordPress website">
-<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css>
-<link rel=stylesheet href=/css/layouts/single.css>
-<link rel=stylesheet href=/css/navigators/sidebar.css>
-<link rel=stylesheet href=/css/style.css>
-</head>
-<body data-spy=scroll data-target=#TableOfContents data-offset=80>
-<div class="container-fluid bg-dimmed wrapper">
-<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
-<div class=container>
-<button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
-<span class=navbar-toggler-icon></span>
-</button>
-<a class=navbar-brand href=/>
-Reset_Smith's Blog</a>
+<!doctype html><html><head><title>Migrating a WordPress website</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=/css/bootstrap.min.css><link rel=stylesheet href=/css/layouts/main.css><link rel=stylesheet href=/css/navigators/navbar.css><link rel=stylesheet href=/css/plyr.css><link rel=stylesheet href=/css/flag-icon.min.css><link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css><meta property="og:title" content="Migrating a WordPress website"><meta property="og:description" content="When migrating a WordPress website from one server/VPS to another there are two things we need to make sure we capture; the MySql database and the wp-content folder. The instructions below will walkthrough copying both the MySql database and the wp-content folders from an existing WordPress installation to another &lsquo;blank&rsquo; WordPress installation on a different VPS.
+Copying the data This should be done on the server you want to copy."><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/posts/wordpress/migration/"><meta property="article:published_time" content="2021-04-05T10:03:55-07:00"><meta property="article:modified_time" content="2021-04-05T10:03:55-07:00"><meta name=description content="Migrating a WordPress website"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/single.css><link rel=stylesheet href=/css/navigators/sidebar.css><link rel=stylesheet href=/css/style.css></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
+<span class=navbar-toggler-icon></span></button>
+<a class=navbar-brand href=/>Reset_Smith's Blog</a>
 <button class="navbar-toggler navbar-light" id=toc-toggler type=button onclick=toggleTOC()>
-<span class=navbar-toggler-icon></span>
-</button>
-<div class="collapse navbar-collapse lang-selector" id=top-nav-items>
-<ul class="navbar-nav ml-auto">
-</ul>
-</div>
-</div>
-</nav>
-<section class=sidebar-section id=sidebar-section>
-<div class=sidebar-holder>
-<div class=sidebar id=sidebar>
-<form class=mx-auto method=get action=/search>
-<input type=text name=keyword placeholder=Search data-search id=search-box>
-</form>
-<div class=sidebar-tree>
-<ul class=tree id=tree>
-<li id=list-heading><a href=/posts data-filter=all>Posts</a></li>
-<div class=subtree>
-<li>
-<i class="fas fa-plus-circle"></i><a href=/posts/server_mgmt/>Server Management</a>
-<ul>
-<li><a href=/posts/server_mgmt/htpasswd/ title="Basic Auth with Apache">Basic Auth with Apache</a></li>
-<li><a href=/posts/server_mgmt/add_ssl/ title="Enabling SSL">Enabling SSL</a></li>
-</ul>
-</li>
-<li>
-<i class="fas fa-minus-circle"></i><a class=active href=/posts/wordpress/>WordPress</a>
-<ul class=active>
-<li><a href=/posts/wordpress/new_lamp/ title="Deploying a LAMP server">Deploying a LAMP server</a></li>
-<li><a class=active href=/posts/wordpress/migration/ title="WordPress Migrations">WordPress Migrations</a></li>
-</ul>
-</li>
-<li><a href=/posts/hugo/ title=Hugo>Hugo</a></li>
-<li>
-<i class="fas fa-plus-circle"></i><a href=/posts/monitoring/>Monitoring</a>
-<ul>
-<li><a href=/posts/monitoring/promtail/ title="Installing Promtail">Installing Promtail</a></li>
-<li><a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter">Installing Node Exporter</a></li>
-</ul>
-</li>
-</div>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section class=content-section id=content-section>
-<div class=content>
-<div class="container p-0 read-area">
-<div class="hero-area col-sm-12" id=hero-area style=background-image:url(https://resettech.net/posts/wordpress/migration/post.jpg)>
-</div>
-<div class=page-content>
-<div class="author-profile ml-auto align-self-lg-center">
-<img class=rounded-circle src=/images/authors/reset_smith_hua4f6218794f907357bf1ed85aa384e41_361770_120x120_fit_q75_box.jpg alt="Author Image">
-<h5 class=author-name>Reset_Smith</h5>
-<p>April 5, 2021</p>
-</div>
-<div class=title>
-<h1>Migrating a WordPress website</h1>
-</div>
-<div class=post-content id=post-content>
-<p>When migrating a WordPress website from one server/VPS to another there are two things we need to make sure we capture; the MySql database and the wp-content folder. The instructions below will walkthrough copying both the MySql database and the wp-content folders from an existing WordPress installation to another &lsquo;blank&rsquo; WordPress installation on a different VPS.</p>
-<h2 id=copying-the-data>Copying the data</h2>
-<p><em>This should be done on the server you want to copy.</em></p>
-<p>First thing we are going to do is create a folder in the /tmp/ directory to work out of. Navigate to the /tmp/ directory and make a folder, I usually use the website domain name in the folder name, ie: casat_copy.</p>
-<pre tabindex=0><code>cd /tmp
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/posts data-filter=all>Posts</a></li><div class=subtree><li><i class="fas fa-plus-circle"></i><a href=/posts/server_mgmt/>Server Management</a><ul><li><a href=/posts/server_mgmt/htpasswd/ title="Basic Auth with Apache">Basic Auth with Apache</a></li><li><a href=/posts/server_mgmt/add_ssl/ title="Enabling SSL">Enabling SSL</a></li></ul></li><li><i class="fas fa-minus-circle"></i><a class=active href=/posts/wordpress/>WordPress</a><ul class=active><li><a href=/posts/wordpress/new_lamp/ title="Deploying a LAMP server">Deploying a LAMP server</a></li><li><a class=active href=/posts/wordpress/migration/ title="WordPress Migrations">WordPress Migrations</a></li></ul></li><li><a href=/posts/hugo/ title=Hugo>Hugo</a></li><li><i class="fas fa-plus-circle"></i><a href=/posts/monitoring/>Monitoring</a><ul><li><a href=/posts/monitoring/promtail/ title="Installing Promtail">Installing Promtail</a></li><li><a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter">Installing Node Exporter</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class=content><div class="container p-0 read-area"><div class="hero-area col-sm-12" id=hero-area style=background-image:url(https://resettech.net/posts/wordpress/migration/post.jpg)></div><div class=page-content><div class="author-profile ml-auto align-self-lg-center"><img class=rounded-circle src=/images/authors/reset_smith_hua4f6218794f907357bf1ed85aa384e41_361770_120x120_fit_q75_box.jpg alt="Author Image"><h5 class=author-name>Reset_Smith</h5><p>April 5, 2021</p></div><div class=title><h1>Migrating a WordPress website</h1></div><div class=post-content id=post-content><p>When migrating a WordPress website from one server/VPS to another there are two things we need to make sure we capture; the MySql database and the wp-content folder. The instructions below will walkthrough copying both the MySql database and the wp-content folders from an existing WordPress installation to another &lsquo;blank&rsquo; WordPress installation on a different VPS.</p><h2 id=copying-the-data>Copying the data</h2><p><em>This should be done on the server you want to copy.</em></p><p>First thing we are going to do is create a folder in the /tmp/ directory to work out of. Navigate to the /tmp/ directory and make a folder, I usually use the website domain name in the folder name, ie: casat_copy.</p><pre><code>cd /tmp
 sudo mkdir $HOST_COPY
-</code></pre><p>Now we will copy the wp-content folder from our WordPress installation into our $HOST_COPY folder in the /tmp/ directory.</p>
-<pre tabindex=0><code>sudo cp -avr /var/www/$DOMAIN_NAME/wp-content /tmp/$HOST_COPY
+</code></pre><p>Now we will copy the wp-content folder from our WordPress installation into our $HOST_COPY folder in the /tmp/ directory.</p><pre><code>sudo cp -avr /var/www/$DOMAIN_NAME/wp-content /tmp/$HOST_COPY
 sudo mysqldump -u root -p $DATABASE_NAME &gt; /tmp/$HOST_COPY/database.sql
-</code></pre><p>Next we will make a copy of the MySql database and put it in the $HOST_COPY folder. Historically I&rsquo;ve had trouble getting the database permissions correct for this command to run as a user. So before running the command to export the MySql database we will first use a command to elevate ourselves to the &lsquo;root&rsquo; user on the server (su), then run our command (mysqldump&mldr;), and then exit the &lsquo;root&rsquo; user back our own user (exit).</p>
-<pre tabindex=0><code>su
+</code></pre><p>Next we will make a copy of the MySql database and put it in the $HOST_COPY folder. Historically I&rsquo;ve had trouble getting the database permissions correct for this command to run as a user. So before running the command to export the MySql database we will first use a command to elevate ourselves to the &lsquo;root&rsquo; user on the server (su), then run our command (mysqldump&mldr;), and then exit the &lsquo;root&rsquo; user back our own user (exit).</p><pre><code>su
 mysqldump -u root $DATABASE_NAME &gt; /tmp/$HOST_COPY/database.sql
 exit
-</code></pre><div class="alert alert-info">
-<strong>Database Name</strong><br>
-If you don&rsquo;t know what the database name is you can find it by viewing the wp-config.php file. It can be found in the WordPress root directory, commonly /var/www/$DOMAIN/wp-config.php.
-</div>
-<hr>
-<h2 id=exporting-the-data>Exporting the data</h2>
-<p>Now that we have the data copied we need to package it together to make it easier to move. The following command will compress the folder together into a single &lsquo;tarball&rsquo; file.</p>
-<pre tabindex=0><code>tar -czvf $HOST_COPY.tar.gz /tmp/$HOST_COPY
-</code></pre><p>With the tarball file made, we&rsquo;ll use &lsquo;scp&rsquo; (secure copy) to send the files from one server to another. The command itself is rather simple, however you will likely have to make some adjustments on the new server to allow for a less secure connection to make this work. The scp command is listed below.</p>
-<pre tabindex=0><code>scp $HOST_COPY.tar.gz $USER@$NEW_SERVER:~
-</code></pre><p>An example would look like this <code>scp casat.tar.gz jmarks@123.56.89.111:~</code></p>
-<div class="alert alert-warning">
-<p><strong>Allowing Less Secure Connections</strong><br>
-If the &lsquo;scp&rsquo; command is failing, it&rsquo;s likely that the target server (new server) only allows connections with verified SSH keys (as it should). In order to get around this you will likely need to enable &lsquo;PasswordAuthentication&rsquo; to let you scp into the server using your &lsquo;sudo&rsquo; password.</p>
-<p>To enable &lsquo;PasswordAuthentication&rsquo; first connect to the server you want to enable it on, and then open the sshd_config file.</p>
-<pre tabindex=0><code>sudo vim /etc/ssh/sshd_config
-</code></pre><p>From there you will want to find the line</p>
-<pre tabindex=0><code>PasswordAuthentication no
-</code></pre><p>Update the &lsquo;no&rsquo; to a &lsquo;yes&rsquo; and then save the file. We then need to reload the sshd module for the changes to take affect.</p>
-<pre tabindex=0><code>sudo systemctl restart sshd.service
-</code></pre><p>Now we should be able to use the &lsquo;scp&rsquo; command to move our file from our old server to the new. When prompted for a password during the &lsquo;scp&rsquo; you should use your &lsquo;sudo&rsquo; password on the target server.</p>
-<p><strong>Once the file is copied you need to disable PasswordAuthentication.</strong><br>
-Reopen the sshd_config file and change PasswordAuthentication back to no, and then run the following command to apply the change</p>
-<pre tabindex=0><code>sudo systemctl restart sshd.service
-</code></pre><p>This disables PasswordAuthentication and restricts access to SSH only again.</p>
-</div>
-<p>After you have confirmed the files are on the new server you should clean up the files you left in /tmp/. Running the following command from within /tmp/ on the old server will clear both the tarball file and the temporary copy folder we made.</p>
-<pre tabindex=0><code>sudo rm -rf /tmp/$HOST_COPY.tar.gz $HOST_COPY
-</code></pre><hr>
-<h2 id=importing-the-data>Importing the data</h2>
-<p><em>This should be done on the new server</em></p>
-<p>The final steps on the new server are to unpack the tarball file we copied from the old server, import the MySql database onto our current one, and then replace the content of our existing /wp-content folder with the copy. After all that we will go back to the MySql database and update any URL references to point to the correct domain name.</p>
-<p>Navigate to the folder with the copied tarball file, if you folowed the steps above the copy should be in /home/$USER/. First we will copy the file to /tmp/, then navigate to that folder, then decompress the tarball</p>
-<pre tabindex=0><code>sudo mv $HOST_COPY.tar.gz /tmp/
+</code></pre><div class="alert alert-info"><strong>Database Name</strong><br>If you don&rsquo;t know what the database name is you can find it by viewing the wp-config.php file. It can be found in the WordPress root directory, commonly /var/www/$DOMAIN/wp-config.php.</div><hr><h2 id=exporting-the-data>Exporting the data</h2><p>Now that we have the data copied we need to package it together to make it easier to move. The following command will compress the folder together into a single &lsquo;tarball&rsquo; file.</p><pre><code>tar -czvf $HOST_COPY.tar.gz /tmp/$HOST_COPY
+</code></pre><p>With the tarball file made, we&rsquo;ll use &lsquo;scp&rsquo; (secure copy) to send the files from one server to another. The command itself is rather simple, however you will likely have to make some adjustments on the new server to allow for a less secure connection to make this work. The scp command is listed below.</p><pre><code>scp $HOST_COPY.tar.gz $USER@$NEW_SERVER:~
+</code></pre><p>An example would look like this <code>scp casat.tar.gz jmarks@123.56.89.111:~</code></p><div class="alert alert-warning"><p><strong>Allowing Less Secure Connections</strong><br>If the &lsquo;scp&rsquo; command is failing, it&rsquo;s likely that the target server (new server) only allows connections with verified SSH keys (as it should). In order to get around this you will likely need to enable &lsquo;PasswordAuthentication&rsquo; to let you scp into the server using your &lsquo;sudo&rsquo; password.</p><p>To enable &lsquo;PasswordAuthentication&rsquo; first connect to the server you want to enable it on, and then open the sshd_config file.</p><pre><code>sudo vim /etc/ssh/sshd_config
+</code></pre><p>From there you will want to find the line</p><pre><code>PasswordAuthentication no
+</code></pre><p>Update the &lsquo;no&rsquo; to a &lsquo;yes&rsquo; and then save the file. We then need to reload the sshd module for the changes to take affect.</p><pre><code>sudo systemctl restart sshd.service
+</code></pre><p>Now we should be able to use the &lsquo;scp&rsquo; command to move our file from our old server to the new. When prompted for a password during the &lsquo;scp&rsquo; you should use your &lsquo;sudo&rsquo; password on the target server.</p><p><strong>Once the file is copied you need to disable PasswordAuthentication.</strong><br>Reopen the sshd_config file and change PasswordAuthentication back to no, and then run the following command to apply the change</p><pre><code>sudo systemctl restart sshd.service
+</code></pre><p>This disables PasswordAuthentication and restricts access to SSH only again.</p></div><p>After you have confirmed the files are on the new server you should clean up the files you left in /tmp/. Running the following command from within /tmp/ on the old server will clear both the tarball file and the temporary copy folder we made.</p><pre><code>sudo rm -rf /tmp/$HOST_COPY.tar.gz $HOST_COPY
+</code></pre><hr><h2 id=importing-the-data>Importing the data</h2><p><em>This should be done on the new server</em></p><p>The final steps on the new server are to unpack the tarball file we copied from the old server, import the MySql database onto our current one, and then replace the content of our existing /wp-content folder with the copy. After all that we will go back to the MySql database and update any URL references to point to the correct domain name.</p><p>Navigate to the folder with the copied tarball file, if you folowed the steps above the copy should be in /home/$USER/. First we will copy the file to /tmp/, then navigate to that folder, then decompress the tarball</p><pre><code>sudo mv $HOST_COPY.tar.gz /tmp/
 cd /tmp
 tar -xzvf $HOST_COPY.tar.gz
-</code></pre><p>Take the copy MySql database and overwrite the existing database</p>
-<pre tabindex=0><code>sudo mysql -u root -p wp_$EXISTING_DB &lt; /tmp/$HOST_COPY/database.sql
-</code></pre><p>Next we need to remove the current /wp-content folder from our WordPress installation, then we copy the /wp-content folder from $HOST_COPY</p>
-<pre tabindex=0><code>sudo rm -r /var/www/$DOMAIN_NAME/wp-content/
+</code></pre><p>Take the copy MySql database and overwrite the existing database</p><pre><code>sudo mysql -u root -p wp_$EXISTING_DB &lt; /tmp/$HOST_COPY/database.sql
+</code></pre><p>Next we need to remove the current /wp-content folder from our WordPress installation, then we copy the /wp-content folder from $HOST_COPY</p><pre><code>sudo rm -r /var/www/$DOMAIN_NAME/wp-content/
 sudo cp -ar /tmp/$HOST_COPY/wp-content /var/www/$DOMAIN_NAME/
-</code></pre><p>Since this folder is being copied from another source we need to update the permissions so the www-data user can continue to access them</p>
-<pre tabindex=0><code>sudo chown -R www-data:www-data /var/www/$DOMAIN_NAME/
+</code></pre><p>Since this folder is being copied from another source we need to update the permissions so the www-data user can continue to access them</p><pre><code>sudo chown -R www-data:www-data /var/www/$DOMAIN_NAME/
 sudo chmod -R 755 /var/www/html/$DOMAIN_NAME/
-</code></pre><hr>
-<h2 id=updating-the-url-in-the-database>Updating the URL in the database</h2>
-<p>If the website that we copied the data <em>from</em> had a different URL from the one we are copying the data <em>to</em> then we need to update the URL in the MySql database. The easiest and most comprehensive way to do this is using the wp-cli app. Alternatively, in some cases, it can just be done from within MySql.</p>
-<h3 id=updating-the-url-with-wp-cli>Updating the URL with wp-cli</h3>
-<p>wp-cli is a powerful tool for managing WordPress website from the Terminal. It can do and allow you to automate all sorts of functions. For this particular case we will be using wp-cli&rsquo;s &lsquo;search and replace&rsquo; feature. If you followed the WordPress server installation <a href=http://hugo.casatdev.com/it_notes/new_server_config/LAMP_03/#installing-wp-cli>on here</a>, then wp-cli should already be installed. Otherwise it is <a href=https://wp-cli.org>available here.</a></p>
-<p>In order to update the URL for the website, we first navigate to the WordPress root folder, /var/www/$DOMAIN_NAME/. From there we will run the following command</p>
-<pre tabindex=0><code>wp search replace $OLD_DOMAIN $NEW_DOMAIN --dry-run
-</code></pre><p>Make sure you replace the domain name variables with the complete &lsquo;fully qualified domain name&rsquo; (FQDN). The $OLD_DOMAIN needs to be whatever the current URL of the server is, typically that will either be an IP address or a &lsquo;dev&rsquo; subdomain. Here&rsquo;s a couple of examples</p>
-<pre tabindex=0><code>wp search replace 123.567.89.211 https://casat.org --dry-run
+</code></pre><hr><h2 id=updating-the-url-in-the-database>Updating the URL in the database</h2><p>If the website that we copied the data <em>from</em> had a different URL from the one we are copying the data <em>to</em> then we need to update the URL in the MySql database. The easiest and most comprehensive way to do this is using the wp-cli app. Alternatively, in some cases, it can just be done from within MySql.</p><h3 id=updating-the-url-with-wp-cli>Updating the URL with wp-cli</h3><p>wp-cli is a powerful tool for managing WordPress website from the Terminal. It can do and allow you to automate all sorts of functions. For this particular case we will be using wp-cli&rsquo;s &lsquo;search and replace&rsquo; feature. If you followed the WordPress server installation <a href=http://hugo.casatdev.com/it_notes/new_server_config/LAMP_03/#installing-wp-cli>on here</a>, then wp-cli should already be installed. Otherwise it is <a href=https://wp-cli.org>available here.</a></p><p>In order to update the URL for the website, we first navigate to the WordPress root folder, /var/www/$DOMAIN_NAME/. From there we will run the following command</p><pre><code>wp search replace $OLD_DOMAIN $NEW_DOMAIN --dry-run
+</code></pre><p>Make sure you replace the domain name variables with the complete &lsquo;fully qualified domain name&rsquo; (FQDN). The $OLD_DOMAIN needs to be whatever the current URL of the server is, typically that will either be an IP address or a &lsquo;dev&rsquo; subdomain. Here&rsquo;s a couple of examples</p><pre><code>wp search replace 123.567.89.211 https://casat.org --dry-run
 wp search replace http://dev.casat.org http://casat.org --dry-run
-</code></pre><p>The &ndash;dry-run flag at the end, is there to say that this is a test. We want to run the command and then check what the output is prior to running the command in &lsquo;production&rsquo;. Run the command and check the result, if you have any error notices fix those and then test again. Once you have the command working cleanly, run it without the &ndash;dry-run flag and that will update the URLs across the entire site.</p>
-<h3 id=updating-the-url-with-mysql>Updating the URL with MySql</h3>
-<p>It is also possible to update the URL directly within MySql itself, however this should only be done as a last resort if needed.</p>
-<div class="alert alert-danger">
-<strong>Updating MySql Manually</strong><br>
-Because of the way that WordPress stores information within the MySql database it&rsquo;s possible that this can cause additional issues. Many plugins use &lsquo;serialized data&rsquo; within the database, this means that the data is spaced in a way to create sections. When updating the MySql URL manually it is possible to screw up the spacing of those sequences and potentially break other things. In order to avoid this its recommended to use the wp-cli search and replace function instead.
-</div>
-<p>Connect to the MySql app using the root account for MySql</p>
-<pre tabindex=0><code>mysql -u root -p
-</code></pre><p>Once we are in MySql we first need to connect to the WordPress database</p>
-<pre tabindex=0><code>USE wp_$HOST_NAME;
-</code></pre><p>Then we will update the URL in two specific places</p>
-<pre tabindex=0><code>UPDATE wp_options SET option_value = 'https://$DOMAIN_NAME' WHERE option_name = 'siteurl';
+</code></pre><p>The &ndash;dry-run flag at the end, is there to say that this is a test. We want to run the command and then check what the output is prior to running the command in &lsquo;production&rsquo;. Run the command and check the result, if you have any error notices fix those and then test again. Once you have the command working cleanly, run it without the &ndash;dry-run flag and that will update the URLs across the entire site.</p><h3 id=updating-the-url-with-mysql>Updating the URL with MySql</h3><p>It is also possible to update the URL directly within MySql itself, however this should only be done as a last resort if needed.</p><div class="alert alert-danger"><strong>Updating MySql Manually</strong><br>Because of the way that WordPress stores information within the MySql database it&rsquo;s possible that this can cause additional issues. Many plugins use &lsquo;serialized data&rsquo; within the database, this means that the data is spaced in a way to create sections. When updating the MySql URL manually it is possible to screw up the spacing of those sequences and potentially break other things. In order to avoid this its recommended to use the wp-cli search and replace function instead.</div><p>Connect to the MySql app using the root account for MySql</p><pre><code>mysql -u root -p
+</code></pre><p>Once we are in MySql we first need to connect to the WordPress database</p><pre><code>USE wp_$HOST_NAME;
+</code></pre><p>Then we will update the URL in two specific places</p><pre><code>UPDATE wp_options SET option_value = 'https://$DOMAIN_NAME' WHERE option_name = 'siteurl';
 UPDATE wp_options SET option_value = 'https://$DOMAIN_NAME' WHERE option_name = 'home';
-</code></pre><p>After that we can leave MySql</p>
-<pre tabindex=0><code>exit;
-</code></pre><p>Then finally restart the MySql database for the changes to take affect.</p>
-<pre tabindex=0><code>systemctl restart mysql
-</code></pre>
-</div>
-<div class="row pl-3 pr-3">
-<div class="col-md-6 share-buttons">
-</div>
-<div class="col-md-6 btn-improve-page">
-<a href=https://github.com/ResetSmith/ResetSmith.github.io/edit/main/content/posts/wordpress/migration/index.md title="Improve this page" target=_blank rel=noopener>
-<i class="fas fa-code-branch"></i>
-Improve this page
-</a>
-</div>
-</div>
-<hr>
-<div class="row next-prev-navigator">
-<div class="col-md-6 previous-article">
-<a href=/posts/wordpress/new_lamp/ title="Setting up a LAMP server for WordPress" class="btn btn-outline-info">
-<div><i class="fas fa-chevron-circle-left"></i> Prev</div>
-<div class=next-prev-text>Setting up a LAMP server for WordPress</div>
-</a>
-</div>
-<div class="col-md-6 next-article">
-<a href=/posts/hugo/ title=Hugo class="btn btn-outline-info">
-<div>Next <i class="fas fa-chevron-circle-right"></i></div>
-<div class=next-prev-text>Hugo</div>
-</a>
-</div>
-</div>
-<hr>
-</div>
-</div>
-</div>
-<a id=scroll-to-top class=btn><i class="fas fa-chevron-circle-up"></i></a>
-</section>
-<section class=toc-section id=toc-section>
-<div class=toc-holder>
-<h5 class="text-center pl-3">Table of Contents</h5>
-<hr>
-<div class=toc>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#copying-the-data>Copying the data</a></li>
-<li><a href=#exporting-the-data>Exporting the data</a></li>
-<li><a href=#importing-the-data>Importing the data</a></li>
-<li><a href=#updating-the-url-in-the-database>Updating the URL in the database</a></li>
-</ul>
-</nav>
-</div>
-</div>
-</section>
-</div>
-<footer class="container-fluid text-center align-content-center footer pb-2">
-<div class="container pt-5">
-<div class="row text-left">
-<div class="col-md-4 col-sm-12">
-<h5>Navigation</h5>
-<ul>
-</ul>
-</div>
-<div class="col-md-4 col-sm-12">
-<h5>Contact me:</h5>
-<ul>
-<li><span>Email: </span> <span>johndoe@example.com</span></li>
-<li><span>Phone: </span> <span>+0123456789</span></li>
-</ul>
-</div>
-&lt;<div class="col-md-4 col-sm-12">
-<h5></h5>
-<ul>
-&lt;<li><a href=https://www.freepik.com>Freepik</a></li>
-</ul>
-</div>
-</div>
-</div>
-<hr>
-<div class=container>
-<div class="row text-left">
-<div class=col-md-4>
-<a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener>
-<img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png alt="Toha Theme Logo">
-Toha
-</a>
-</div>
-<div class="col-md-4 text-center">© 2021 Copyright.</div>
-<div class="col-md-4 text-right">
-<a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18>
-</a>
-</div>
-</div>
-</div>
-</footer>
-<script type=text/javascript src=/js/jquery-3.4.1.min.js></script>
-<script type=text/javascript src=/js/popper.min.js></script>
-<script type=text/javascript src=/js/bootstrap.min.js></script>
-<script type=text/javascript src=/js/navbar.js></script>
-<script type=text/javascript src=/js/plyr.js></script>
-<script type=text/javascript src=/js/main.js></script>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script>
-<script src=/js/single.js></script>
-<script>hljs.initHighlightingOnLoad()</script>
-</body>
-</html>
+</code></pre><p>After that we can leave MySql</p><pre><code>exit;
+</code></pre><p>Then finally restart the MySql database for the changes to take affect.</p><pre><code>systemctl restart mysql
+</code></pre></div><div class="row pl-3 pr-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/ResetSmith/ResetSmith.github.io/edit/main/content/posts/wordpress/migration/index.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>Improve this page</a></div></div><hr><div class="row next-prev-navigator"><div class="col-md-6 previous-article"><a href=/posts/wordpress/new_lamp/ title="Setting up a LAMP server for WordPress" class="btn btn-outline-info"><div><i class="fas fa-chevron-circle-left"></i>Prev</div><div class=next-prev-text>Setting up a LAMP server for WordPress</div></a></div><div class="col-md-6 next-article"><a href=/posts/hugo/ title=Hugo class="btn btn-outline-info"><div>Next <i class="fas fa-chevron-circle-right"></i></div><div class=next-prev-text>Hugo</div></a></div></div><hr></div></div></div><a id=scroll-to-top class=btn><i class="fas fa-chevron-circle-up"></i></a></section><section class=toc-section id=toc-section><div class=toc-holder><h5 class="text-center pl-3">Table of Contents</h5><hr><div class=toc><nav id=TableOfContents><ul><li><a href=#copying-the-data>Copying the data</a></li><li><a href=#exporting-the-data>Exporting the data</a></li><li><a href=#importing-the-data>Importing the data</a></li><li><a href=#updating-the-url-in-the-database>Updating the URL in the database</a></li></ul></nav></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><ul><li><span>Email:</span> <span>johndoe@example.com</span></li><li><span>Phone:</span> <span>+0123456789</span></li></ul></div>&lt;<div class="col-md-4 col-sm-12"><h5></h5><ul>&lt;<li><a href=https://www.freepik.com>Freepik</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png alt="Toha Theme Logo">
+Toha</a></div><div class="col-md-4 text-center">© 2021 Copyright.</div><div class="col-md-4 text-right"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script><script type=text/javascript src=/js/popper.min.js></script><script type=text/javascript src=/js/bootstrap.min.js></script><script type=text/javascript src=/js/navbar.js></script><script type=text/javascript src=/js/plyr.js></script><script type=text/javascript src=/js/main.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script><script src=/js/single.js></script><script>hljs.initHighlightingOnLoad();</script></body></html>
