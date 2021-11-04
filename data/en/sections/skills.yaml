@@ -12,7 +12,7 @@ section:
 # Give a summary of you each skill in the summary section.
 skills:
 - name: Linux
-  logo: "/images/sections/skills/ubuntu.png"
+  logo: "/images/sections/skills/linux.png"
   summary: "Familar with using Ubuntu for servers. I am comfortable navigating Linux from the terminal and writing Bash scripts for automation purposes."
   url: "https://ubuntu.com"
 
