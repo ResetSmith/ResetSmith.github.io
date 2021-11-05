@@ -1,7 +1,7 @@
 ---
 title: "Installing PromTail"
 date: 2021-08-17T10:03:55-07:00
-hero: development2.png
+hero: development2.jpg
 author:
   name: Reset_Smith
   # image: /images/authors/
