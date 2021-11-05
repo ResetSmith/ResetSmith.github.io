@@ -1,7 +1,7 @@
 ---
 title: "Enabling SSL with Apache"
-date: 2021-05-01T09:03:55-07:00
-hero: apache_certbot.png
+date: 2021-05-01
+hero: development.png
 author:
   name: Reset_Smith
   # image: /images/authors/
