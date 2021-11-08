@@ -1,28 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Monitoring on Reset_Smith's Blog</title><link>https://resettech.net/posts/monitoring/</link><description>Recent content in Monitoring on Reset_Smith's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 03 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://resettech.net/posts/monitoring/index.xml" rel="self" type="application/rss+xml"/><item><title>Installing Prometheus</title><link>https://resettech.net/posts/monitoring/prom_install/</link><pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/monitoring/prom_install/</guid><description>Create a User sudo useradd -rs /bin/false prometheus
-sudo mkdir /etc/prometheus
-sudo mkdir /var/lib/prometheus
-sudo chown prometheus:prometheus /etc/prometheus
-sudo chown prometheus:prometheus /var/lib/prometheus
-Download Prometheus cd /tmp
-wget https://github.com/prometheus/prometheus/releases/download/v2.13.1/prometheus-2.13.1.linux-amd64.tar.gz
-tar -xzvf prometheus-2.13.1.linux-amd64.tar.gz prometheus/
-sudo mv prometheus/prometheus /usr/local/bin/
-sudo mv prometheus/promtool /usr/local/bin/
-sudo chown prometheus:prometheus /usr/local/bin/prometheus
-sudo chown prometheus:prometheus /usr/local/bin/prometheus
-Configure Prometheus sudo vim /etc/prometheus/prometheus.yml
-global:
-scrape_interval: 15s
-evaluation_interval: 15s
-rule_files:
-# - &amp;quot;first.rules&amp;quot;
-# - &amp;quot;second.rules&amp;quot;
-scrape_configs:
-- job_name: 'prometheus'
-scrape_interval: 5s
-static_configs:
-- targets: ['localhost:9090']
-sudo chown prometheus:prometheus /etc/prometheus/prometheus.</description></item><item><title>Installing Node Exporter</title><link>https://resettech.net/posts/monitoring/node_exporter/</link><pubDate>Thu, 19 Aug 2021 10:03:55 -0700</pubDate><guid>https://resettech.net/posts/monitoring/node_exporter/</guid><description>create folder for exporter apps sudo mkdir /usr/local/bin/metrics
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Monitoring on Reset_Smith's Blog</title><link>https://resettech.net/posts/monitoring/</link><description>Recent content in Monitoring on Reset_Smith's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 03 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://resettech.net/posts/monitoring/index.xml" rel="self" type="application/rss+xml"/><item><title>Installing Prometheus</title><link>https://resettech.net/posts/monitoring/prom_install/</link><pubDate>Sun, 03 Oct 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/monitoring/prom_install/</guid><description>Prometheus is an open-source application created for systems monitoring and alerting. The Prometheus server application can produce limited visualizations of data that it collects and stores from Exporters which send it the data. Prometheus and it&amp;rsquo;s Exporters are good for measuring numerical values over time, things such as: Data Storage/Memory Usage, Network Stats, Process Monitoring.
+Prometheus is often paired with the open-source visualization software Grafana which improves the end-user experience by making queries easier and better looking.</description></item><item><title>Installing Node Exporter</title><link>https://resettech.net/posts/monitoring/node_exporter/</link><pubDate>Thu, 19 Aug 2021 10:03:55 -0700</pubDate><guid>https://resettech.net/posts/monitoring/node_exporter/</guid><description>create folder for exporter apps sudo mkdir /usr/local/bin/metrics
 sudo mkdir /etc/metrics
 sudo useradd -rs /bin/false exporter
 sudo chmod -R 777 /usr/local/bin/metrics
