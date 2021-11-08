@@ -26,7 +26,7 @@ Through this article series I'll go through setting up a Prometheus server on a 
 There are a few different ways to handle getting Prometheus started. The easiest way to get going quickly is to use Prometheus as a Docker image, Promehteus has [instructions on it's website](https://prometheus.io/docs/prometheus/latest/installation/) for doing this if you would like to go that route. For the purposes of this article I'll go through installing Prometheus 'locally', locally in this instance refers to a DigitalOcean VPS. I'll use this setup for the rest of the series so if you do something different your experience may differ slightly.
 
 {{< alert type="info" >}}
-**DigitalOcean VPS **\
+**DigitalOcean VPS**\
 For this article I am installing Prometheus on a DigitalOcean 2vCPU, 4GB Memory Droplet. Prometheus seems to have relatively low memory usage compared to other monitoring apps I tried (looking at you Elastic), you should be able to follow these directions on any comparable Cloud VPS running Ubuntu 20.04 or the Debian equivalent.
 {{< /alert >}}
 
@@ -34,7 +34,7 @@ For this article I am installing Prometheus on a DigitalOcean 2vCPU, 4GB Memory 
 
 To install Prometheus we'll first create a new user on our server to run the app, and create some necessary folders, then grant the correct permissions. From there we'll download Prometheus and move it to the correct location to run from, setup a config file, and then create a service to run the app.
 
-### Creating the User
+### Creating a user account
 
 We'll start with creating a user named 'prometheus'.
 ```
@@ -98,7 +98,7 @@ Next we need to update the permissions of the configuration file for our 'promet
 sudo chown prometheus:prometheus /etc/prometheus/prometheus.yml
 ```
 
-### Create Service
+### Setup a service to run Prometheus
 
 With the other pieces in place we're ready to create a service to handle running the Prometheus app. The service will tell Ubuntu which user to use when running Prometheus as well as tell Prometheus where it can find the configuration file and the data to monitor. Create the service file with the following command.
 ```
@@ -143,14 +143,15 @@ sudo systemctl enable prometheus.service
 
 We should now have an operating Prometheus app, accessible through it's default of http://localhost:9090.
 
-### Open Firewall
+### Open the firewall
+
 If you are using a firewall app to secure your server (You should be) you will need to open port 9090 to TCP traffic. You can do this with UFW with the following command.
 ```
 sudo ufw allow 9090
 ```
 
 
-## Install Grafana
+## Installing Grafana
 ```
 sudo apt-get install -y apt-transport-https
 sudo apt-get install -y software-properties-common wget
@@ -176,7 +177,8 @@ admin/admin
 
 Setup reverse proxy in Apache
 
-## Install Node Exporter Locally
+## Installing Node Exporter Locally
+
 ### create folder for exporter apps
 ```
 sudo mkdir /usr/local/bin/node_exporter
