@@ -129,7 +129,7 @@ If the website that we copied the data *from* had a different URL from the one w
 
 ### Updating the URL with wp-cli
 
-wp-cli is a powerful tool for managing WordPress website from the Terminal. It can do and allow you to automate all sorts of functions. For this particular case we will be using wp-cli's 'search and replace' feature. If you followed the WordPress server installation [on here](http://hugo.casatdev.com/it_notes/new_server_config/LAMP_03/#installing-wp-cli), then wp-cli should already be installed. Otherwise it is [available here.](https://wp-cli.org)
+wp-cli is a powerful tool for managing WordPress websites from the Terminal and can allow a knowledgable admin to automate all sorts of functions. For this particular case we will be using wp-cli's 'search and replace' feature. If you followed the WordPress server installation [on here](http://hugo.casatdev.com/it_notes/new_server_config/LAMP_03/#installing-wp-cli), then wp-cli should already be installed. Otherwise it is [available here.](https://wp-cli.org)
 
 In order to update the URL for the website, we first navigate to the WordPress root folder, /var/www/$DOMAIN_NAME/. From there we will run the following command
 ```
