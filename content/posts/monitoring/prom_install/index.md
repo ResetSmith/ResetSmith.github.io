@@ -207,6 +207,7 @@ sudo ufw allow 3000
 ```
 
 The default user should be admin/admin, you should update this as soon as you get into Grafana. For the time being this is only accessible via URL:Port, in a future article I will cover creating a reverse proxy with Apache to route traffic to Grafana via a subdomain.
+
 ---
 
 ## Installing Node Exporter
