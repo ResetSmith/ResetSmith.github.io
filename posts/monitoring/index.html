@@ -1,13 +1,185 @@
-<!doctype html><html><head><title>Monitoring</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=/css/bootstrap.min.css><link rel=stylesheet href=/css/layouts/main.css><link rel=stylesheet href=/css/navigators/navbar.css><link rel=stylesheet href=/css/plyr.css><link rel=stylesheet href=/css/flag-icon.min.css><link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css><meta property="og:title" content="Monitoring"><meta property="og:description" content><meta property="og:type" content="website"><meta property="og:url" content="https://resettech.net/posts/monitoring/"><meta property="og:updated_time" content="2021-10-03T00:00:00+00:00"><link rel=stylesheet href=/css/layouts/list.css><link rel=stylesheet href=/css/navigators/sidebar.css><link rel=stylesheet href=/css/style.css></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
-<span class=navbar-toggler-icon></span></button>
-<a class=navbar-brand href=/>Reset_Smith's Blog</a>
+<!doctype html><html>
+<head>
+<title>Monitoring</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta http-equiv=x-ua-compatible content="ie=edge">
+<link rel=stylesheet href=/css/bootstrap.min.css>
+<link rel=stylesheet href=/css/layouts/main.css>
+<link rel=stylesheet href=/css/navigators/navbar.css>
+<link rel=stylesheet href=/css/plyr.css>
+<link rel=stylesheet href=/css/flag-icon.min.css>
+<link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css>
+<meta property="og:title" content="Monitoring">
+<meta property="og:description" content>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://resettech.net/posts/monitoring/">
+<link rel=stylesheet href=/css/layouts/list.css>
+<link rel=stylesheet href=/css/navigators/sidebar.css>
+<link rel=stylesheet href=/css/style.css>
+</head>
+<body data-spy=scroll data-target=#TableOfContents data-offset=80>
+<div class="container-fluid bg-dimmed wrapper">
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+<div class=container>
+<button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
+<span class=navbar-toggler-icon></span>
+</button>
+<a class=navbar-brand href=/>
+Reset_Smith's Blog</a>
 <button class="navbar-toggler navbar-light" id=toc-toggler type=button onclick=toggleTOC()>
-<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/posts data-filter=all>Posts</a></li><div class=subtree><li><i class="fas fa-plus-circle"></i><a href=/posts/server_mgmt/>Server Management</a><ul><li><a href=/posts/server_mgmt/htpasswd/ title="Basic Auth with Apache">Basic Auth with Apache</a></li><li><a href=/posts/server_mgmt/add_ssl/ title="Enabling SSL">Enabling SSL</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/posts/wordpress/>WordPress</a><ul><li><a href=/posts/wordpress/new_lamp/ title="Deploying a LAMP server">Deploying a LAMP server</a></li><li><a href=/posts/wordpress/migration/ title="WordPress Migrations">WordPress Migrations</a></li></ul></li><li><a href=/posts/hugo/ title=Hugo>Hugo</a></li><li><i class="fas fa-minus-circle"></i><a class=active href=/posts/monitoring/>Monitoring</a><ul class=active><li><a href=/posts/monitoring/prom_install/ title="Installing Prometheus">Installing Prometheus</a></li><li><a href=/posts/monitoring/promtail/ title="Installing Promtail">Installing Promtail</a></li><li><a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter">Installing Node Exporter</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class="content container-fluid" id=content><div class="container-fluid post-card-holder" id=post-card-holder><div class=post-card><a href=/posts/monitoring/prom_install/ class=post-card-link><div class=card><div class=card-head><img class=card-img-top src=/posts/monitoring/prom_install/data_security_15.jpg alt="Hero Image"></div><div class=card-body><h5 class=card-title>Installing Prometheus</h5><p class="card-text post-summary">Create a User sudo useradd -rs /bin/false prometheus sudo mkdir /etc/prometheus sudo mkdir /var/lib/prometheus sudo chown prometheus:prometheus /etc/prometheus sudo chown prometheus:prometheus /var/lib/prometheus Download Prometheus cd /tmp wget https://github.com/prometheus/prometheus/releases/download/v2.13.1/prometheus-2.13.1.linux-amd64.tar.gz tar -xzvf prometheus-2.13.1.linux-amd64.tar.gz prometheus/ sudo mv prometheus/prometheus /usr/local/bin/ sudo mv prometheus/promtool /usr/local/bin/ sudo chown prometheus:prometheus /usr/local/bin/prometheus sudo chown prometheus:prometheus /usr/local/bin/prometheus Configure Prometheus sudo vim /etc/prometheus/prometheus.yml global: scrape_interval: 15s evaluation_interval: 15s rule_files: # - "first.rules" # - "second.rules" scrape_configs: - job_name: 'prometheus' scrape_interval: 5s static_configs: - targets: ['localhost:9090'] sudo chown prometheus:prometheus /etc/prometheus/prometheus.</p></div><div class=card-footer><span class=float-left>October 3, 2021</span>
-<a href=/posts/monitoring/prom_install/ class="float-right btn btn-outline-info btn-sm">Read</a></div></div></a></div><div class=post-card><a href=/posts/monitoring/node_exporter/ class=post-card-link><div class=card><div class=card-head><img class=card-img-top src=/images/default-hero.jpg alt="Hero Image"></div><div class=card-body><h5 class=card-title>Installing Node Exporter</h5><p class="card-text post-summary">create folder for exporter apps sudo mkdir /usr/local/bin/metrics sudo mkdir /etc/metrics sudo useradd -rs /bin/false exporter sudo chmod -R 777 /usr/local/bin/metrics sudo chmod -R 777 /etc/metrics sudo chown -R exporter:exporter /usr/local/bin/metrics sudo chown -R exporter:exporter /etc/metrics Install node_exporter curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz tar xzvf node_exporter-*.*-amd64.tar.gz sudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exporter create service sudo vim /etc/systemd/system/node_exporter.service [Unit] Description=Node exporter for Prometheus After=network.target [Service] User=exporter Type=simple ExecStart=/usr/local/bin/node_exporter/node_exporter [Install] WantedBy=multi-user.target start and enable service sudo systemctl start node_exporter.</p></div><div class=card-footer><span class=float-left>August 19, 2021</span>
-<a href=/posts/monitoring/node_exporter/ class="float-right btn btn-outline-info btn-sm">Read</a></div></div></a></div><div class=post-card><a href=/posts/monitoring/promtail/ class=post-card-link><div class=card><div class=card-head><img class=card-img-top src=/posts/monitoring/promtail/development2.jpg alt="Hero Image"></div><div class=card-body><h5 class=card-title>Installing PromTail</h5><p class="card-text post-summary">Promtail is an app for transferring logs from one server to another. For our use we are transferring logs from our many different VPS to our centralized Loki server.
+<span class=navbar-toggler-icon></span>
+</button>
+<div class="collapse navbar-collapse lang-selector" id=top-nav-items>
+<ul class="navbar-nav ml-auto">
+</ul>
+</div>
+</div>
+</nav>
+<section class=sidebar-section id=sidebar-section>
+<div class=sidebar-holder>
+<div class=sidebar id=sidebar>
+<form class=mx-auto method=get action=/search>
+<input type=text name=keyword placeholder=Search data-search id=search-box>
+</form>
+<div class=sidebar-tree>
+<ul class=tree id=tree>
+<li id=list-heading><a href=/posts data-filter=all>Posts</a></li>
+<div class=subtree>
+<li>
+<i class="fas fa-plus-circle"></i><a href=/posts/server_mgmt/>Server Management</a>
+<ul>
+<li><a href=/posts/server_mgmt/htpasswd/ title="Basic Auth with Apache">Basic Auth with Apache</a></li>
+<li><a href=/posts/server_mgmt/add_ssl/ title="Enabling SSL">Enabling SSL</a></li>
+</ul>
+</li>
+<li>
+<i class="fas fa-plus-circle"></i><a href=/posts/wordpress/>WordPress</a>
+<ul>
+<li><a href=/posts/wordpress/new_lamp/ title="Deploying a LAMP server">Deploying a LAMP server</a></li>
+<li><a href=/posts/wordpress/migration/ title="WordPress Migrations">WordPress Migrations</a></li>
+</ul>
+</li>
+<li><a href=/posts/hugo/ title=Hugo>Hugo</a></li>
+<li>
+<i class="fas fa-minus-circle"></i><a class=active href=/posts/monitoring/>Monitoring</a>
+<ul class=active>
+<li><a href=/posts/monitoring/prom_install/ title="Installing Prometheus">Installing Prometheus</a></li>
+<li><a href=/posts/monitoring/promtail/ title="Installing Promtail">Installing Promtail</a></li>
+<li><a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter">Installing Node Exporter</a></li>
+</ul>
+</li>
+</div>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class=content-section id=content-section>
+<div class="content container-fluid" id=content>
+<div class="container-fluid post-card-holder" id=post-card-holder>
+<div class=post-card>
+<a href=/posts/monitoring/prom_install/ class=post-card-link>
+<div class=card>
+<div class=card-head>
+<img class=card-img-top src=/posts/monitoring/prom_install/data_security_15.jpg alt="Hero Image">
+</div>
+<div class=card-body>
+<h5 class=card-title>Installing Prometheus</h5>
+<p class="card-text post-summary">Create a User sudo useradd -rs /bin/false prometheus sudo mkdir /etc/prometheus sudo mkdir /var/lib/prometheus sudo chown prometheus:prometheus /etc/prometheus sudo chown prometheus:prometheus /var/lib/prometheus Download Prometheus cd /tmp wget https://github.com/prometheus/prometheus/releases/download/v2.13.1/prometheus-2.13.1.linux-amd64.tar.gz tar -xzvf prometheus-2.13.1.linux-amd64.tar.gz prometheus/ sudo mv prometheus/prometheus /usr/local/bin/ sudo mv prometheus/promtool /usr/local/bin/ sudo chown prometheus:prometheus /usr/local/bin/prometheus sudo chown prometheus:prometheus /usr/local/bin/prometheus Configure Prometheus sudo vim /etc/prometheus/prometheus.yml global: scrape_interval: 15s evaluation_interval: 15s rule_files: # - "first.rules" # - "second.rules" scrape_configs: - job_name: 'prometheus' scrape_interval: 5s static_configs: - targets: ['localhost:9090'] sudo chown prometheus:prometheus /etc/prometheus/prometheus.</p>
+</div>
+<div class=card-footer>
+<span class=float-left>October 3, 2021</span>
+<a href=/posts/monitoring/prom_install/ class="float-right btn btn-outline-info btn-sm">Read</a>
+</div>
+</div>
+</a>
+</div>
+<div class=post-card>
+<a href=/posts/monitoring/node_exporter/ class=post-card-link>
+<div class=card>
+<div class=card-head>
+<img class=card-img-top src=/images/default-hero.jpg alt="Hero Image">
+</div>
+<div class=card-body>
+<h5 class=card-title>Installing Node Exporter</h5>
+<p class="card-text post-summary">create folder for exporter apps sudo mkdir /usr/local/bin/metrics sudo mkdir /etc/metrics sudo useradd -rs /bin/false exporter sudo chmod -R 777 /usr/local/bin/metrics sudo chmod -R 777 /etc/metrics sudo chown -R exporter:exporter /usr/local/bin/metrics sudo chown -R exporter:exporter /etc/metrics Install node_exporter curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz tar xzvf node_exporter-*.*-amd64.tar.gz sudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exporter create service sudo vim /etc/systemd/system/node_exporter.service [Unit] Description=Node exporter for Prometheus After=network.target [Service] User=exporter Type=simple ExecStart=/usr/local/bin/node_exporter/node_exporter [Install] WantedBy=multi-user.target start and enable service sudo systemctl start node_exporter.</p>
+</div>
+<div class=card-footer>
+<span class=float-left>August 19, 2021</span>
+<a href=/posts/monitoring/node_exporter/ class="float-right btn btn-outline-info btn-sm">Read</a>
+</div>
+</div>
+</a>
+</div>
+<div class=post-card>
+<a href=/posts/monitoring/promtail/ class=post-card-link>
+<div class=card>
+<div class=card-head>
+<img class=card-img-top src=/posts/monitoring/promtail/development2.jpg alt="Hero Image">
+</div>
+<div class=card-body>
+<h5 class=card-title>Installing PromTail</h5>
+<p class="card-text post-summary">Promtail is an app for transferring logs from one server to another. For our use we are transferring logs from our many different VPS to our centralized Loki server.
 Installing Promtail Begin by downloading the promtail app and installing it
 curl -O -L https://github.com/grafana/loki/releases/download/v2.3.0/promtail-linux-amd64.zip sudo apt install unzip unzip promtail-linux-amd64.zip sudo mv promtail-linux-amd64 /usr/local/bin/promtail make conf file Make a configuration file for Promtail
-sudo vim /etc/metrics/promtail.yml server: http_listen_port: 9080 grpc_listen_port: 0 positions: filename: /etc/metrics/positions.</p></div><div class=card-footer><span class=float-left>August 17, 2021</span>
-<a href=/posts/monitoring/promtail/ class="float-right btn btn-outline-info btn-sm">Read</a></div></div></a></div></div><div class=paginator></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><ul><li><span>Email:</span> <span>johndoe@example.com</span></li><li><span>Phone:</span> <span>+0123456789</span></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png alt="Toha Theme Logo">
-Toha</a></div><div class="col-md-4 text-center">© 2021 Copyright.</div><div class="col-md-4 text-right"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script><script type=text/javascript src=/js/popper.min.js></script><script type=text/javascript src=/js/bootstrap.min.js></script><script type=text/javascript src=/js/navbar.js></script><script type=text/javascript src=/js/plyr.js></script><script type=text/javascript src=/js/main.js></script><script src=/js/list.js></script></body></html>
+sudo vim /etc/metrics/promtail.yml server: http_listen_port: 9080 grpc_listen_port: 0 positions: filename: /etc/metrics/positions.</p>
+</div>
+<div class=card-footer>
+<span class=float-left>August 17, 2021</span>
+<a href=/posts/monitoring/promtail/ class="float-right btn btn-outline-info btn-sm">Read</a>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class=paginator>
+</div>
+</div>
+</section>
+</div>
+<footer class="container-fluid text-center align-content-center footer pb-2">
+<div class="container pt-5">
+<div class="row text-left">
+<div class="col-md-4 col-sm-12">
+<h5>Navigation</h5>
+<ul>
+</ul>
+</div>
+<div class="col-md-4 col-sm-12">
+<h5>Contact me:</h5>
+<ul>
+<li><span>Email: </span> <span>johndoe@example.com</span></li>
+<li><span>Phone: </span> <span>+0123456789</span></li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+<div class=container>
+<div class="row text-left">
+<div class=col-md-4>
+<a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener>
+<img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png alt="Toha Theme Logo">
+Toha
+</a>
+</div>
+<div class="col-md-4 text-center">© 2021 Copyright.</div>
+<div class="col-md-4 text-right">
+<a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18>
+</a>
+</div>
+</div>
+</div>
+</footer>
+<script type=text/javascript src=/js/jquery-3.4.1.min.js></script>
+<script type=text/javascript src=/js/popper.min.js></script>
+<script type=text/javascript src=/js/bootstrap.min.js></script>
+<script type=text/javascript src=/js/navbar.js></script>
+<script type=text/javascript src=/js/plyr.js></script>
+<script type=text/javascript src=/js/main.js></script>
+<script src=/js/list.js></script>
+</body>
+</html>
