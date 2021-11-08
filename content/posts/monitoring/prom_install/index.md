@@ -13,7 +13,7 @@ menu:
     weight: 10
 ---
 
-[Prometheus](https://prometheus.io/) is an open-source application created for systems monitoring and alerting. The Prometheus server application can produce limited visualizations of data that it collects and stores from Exporters which send it the data. Prometheus and it's Exporters are good for measuring numerical values over time, things such as: Data Storage/Memory Usage, Network Stats, Process Monitoring.
+[Prometheus](https://prometheus.io/) is an open-source application created for systems monitoring and alerting. The Prometheus server application can produce limited visualizations of data that it collects and stores from Exporters which send it the data. Prometheus and it's Exporters are good for measuring numerical values over time, things such as: Data Storage/Memory Usage, Network Stats, and Process Monitoring.
 
 Prometheus is often paired with the open-source visualization software [Grafana](https://grafana.com) which improves the end-user experience by making queries easier and better looking. In addition to the visualization app, Grafana also makes a log aggregation system called [Loki](https://grafana.com/oss/loki/). Loki is a powerful tool for monitoring activity on remote servers and makes identifiying possible issues or threats much easier.
 
@@ -29,6 +29,8 @@ There are a few different ways to handle getting Prometheus started. The easiest
 **DigitalOcean VPS**\
 For this article I am installing Prometheus on a DigitalOcean 2vCPU, 4GB Memory Droplet. Prometheus seems to have relatively low memory usage compared to other monitoring apps I tried (looking at you Elastic), you should be able to follow these directions on any comparable Cloud VPS running Ubuntu 20.04 or the Debian equivalent.
 {{< /alert >}}
+
+---
 
 ## Installing Prometheus
 
@@ -53,11 +55,15 @@ sudo chown prometheus:prometheus /var/lib/prometheus
 
 ### Download Prometheus
 
+*At the time of this article the most recent Prometheus version is 2.31.1, however you should check the Prometheus website [downloads section](https://prometheus.io/download/) for the most recent version.*
+
 With the user made and the folders in place we're ready to download Prometheus. For this we'll navigate to the /tmp folder, download Prometheus, uncompress the tarball, move the files to their correct locations on the server, and then update the permissions to grant access to our 'prometheus' user and group.
 ```
 cd /tmp
-wget https://github.com/prometheus/prometheus/releases/download/v2.13.1/prometheus-2.13.1.linux-amd64.tar.gz
-tar -xzvf prometheus-2.13.1.linux-amd64.tar.gz prometheus/
+
+wget https://github.com/prometheus/prometheus/releases/download/v2.31.1/prometheus-2.31.1.linux-amd64.tar.gz
+tar -xzvf prometheus-2.31.1.linux-amd64.tar.gz prometheus/
+
 sudo mv prometheus/prometheus /usr/local/bin/
 sudo mv prometheus/promtool /usr/local/bin/
 
@@ -149,35 +155,61 @@ If you are using a firewall app to secure your server (You should be) you will n
 ```
 sudo ufw allow 9090
 ```
-
+---
 
 ## Installing Grafana
+
+Like Prometheus, Grafana has a couple of different options for installation including a hosted cloud option that will avoid having to go through all of this if you wish. However, we are interested in the 'self-managed' version of Grafana, specifically we will be using the 'Enterprise Edition'.
+
+For our purposes we will be using the option to install Grafana from the APT repository. This will allow Grafana to be updated in the future using the 'apt update/upgrade' command instead of having to download and reinstall from the web.
+
+Lets start with installing the necessary dependencies for Grafana.
 ```
 sudo apt-get install -y apt-transport-https
 sudo apt-get install -y software-properties-common wget
+```
+
+Now we add Grafana Enterprise stable release to the apt repository.
+```
 wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
 echo "deb https://packages.grafana.com/enterprise/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+```
 
+And then we can update the apt repository list and install Grafana.
+```
 sudo apt-get update
 sudo apt-get install grafana-enterprise
 ```
+
 ### Setup a service for Grafana
+
+Just like with Prometheus we need to create a service that will keep Grafana running.
+
+This first command tells systemctl to check for new services.
 ```
 sudo systemctl daemon-reload
+```
+
+Next lets start the Grafana service and then check if it's working Ok.
+```
 sudo systemctl start grafana-server
 sudo systemctl status grafana-server
+```
+
+If the status comes back 'active' then we are good to enable the service.
+```
 sudo systemctl enable grafana-server
 ```
 
-Check http://localhost:3000
+From here we should be able to now see our Grafana instance available at http://localhost:3000. If the server/website is not available you may need to open port 3000 on your Firewall to TCP traffic.
+```
+sudo ufw allow 3000
+```
 
-open firewall
+The default user should be admin/admin, you should update this as soon as you get into Grafana. For the time being this is only accessible via URL:Port, in a future article I will cover creating a reverse proxy with Apache to route traffic to Grafana via a subdomain.
+---
 
-admin/admin
-
-Setup reverse proxy in Apache
-
-## Installing Node Exporter Locally
+## Installing Node Exporter
 
 ### create folder for exporter apps
 ```
@@ -221,7 +253,7 @@ sudo systemctl status node_exporter.service
 sudo systemctl enable node_exporter.service
 ```
 
-## Add Node Exporter to Prometheus
+### Add Node Exporter to Prometheus
 ```
 sudo vim /etc/prometheus/prometheus.yml
 ```
