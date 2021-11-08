@@ -103,12 +103,12 @@ Reset_Smith's Blog</a>
 <p><em>For the purposes of this article you will need SSH access to a VPS or local machine running Ubuntu 20.04 LTS</em></p>
 <p>There are a few different ways to handle getting Prometheus started. The easiest way to get going quickly is to use Prometheus as a Docker image, Promehteus has <a href=https://prometheus.io/docs/prometheus/latest/installation/>instructions on it&rsquo;s website</a> for doing this if you would like to go that route. For the purposes of this article I&rsquo;ll go through installing Prometheus &lsquo;locally&rsquo;, locally in this instance refers to a DigitalOcean VPS. I&rsquo;ll use this setup for the rest of the series so if you do something different your experience may differ slightly.</p>
 <div class="alert alert-info">
-**DigitalOcean VPS **<br>
+<strong>DigitalOcean VPS</strong><br>
 For this article I am installing Prometheus on a DigitalOcean 2vCPU, 4GB Memory Droplet. Prometheus seems to have relatively low memory usage compared to other monitoring apps I tried (looking at you Elastic), you should be able to follow these directions on any comparable Cloud VPS running Ubuntu 20.04 or the Debian equivalent.
 </div>
 <h2 id=installing-prometheus>Installing Prometheus</h2>
 <p>To install Prometheus we&rsquo;ll first create a new user on our server to run the app, and create some necessary folders, then grant the correct permissions. From there we&rsquo;ll download Prometheus and move it to the correct location to run from, setup a config file, and then create a service to run the app.</p>
-<h3 id=creating-the-user>Creating the User</h3>
+<h3 id=creating-a-user-account>Creating a user account</h3>
 <p>We&rsquo;ll start with creating a user named &lsquo;prometheus&rsquo;.</p>
 <pre tabindex=0><code>sudo useradd -rs /bin/false prometheus
 </code></pre><p>The &lsquo;-rs /bin/false&rsquo; modifier defines this user as a &lsquo;system&rsquo; account, and setting the shell as /bin/false prevents this user from being logged into.</p>
@@ -148,7 +148,7 @@ scrape_configs:
 </code></pre><p>The Prometheus configuration file has quite a few options, you can see them all in the <a href=https://prometheus.io/docs/prometheus/latest/configuration/configuration/>Prometheus configuration documentation</a>. We&rsquo;ll start with this simple configuration for now, and add on to this throughout this series.</p>
 <p>Next we need to update the permissions of the configuration file for our &lsquo;prometheus&rsquo; user and group.</p>
 <pre tabindex=0><code>sudo chown prometheus:prometheus /etc/prometheus/prometheus.yml
-</code></pre><h3 id=create-service>Create Service</h3>
+</code></pre><h3 id=setup-a-service-to-run-prometheus>Setup a service to run Prometheus</h3>
 <p>With the other pieces in place we&rsquo;re ready to create a service to handle running the Prometheus app. The service will tell Ubuntu which user to use when running Prometheus as well as tell Prometheus where it can find the configuration file and the data to monitor. Create the service file with the following command.</p>
 <pre tabindex=0><code>sudo touch /etc/systemd/system/prometheus.service
 </code></pre><p>Fill in the prometheus.service file with what&rsquo;s below.</p>
@@ -176,10 +176,10 @@ WantedBy=multi-user.target
 </code></pre><p>If the status update returns an error code, you&rsquo;ll need to retrace your steps and fix the issue before continuing. If the status comes back &lsquo;active&rsquo; then we should be set to &lsquo;enable&rsquo; the service. Enabling the service sets it so that it will automatically restart when the server does.</p>
 <pre tabindex=0><code>sudo systemctl enable prometheus.service
 </code></pre><p>We should now have an operating Prometheus app, accessible through it&rsquo;s default of http://localhost:9090.</p>
-<h3 id=open-firewall>Open Firewall</h3>
+<h3 id=open-the-firewall>Open the firewall</h3>
 <p>If you are using a firewall app to secure your server (You should be) you will need to open port 9090 to TCP traffic. You can do this with UFW with the following command.</p>
 <pre tabindex=0><code>sudo ufw allow 9090
-</code></pre><h2 id=install-grafana>Install Grafana</h2>
+</code></pre><h2 id=installing-grafana>Installing Grafana</h2>
 <pre tabindex=0><code>sudo apt-get install -y apt-transport-https
 sudo apt-get install -y software-properties-common wget
 wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
@@ -196,7 +196,7 @@ sudo systemctl enable grafana-server
 <p>open firewall</p>
 <p>admin/admin</p>
 <p>Setup reverse proxy in Apache</p>
-<h2 id=install-node-exporter-locally>Install Node Exporter Locally</h2>
+<h2 id=installing-node-exporter-locally>Installing Node Exporter Locally</h2>
 <h3 id=create-folder-for-exporter-apps>create folder for exporter apps</h3>
 <pre tabindex=0><code>sudo mkdir /usr/local/bin/node_exporter
 sudo mkdir /etc/prometheus/node_exporter
@@ -209,7 +209,7 @@ sudo chown -R exporter:exporter /etc/prometheus/node_exporter
 <pre tabindex=0><code>curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
 tar xzvf node_exporter-*.*-amd64.tar.gz
 sudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exporter
-</code></pre><h3 id=create-service-1>create service</h3>
+</code></pre><h3 id=create-service>create service</h3>
 <pre tabindex=0><code>sudo vim /etc/systemd/system/node_exporter.service
 
 [Unit]
@@ -275,8 +275,8 @@ Improve this page
 <ul>
 <li><a href=#getting-started>Getting Started</a></li>
 <li><a href=#installing-prometheus>Installing Prometheus</a></li>
-<li><a href=#install-grafana>Install Grafana</a></li>
-<li><a href=#install-node-exporter-locally>Install Node Exporter Locally</a></li>
+<li><a href=#installing-grafana>Installing Grafana</a></li>
+<li><a href=#installing-node-exporter-locally>Installing Node Exporter Locally</a></li>
 <li><a href=#add-node-exporter-to-prometheus>Add Node Exporter to Prometheus</a></li>
 </ul>
 </nav>
