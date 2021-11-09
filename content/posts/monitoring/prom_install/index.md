@@ -24,11 +24,11 @@ Through this article series I'll go through setting up a Prometheus server on a 
 
 *For the purposes of this article you will need SSH access to a VPS or local machine running Ubuntu 20.04 LTS*
 
-There are a few different ways to handle getting Prometheus started. The easiest way to get going quickly is to use Prometheus as a Docker image, Promehteus has [instructions on it's website](https://prometheus.io/docs/prometheus/latest/installation/) for doing this if you would like to go that route. For the purposes of this article I'll go through installing Prometheus 'locally', locally in this instance refers to a DigitalOcean VPS. I'll use this setup for the rest of this series so if you do something different your experience may differ slightly.
+There are a few different ways to handle getting Prometheus started. The easiest way to get going quickly is to use Prometheus as a Docker image, Prometheus has [instructions on it's website](https://prometheus.io/docs/prometheus/latest/installation/) for doing this if you would like to go that route. For the purposes of this article I'll go through installing Prometheus 'locally', locally in this instance refers to a DigitalOcean VPS. I'll use this setup for the rest of this series so if you do something different your experience may differ slightly.
 
 {{< alert type="info" >}}
 **DigitalOcean VPS**\
-For this article I am installing Prometheus on a DigitalOcean 2vCPU, 4GB Memory Droplet. Prometheus seems to have relatively low memory usage compared to other monitoring apps I tried (looking at you Elastic), you should be able to follow these directions on any comparable Cloud VPS running Ubuntu 20.04 or with a bit of fanagling the Debian equivalent.
+For this article I am installing Prometheus on a DigitalOcean 2vCPU, 4GB Memory Droplet. Prometheus seems to have relatively low memory usage compared to other monitoring apps I tried (looking at you Elastic), you should be able to follow these directions on any comparable Cloud VPS running Ubuntu 20.04 or with a bit of 'fanagaling' the Debian equivalent.
 {{< /alert >}}
 
 ---
