@@ -195,7 +195,7 @@ sudo systemctl start grafana-server
 sudo systemctl status grafana-server
 ```
 
-If the status comes back <span style="color:green">'active'</span> then we are good to enable the service.
+If the status comes back 'active' then we are good to enable the service.
 ```
 sudo systemctl enable grafana-server
 ```
@@ -215,28 +215,44 @@ The default user should be admin/admin, you should update this as soon as you ge
 
 [Node Exporter](https://github.com/prometheus/node_exporter) is one of the many premade exporters available for Prometheus. Node Exporter is a hardware and OS metrics tool for Linux, that uses 'collectors' to pull metrics from it's host machine and then make them available for a scrapper to come along and pull. Node Exporter will typically be installed on a host machine that you would want to monitor, we'll be installing it on the same machine we installed Prometheus on in this example. Installing Node Exporter on a remote machine will be covered in a future article.
 
-### create folder for exporter apps
+### Create a User
+
+Like with Prometheus we will first create a system user account for Node Exporter to use. The user will be named 'exporter' and we'll use the same -rs /bin/exporter to create the account. From there we'll make a folder for the Node Exporter app and another for the config file, then we'll give permissions to these folders to the exporter user and group.
 ```
+sudo useradd -rs /bin/false exporter
+
 sudo mkdir /usr/local/bin/node_exporter
 sudo mkdir /etc/prometheus/node_exporter
-sudo useradd -rs /bin/false exporter
-sudo chmod -R 777 /usr/local/bin/node_exporter
-sudo chmod -R 777 /etc/prometheus/node_exporter
+
 sudo chown -R exporter:exporter /usr/local/bin/node_exporter
 sudo chown -R exporter:exporter /etc/prometheus/node_exporter
+sudo chmod -R 777 /usr/local/bin/node_exporter
+sudo chmod -R 777 /etc/prometheus/node_exporter
+
 ```
 
-### Install node_exporter
+### Download Node Exporter
+
+*At the time of this article the most recent Node Exporter version is 1.2.2, however you should check the Prometheus website [downloads section](https://prometheus.io/download/#node_exporter) for the most recent version.*
+
+Next we'll download the Node Exporter app. Navigate to the /tmp folder, download the Node Exporter, uncompress the tarball file, move the Node Exporter app to it's working directory, and the navigate back to your 'home' folder.
 ```
+cd /tmp
 curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
 tar xzvf node_exporter-*.*-amd64.tar.gz
 sudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exporter
+cd
 ```
 
-### create service
+### Setup up a service to run Node Exporter
+
+From here we'll create the Node Exporter service file.
 ```
 sudo vim /etc/systemd/system/node_exporter.service
+```
 
+And then we'll fill that in with the text below.
+```
 [Unit]
 Description=Node exporter for Prometheus
 After=network.target
@@ -250,20 +266,46 @@ ExecStart=/usr/local/bin/node_exporter/node_exporter
 WantedBy=multi-user.target
 ```
 
-### start and enable service
+We can now start our Node Exporter service. Like with Prometheus we'll start the Node Exporter service and then check if it's running properly.
 ```
 sudo systemctl start node_exporter.service
 sudo systemctl status node_exporter.service
+```
+
+If the service returns 'active' then we can move forward with enabling it.
+```
 sudo systemctl enable node_exporter.service
 ```
 
 ### Add Node Exporter to Prometheus
-```
-sudo vim /etc/prometheus/prometheus.yml
-```
+
+Finally we'll go ahead and add a job within our Prometheus configuration file to scrape data from Node Exporter. Open the prometheus.yml and then add the following to the end.
 ```
 - job_name: 'node_exporter'
   scrape_interval: 5s
   static_configs:
     - targets: ['localhost:9100']
 ```
+
+In .yml files the spacing is important so make sure the spacing matches up properly with the 'prometheus' job that's already there. The final configuration file should read like this
+```
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first.rules"
+  # - "second.rules"
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'node_exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9100']
+```
+
+Now we can log back into the Grafana website, and import a dashboard. To start with we should import '#1860 Node Exporter Full', we just need the number 1860. We need to add Node Exporter as our source and then we should be ready to rock.
