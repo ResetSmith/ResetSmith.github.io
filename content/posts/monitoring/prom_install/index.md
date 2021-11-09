@@ -12,6 +12,7 @@ menu:
     parent: monitoring
     weight: 10
 ---
+---
 
 [Prometheus](https://prometheus.io/) is an open-source application created for systems monitoring and alerting. The Prometheus server application can produce limited visualizations of data that it collects and stores from Exporters which send it the data. Prometheus and it's Exporters are good for measuring numerical values over time, things such as: Data Storage/Memory Usage, Network Stats, and Process Monitoring.
 
@@ -23,11 +24,11 @@ Through this article series I'll go through setting up a Prometheus server on a 
 
 *For the purposes of this article you will need SSH access to a VPS or local machine running Ubuntu 20.04 LTS*
 
-There are a few different ways to handle getting Prometheus started. The easiest way to get going quickly is to use Prometheus as a Docker image, Promehteus has [instructions on it's website](https://prometheus.io/docs/prometheus/latest/installation/) for doing this if you would like to go that route. For the purposes of this article I'll go through installing Prometheus 'locally', locally in this instance refers to a DigitalOcean VPS. I'll use this setup for the rest of the series so if you do something different your experience may differ slightly.
+There are a few different ways to handle getting Prometheus started. The easiest way to get going quickly is to use Prometheus as a Docker image, Promehteus has [instructions on it's website](https://prometheus.io/docs/prometheus/latest/installation/) for doing this if you would like to go that route. For the purposes of this article I'll go through installing Prometheus 'locally', locally in this instance refers to a DigitalOcean VPS. I'll use this setup for the rest of this series so if you do something different your experience may differ slightly.
 
 {{< alert type="info" >}}
 **DigitalOcean VPS**\
-For this article I am installing Prometheus on a DigitalOcean 2vCPU, 4GB Memory Droplet. Prometheus seems to have relatively low memory usage compared to other monitoring apps I tried (looking at you Elastic), you should be able to follow these directions on any comparable Cloud VPS running Ubuntu 20.04 or the Debian equivalent.
+For this article I am installing Prometheus on a DigitalOcean 2vCPU, 4GB Memory Droplet. Prometheus seems to have relatively low memory usage compared to other monitoring apps I tried (looking at you Elastic), you should be able to follow these directions on any comparable Cloud VPS running Ubuntu 20.04 or with a bit of fanagling the Debian equivalent.
 {{< /alert >}}
 
 ---
@@ -51,7 +52,6 @@ sudo mkdir /var/lib/prometheus
 sudo chown prometheus:prometheus /etc/prometheus
 sudo chown prometheus:prometheus /var/lib/prometheus
 ```
-
 
 ### Download Prometheus
 
@@ -79,7 +79,6 @@ First create the configuration file.
 ```
 sudo vim /etc/prometheus/prometheus.yml
 ```
-
 
 Here is a basic configuration to get us started, it will pull the basic metrics that Prometheus itself collects. Later this can be expanded on to add additional Exporters to monitor. Copy what's below into the prometheus.yml file.
 ```
@@ -149,7 +148,7 @@ sudo systemctl enable prometheus.service
 
 We should now have an operating Prometheus app, accessible through it's default of http://localhost:9090.
 
-### Open the firewall
+### Opening the firewall
 
 If you are using a firewall app to secure your server (You should be) you will need to open port 9090 to TCP traffic. You can do this with UFW with the following command.
 ```
@@ -201,6 +200,8 @@ If the status comes back 'active' then we are good to enable the service.
 sudo systemctl enable grafana-server
 ```
 
+### Opening the Firewall
+
 From here we should be able to now see our Grafana instance available at http://localhost:3000. If the server/website is not available you may need to open port 3000 on your Firewall to TCP traffic.
 ```
 sudo ufw allow 3000
@@ -211,6 +212,8 @@ The default user should be admin/admin, you should update this as soon as you ge
 ---
 
 ## Installing Node Exporter
+
+Node Exporter is one of the many premande exporters available for Prometheus. Node Exporter is a hardware and OS metrics tool for Linux, that uses 'collectors' to pull metrics from it's host machine and then make them available for a scrapper to come along and pull.
 
 ### create folder for exporter apps
 ```
