@@ -195,7 +195,7 @@ sudo systemctl start grafana-server
 sudo systemctl status grafana-server
 ```
 
-If the status comes back 'active' then we are good to enable the service.
+If the status comes back <span style="color:green">'active'</span> then we are good to enable the service.
 ```
 sudo systemctl enable grafana-server
 ```
@@ -213,7 +213,7 @@ The default user should be admin/admin, you should update this as soon as you ge
 
 ## Installing Node Exporter
 
-Node Exporter is one of the many premande exporters available for Prometheus. Node Exporter is a hardware and OS metrics tool for Linux, that uses 'collectors' to pull metrics from it's host machine and then make them available for a scrapper to come along and pull.
+[Node Exporter](https://github.com/prometheus/node_exporter) is one of the many premade exporters available for Prometheus. Node Exporter is a hardware and OS metrics tool for Linux, that uses 'collectors' to pull metrics from it's host machine and then make them available for a scrapper to come along and pull. Node Exporter will typically be installed on a host machine that you would want to monitor, we'll be installing it on the same machine we installed Prometheus on in this example. Installing Node Exporter on a remote machine will be covered in a future article.
 
 ### create folder for exporter apps
 ```
