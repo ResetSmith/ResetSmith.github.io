@@ -1,6 +1,6 @@
 ---
 title: "Installing Node Exporter"
-date: 2021-08-19T10:03:55-07:00
+date: 2021-10-06
 hero: bitnami_node_exporter.png
 author:
   name: Reset_Smith
@@ -12,7 +12,9 @@ menu:
     parent: monitoring
     weight: 60
 ---
+---
 
+Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally
 ### create folder for exporter apps
 ```
 sudo mkdir /usr/local/bin/metrics
@@ -58,4 +60,10 @@ sudo systemctl enable node_exporter.service
 ### open firewall on server
 ```
 sudo ufw allow from $PROMETHEUS_SERVER proto tcp to any port 9100
+```
+
+## Add target in Prometheus
+```
+    - targets:
+      - https://$TARGET_URL
 ```
