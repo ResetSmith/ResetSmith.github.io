@@ -11,6 +11,7 @@ menu:
     identifier: monitoring-node_exporter
     parent: monitoring
     weight: 60
+draft: true
 ---
 ---
 

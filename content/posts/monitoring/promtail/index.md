@@ -11,6 +11,7 @@ menu:
     identifier: monitoring-promtail
     parent: monitoring
     weight: 50
+draft: true
 ---
 
 Promtail is an app for transferring logs from one server to another. For our use we are transferring logs from our many different VPS to our centralized Loki server.
