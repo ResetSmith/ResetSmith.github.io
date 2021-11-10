@@ -14,7 +14,7 @@ menu:
 ---
 ---
 
-Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally
+Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally with a few extra steps.
 ### create folder for exporter apps
 ```
 sudo mkdir /usr/local/bin/metrics

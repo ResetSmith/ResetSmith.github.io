@@ -308,4 +308,11 @@ scrape_configs:
       - targets: ['localhost:9100']
 ```
 
-Now we can log back into the Grafana website, and import a dashboard. To start with we should import '#1860 Node Exporter Full', we just need the number 1860. We need to add Node Exporter as our source and then we should be ready to rock.
+Now we can log back into our Grafana server at http://localhost:3000 and then add our Node Exporter as a data source.
+-  From the sidebar click on the + icon
+-  in 'settings' go to 'data sources'
+-  select 'Add data source'
+-  select 'Node Exporter'
+-  set the URL to the URL of prometheus localhost:9090
+-  Save & Test
+-  add dashboard - 1860
