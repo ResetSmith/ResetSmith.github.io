@@ -300,31 +300,6 @@ at <a href=https://casat.org title=CASAT target=_blank rel=noopener>CASAT</a>
 <div class=container>
 <div class=row id=recent-post-cards>
 <div class="col-lg-4 col-md-6 pt-2 post-card">
-<a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter" class=post-card-link>
-<div class=card>
-<div class=card-head>
-<img class=card-img-top src=/images/default-hero.jpg alt="Card image cap">
-</div>
-<div class=card-body>
-<h5 class=card-title>Installing Node Exporter</h5>
-<p class="card-text post-summary"> Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally with a few extra steps.
-create folder for exporter apps sudo mkdir /usr/local/bin/metrics
-sudo mkdir /etc/metrics
-sudo useradd -rs /bin/false exporter
-sudo chmod -R 777 /usr/local/bin/metrics
-sudo chmod -R 777 /etc/metrics
-sudo chown -R exporter:exporter /usr/local/bin/metrics
-sudo chown -R exporter:exporter /etc/metrics
-Install node_exporter curl -O -L https://github.</p>
-</div>
-<div class=card-footer>
-<span class=float-left>October 6, 2021</span>
-<a href=/posts/monitoring/node_exporter/ title=Read class="float-right btn btn-outline-info btn-sm">Read</a>
-</div>
-</div>
-</a>
-</div>
-<div class="col-lg-4 col-md-6 pt-2 post-card">
 <a href=/posts/monitoring/prom_install/ title="Installing Prometheus" class=post-card-link>
 <div class=card>
 <div class=card-head>
@@ -338,35 +313,6 @@ Prometheus is often paired with the open-source visualization software Grafana w
 <div class=card-footer>
 <span class=float-left>October 4, 2021</span>
 <a href=/posts/monitoring/prom_install/ title=Read class="float-right btn btn-outline-info btn-sm">Read</a>
-</div>
-</div>
-</a>
-</div>
-<div class="col-lg-4 col-md-6 pt-2 post-card">
-<a href=/posts/monitoring/promtail/ title="Installing PromTail" class=post-card-link>
-<div class=card>
-<div class=card-head>
-<img class=card-img-top src=/posts/monitoring/promtail/development2.jpg alt="Card image cap">
-</div>
-<div class=card-body>
-<h5 class=card-title>Installing PromTail</h5>
-<p class="card-text post-summary"> Promtail is an app for transferring logs from one server to another. For our use we are transferring logs from our many different VPS to our centralized Loki server.
-Installing Promtail Begin by downloading the promtail app and installing it
-curl -O -L https://github.com/grafana/loki/releases/download/v2.3.0/promtail-linux-amd64.zip
-sudo apt install unzip
-unzip promtail-linux-amd64.zip
-sudo mv promtail-linux-amd64 /usr/local/bin/promtail
-make conf file Make a configuration file for Promtail
-sudo vim /etc/metrics/promtail.yml
-server:
-http_listen_port: 9080
-grpc_listen_port: 0
-positions:
-filename: /etc/metrics/positions.</p>
-</div>
-<div class=card-footer>
-<span class=float-left>August 17, 2021</span>
-<a href=/posts/monitoring/promtail/ title=Read class="float-right btn btn-outline-info btn-sm">Read</a>
 </div>
 </div>
 </a>
@@ -428,6 +374,44 @@ Copying the data This should be done on the server you want to copy.</p>
 <div class=card-footer>
 <span class=float-left>April 5, 2021</span>
 <a href=/posts/wordpress/migration/ title=Read class="float-right btn btn-outline-info btn-sm">Read</a>
+</div>
+</div>
+</a>
+</div>
+<div class="col-lg-4 col-md-6 pt-2 post-card">
+<a href=/posts/wordpress/new_lamp/ title="Setting up a LAMP server for WordPress" class=post-card-link>
+<div class=card>
+<div class=card-head>
+<img class=card-img-top src=/posts/wordpress/new_lamp/post.jpg alt="Card image cap">
+</div>
+<div class=card-body>
+<h5 class=card-title>Setting up a LAMP server for WordPress</h5>
+<p class="card-text post-summary"> This tutorial will walkthrough the process of installing Apache, MySql, and PHP on an Ubuntu 20.04 DigitalOcean Droplet. The server created here will eventually host a WordPress website, I will indicate when settings are specific to WordPress and you can alternate from there if you are doing something different. These directions are for DigitalOcean but should be similar for most VPS providers. Before starting this process you should obtain an Ubuntu 20.</p>
+</div>
+<div class=card-footer>
+<span class=float-left>April 4, 2021</span>
+<a href=/posts/wordpress/new_lamp/ title=Read class="float-right btn btn-outline-info btn-sm">Read</a>
+</div>
+</div>
+</a>
+</div>
+<div class="col-lg-4 col-md-6 pt-2 post-card">
+<a href=/search/ title="অনুসন্ধানের ফলাফল" class=post-card-link>
+<div class=card>
+<div class=card-head>
+<img class=card-img-top src=/images/default-hero.jpg alt="Card image cap">
+</div>
+<div class=card-body>
+<h5 class=card-title>অনুসন্ধানের ফলাফল</h5>
+<p class="card-text post-summary"> This file exists solely to respond to /search URL with the related search layout template.
+No content shown here is rendered, all content is based in the template layouts/page/search.html
+Setting a very low sitemap priority will tell search engines this is not important content.
+This implementation uses Fusejs, jquery and mark.js
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&ldquo;HTML&rdquo;, &ldquo;JSON&rdquo;] ```</p>
+</div>
+<div class=card-footer>
+<span class=float-left>June 8, 2010</span>
+<a href=/search/ title=Read class="float-right btn btn-outline-info btn-sm">Read</a>
 </div>
 </div>
 </a>

@@ -66,8 +66,6 @@ Reset_Smith's Blog</a>
 <i class="fas fa-plus-circle"></i><a href=/posts/monitoring/>Monitoring</a>
 <ul>
 <li><a href=/posts/monitoring/prom_install/ title="Installing Prometheus">Installing Prometheus</a></li>
-<li><a href=/posts/monitoring/promtail/ title="Installing Promtail">Installing Promtail</a></li>
-<li><a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter">Installing Node Exporter</a></li>
 </ul>
 </li>
 </div>
@@ -79,31 +77,6 @@ Reset_Smith's Blog</a>
 <section class=content-section id=content-section>
 <div class="content container-fluid" id=content>
 <div class="container-fluid post-card-holder" id=post-card-holder>
-<div class=post-card>
-<a href=/posts/monitoring/node_exporter/ class=post-card-link>
-<div class=card>
-<div class=card-head>
-<img class=card-img-top src=/images/default-hero.jpg alt="Hero Image">
-</div>
-<div class=card-body>
-<h5 class=card-title>Installing Node Exporter</h5>
-<p class="card-text post-summary">Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally with a few extra steps.
-create folder for exporter apps sudo mkdir /usr/local/bin/metrics
-sudo mkdir /etc/metrics
-sudo useradd -rs /bin/false exporter
-sudo chmod -R 777 /usr/local/bin/metrics
-sudo chmod -R 777 /etc/metrics
-sudo chown -R exporter:exporter /usr/local/bin/metrics
-sudo chown -R exporter:exporter /etc/metrics
-Install node_exporter curl -O -L https://github.</p>
-</div>
-<div class=card-footer>
-<span class=float-left>October 6, 2021</span>
-<a href=/posts/monitoring/node_exporter/ class="float-right btn btn-outline-info btn-sm">Read</a>
-</div>
-</div>
-</a>
-</div>
 <div class=post-card>
 <a href=/posts/monitoring/prom_install/ class=post-card-link>
 <div class=card>
@@ -118,35 +91,6 @@ Prometheus is often paired with the open-source visualization software Grafana w
 <div class=card-footer>
 <span class=float-left>October 4, 2021</span>
 <a href=/posts/monitoring/prom_install/ class="float-right btn btn-outline-info btn-sm">Read</a>
-</div>
-</div>
-</a>
-</div>
-<div class=post-card>
-<a href=/posts/monitoring/promtail/ class=post-card-link>
-<div class=card>
-<div class=card-head>
-<img class=card-img-top src=/posts/monitoring/promtail/development2.jpg alt="Hero Image">
-</div>
-<div class=card-body>
-<h5 class=card-title>Installing PromTail</h5>
-<p class="card-text post-summary">Promtail is an app for transferring logs from one server to another. For our use we are transferring logs from our many different VPS to our centralized Loki server.
-Installing Promtail Begin by downloading the promtail app and installing it
-curl -O -L https://github.com/grafana/loki/releases/download/v2.3.0/promtail-linux-amd64.zip
-sudo apt install unzip
-unzip promtail-linux-amd64.zip
-sudo mv promtail-linux-amd64 /usr/local/bin/promtail
-make conf file Make a configuration file for Promtail
-sudo vim /etc/metrics/promtail.yml
-server:
-http_listen_port: 9080
-grpc_listen_port: 0
-positions:
-filename: /etc/metrics/positions.</p>
-</div>
-<div class=card-footer>
-<span class=float-left>August 17, 2021</span>
-<a href=/posts/monitoring/promtail/ class="float-right btn btn-outline-info btn-sm">Read</a>
 </div>
 </div>
 </a>
