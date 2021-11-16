@@ -1,6 +1,6 @@
 ---
 title: "Installing Prometheus"
-date: 2021-10-04
+date: 2021-11-05
 hero: data_security_15.jpg
 author:
   name: Reset_Smith

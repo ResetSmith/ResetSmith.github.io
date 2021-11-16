@@ -1,6 +1,6 @@
 ---
 title: "Installing Node Exporter"
-date: 2021-10-06
+date: 2021-11-09
 hero: 66260.jpg
 author:
   name: Reset_Smith
