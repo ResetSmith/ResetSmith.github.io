@@ -1,9 +1,106 @@
-<!doctype html><html><head><title>Installing Node Exporter</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=/css/bootstrap.min.css><link rel=stylesheet href=/css/layouts/main.css><link rel=stylesheet href=/css/navigators/navbar.css><link rel=stylesheet href=/css/plyr.css><link rel=stylesheet href=/css/flag-icon.min.css><link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css><meta property="og:title" content="Installing Node Exporter"><meta property="og:description" content="Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally with a few extra steps.
-These directions go through the process I use for installing Node Exporter on remote virtual private servers running Ubuntu 20.04. To begin we&rsquo;ll assume you have access to a remote machine/VPS through SSH or other &lsquo;terminal&rsquo; access with &lsquo;sudo&rsquo; permissions."><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/posts/monitoring/node_exporter/"><meta property="article:published_time" content="2021-11-09T00:00:00+00:00"><meta property="article:modified_time" content="2021-11-09T00:00:00+00:00"><meta name=description content="Installing Node Exporter"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/single.css><link rel=stylesheet href=/css/navigators/sidebar.css><link rel=stylesheet href=/css/style.css></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
-<span class=navbar-toggler-icon></span></button>
-<a class=navbar-brand href=/>Reset_Smith's Blog</a>
+<!doctype html><html>
+<head>
+<title>Installing Node Exporter</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta http-equiv=x-ua-compatible content="ie=edge">
+<link rel=stylesheet href=/css/bootstrap.min.css>
+<link rel=stylesheet href=/css/layouts/main.css>
+<link rel=stylesheet href=/css/navigators/navbar.css>
+<link rel=stylesheet href=/css/plyr.css>
+<link rel=stylesheet href=/css/flag-icon.min.css>
+<link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css>
+<meta property="og:title" content="Installing Node Exporter">
+<meta property="og:description" content="Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally with a few extra steps.
+These directions go through the process I use for installing Node Exporter on remote virtual private servers running Ubuntu 20.04. To begin we&rsquo;ll assume you have access to a remote machine/VPS through SSH or other &lsquo;terminal&rsquo; access with &lsquo;sudo&rsquo; permissions.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://resettech.net/posts/monitoring/node_exporter/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-11-09T00:00:00+00:00">
+<meta property="article:modified_time" content="2021-11-09T00:00:00+00:00">
+<meta name=description content="Installing Node Exporter">
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css>
+<link rel=stylesheet href=/css/layouts/single.css>
+<link rel=stylesheet href=/css/navigators/sidebar.css>
+<link rel=stylesheet href=/css/style.css>
+</head>
+<body data-spy=scroll data-target=#TableOfContents data-offset=80>
+<div class="container-fluid bg-dimmed wrapper">
+<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
+<div class=container>
+<button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
+<span class=navbar-toggler-icon></span>
+</button>
+<a class=navbar-brand href=/>
+Reset_Smith's Blog</a>
 <button class="navbar-toggler navbar-light" id=toc-toggler type=button onclick=toggleTOC()>
-<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/posts data-filter=all>Posts</a></li><div class=subtree><li><i class="fas fa-plus-circle"></i><a href=/posts/server_mgmt/>Server Management</a><ul><li><a href=/posts/server_mgmt/htpasswd/ title="Basic Auth with Apache">Basic Auth with Apache</a></li><li><a href=/posts/server_mgmt/add_ssl/ title="Enabling SSL">Enabling SSL</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/posts/wordpress/>WordPress</a><ul><li><a href=/posts/wordpress/new_lamp/ title="Deploying a LAMP server">Deploying a LAMP server</a></li><li><a href=/posts/wordpress/migration/ title="WordPress Migrations">WordPress Migrations</a></li></ul></li><li><a href=/posts/hugo/ title=Hugo>Hugo</a></li><li><i class="fas fa-minus-circle"></i><a class=active href=/posts/monitoring/>Monitoring</a><ul class=active><li><a href=/posts/monitoring/prom_install/ title="Installing Prometheus">Installing Prometheus</a></li><li><a class=active href=/posts/monitoring/node_exporter/ title="Installing Node Exporter">Installing Node Exporter</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class=content><div class="container p-0 read-area"><div class="hero-area col-sm-12" id=hero-area style=background-image:url(https://resettech.net/posts/monitoring/node_exporter/3515462.jpg)></div><div class=page-content><div class="author-profile ml-auto align-self-lg-center"><img class=rounded-circle src=/images/authors/reset_smith_hua4f6218794f907357bf1ed85aa384e41_361770_120x120_fit_q75_box.jpg alt="Author Image"><h5 class=author-name>Reset_Smith</h5><p>November 9, 2021</p></div><div class=title><h1>Installing Node Exporter</h1></div><div class=post-content id=post-content><hr><p>Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally with a few extra steps.</p><p>These directions go through the process I use for installing Node Exporter on remote virtual private servers running Ubuntu 20.04. To begin we&rsquo;ll assume you have access to a remote machine/VPS through SSH or other &lsquo;terminal&rsquo; access with &lsquo;sudo&rsquo; permissions.</p><h3 id=create-a-system-user-account>Create a system user account</h3><p>Like we did previously on our Prometheus server we&rsquo;ll need to first create a system user account to run the Node Exporter app. These commands will create the &lsquo;exporter&rsquo; system user, make some necessary folder, and then update the permissions for the new folders to give the exporter user access.</p><pre><code>sudo useradd -rs /bin/false exporter
+<span class=navbar-toggler-icon></span>
+</button>
+<div class="collapse navbar-collapse lang-selector" id=top-nav-items>
+<ul class="navbar-nav ml-auto">
+</ul>
+</div>
+</div>
+</nav>
+<section class=sidebar-section id=sidebar-section>
+<div class=sidebar-holder>
+<div class=sidebar id=sidebar>
+<form class=mx-auto method=get action=/search>
+<input type=text name=keyword placeholder=Search data-search id=search-box>
+</form>
+<div class=sidebar-tree>
+<ul class=tree id=tree>
+<li id=list-heading><a href=/posts data-filter=all>Posts</a></li>
+<div class=subtree>
+<li>
+<i class="fas fa-plus-circle"></i><a href=/posts/server_mgmt/>Server Management</a>
+<ul>
+<li><a href=/posts/server_mgmt/htpasswd/ title="Basic Auth with Apache">Basic Auth with Apache</a></li>
+<li><a href=/posts/server_mgmt/add_ssl/ title="Enabling SSL">Enabling SSL</a></li>
+</ul>
+</li>
+<li>
+<i class="fas fa-plus-circle"></i><a href=/posts/wordpress/>WordPress</a>
+<ul>
+<li><a href=/posts/wordpress/new_lamp/ title="Deploying a LAMP server">Deploying a LAMP server</a></li>
+<li><a href=/posts/wordpress/migration/ title="WordPress Migrations">WordPress Migrations</a></li>
+</ul>
+</li>
+<li><a href=/posts/hugo/ title=Hugo>Hugo</a></li>
+<li>
+<i class="fas fa-minus-circle"></i><a class=active href=/posts/monitoring/>Monitoring</a>
+<ul class=active>
+<li><a href=/posts/monitoring/prom_install/ title="Installing Prometheus">Installing Prometheus</a></li>
+<li><a class=active href=/posts/monitoring/node_exporter/ title="Installing Node Exporter">Installing Node Exporter</a></li>
+</ul>
+</li>
+</div>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class=content-section id=content-section>
+<div class=content>
+<div class="container p-0 read-area">
+<div class="hero-area col-sm-12" id=hero-area style=background-image:url(https://resettech.net/posts/monitoring/node_exporter/3040061.jpg)>
+</div>
+<div class=page-content>
+<div class="author-profile ml-auto align-self-lg-center">
+<img class=rounded-circle src=/images/authors/reset_smith_hua4f6218794f907357bf1ed85aa384e41_361770_120x120_fit_q75_box.jpg alt="Author Image">
+<h5 class=author-name>Reset_Smith</h5>
+<p>November 9, 2021</p>
+</div>
+<div class=title>
+<h1>Installing Node Exporter</h1>
+</div>
+<div class=post-content id=post-content>
+<hr>
+<p>Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally with a few extra steps.</p>
+<p>These directions go through the process I use for installing Node Exporter on remote virtual private servers running Ubuntu 20.04. To begin we&rsquo;ll assume you have access to a remote machine/VPS through SSH or other &lsquo;terminal&rsquo; access with &lsquo;sudo&rsquo; permissions.</p>
+<h3 id=create-a-system-user-account>Create a system user account</h3>
+<p>Like we did previously on our Prometheus server we&rsquo;ll need to first create a system user account to run the Node Exporter app. These commands will create the &lsquo;exporter&rsquo; system user, make some necessary folder, and then update the permissions for the new folders to give the exporter user access.</p>
+<pre tabindex=0><code>sudo useradd -rs /bin/false exporter
 
 sudo mkdir /usr/local/bin/metrics
 sudo mkdir /etc/metrics
@@ -14,11 +111,21 @@ sudo chown -R exporter:exporter /etc/metrics
 sudo chmod -R 777 /usr/local/bin/metrics
 sudo chmod -R 777 /etc/metrics
 
-</code></pre><h3 id=download-node-exporter>Download Node Exporter</h3><p>Once we have our user and folders in place we can download the Node Exporter app. Typically I will change directories to the /tmp folder to download the tarball and move to the correct location, but I will leave that to the user to decide where to run these commands from. Regardless we&rsquo;ll first download the Node Exporter tarball file, then uncompress the file, and then move the file to it&rsquo;s working directory.</p><div class="alert alert-info"><strong>Current Releases</strong><br>When writing this article Node Exporter v1.2.2 was the most recent release. However you should check the Node Exporter releases page for the most recent release. You can find the list on the <a href=https://github.com/prometheus/node_exporter/releases>Node Exporter github page.</a></div><pre><code>curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
+</code></pre><h3 id=download-node-exporter>Download Node Exporter</h3>
+<p>Once we have our user and folders in place we can download the Node Exporter app. Typically I will change directories to the /tmp folder to download the tarball and move to the correct location, but I will leave that to the user to decide where to run these commands from. Regardless we&rsquo;ll first download the Node Exporter tarball file, then uncompress the file, and then move the file to it&rsquo;s working directory.</p>
+<div class="alert alert-info">
+<strong>Current Releases</strong><br>
+When writing this article Node Exporter v1.2.2 was the most recent release. However you should check the Node Exporter releases page for the most recent release. You can find the list on the <a href=https://github.com/prometheus/node_exporter/releases>Node Exporter github page.</a>
+</div>
+<pre tabindex=0><code>curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
 tar xzvf node_exporter-*.*-amd64.tar.gz
 sudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exporter
-</code></pre><h3 id=create-a-service>Create a service</h3><p>Now that we have Node Exporter copied to its working directory we can create the service that will run it.</p><p>First let&rsquo;s create the service file itself.</p><pre><code>sudo touch /etc/systemd/system/node_exporter.service
-</code></pre><p>Next we need to fill in the content for the service file. I use vim, but you can use whichever text editor you wish. Fill in the service file with the content below.</p><pre><code>[Unit]
+</code></pre><h3 id=create-a-service>Create a service</h3>
+<p>Now that we have Node Exporter copied to its working directory we can create the service that will run it.</p>
+<p>First let&rsquo;s create the service file itself.</p>
+<pre tabindex=0><code>sudo touch /etc/systemd/system/node_exporter.service
+</code></pre><p>Next we need to fill in the content for the service file. I use vim, but you can use whichever text editor you wish. Fill in the service file with the content below.</p>
+<pre tabindex=0><code>[Unit]
 Description=Node exporter for Prometheus
 After=network.target
 
@@ -29,15 +136,25 @@ ExecStart=/usr/local/bin/node_exporter/node_exporter
 
 [Install]
 WantedBy=multi-user.target
-</code></pre><p>Now that we have the service created we should test run it before enabling it. Run the <code>systemctl start</code> command to get the service running, and then check for any errors using the <code>systemctl status</code> command.</p><pre><code>sudo systemctl start node_exporter.service
+</code></pre><p>Now that we have the service created we should test run it before enabling it. Run the <code>systemctl start</code> command to get the service running, and then check for any errors using the <code>systemctl status</code> command.</p>
+<pre tabindex=0><code>sudo systemctl start node_exporter.service
 sudo systemctl status node_exporter.service
-</code></pre><p>If the status comes back as &lsquo;active&rsquo; you are ok to move forward enabling the service. Otherwise if you receive any errors during the status check you need to fix them before moving on.</p><pre><code>sudo systemctl enable node_exporter.service
-</code></pre><h3 id=open-firewall-to-allow-prometheus-traffic>Open firewall to allow Prometheus traffic</h3><p>Prometheus checks on Node Exporters by adding them to your list of &lsquo;targets&rsquo;. Prometheus sends requests to the addresses listed in its target list and then the corresponding node replies with the information. So in order to complete this handshake we need to open the firewall on our target server (the server we are installing Node Exporter on now). In this example I&rsquo;m using the UFW firewall baked into Ubuntu. I use the following command to open the firewall to allow specifically traffic coming from my Prometheus server to check the port that Node Exporter is broadcasting on, all other requests should be blocked. In this example replace the <code>$PROMETHEUS_SERVER</code> variable with the IP address of your Prometheus server.</p><pre><code>sudo ufw allow from $PROMETHEUS_SERVER proto tcp to any port 9100
-</code></pre><hr><h3 id=add-target-in-prometheus>Add target in Prometheus</h3><p><em>To be done on the Prometheus server</em></p><p>The last thing we must do is add the server we just installed Node Exporter on to our list of Targets for Prometheus. Connect to your Prometheus server and then open up your prometheus.yml file. <em>If you followed my [Promtheus Installation article] it will be located in /etc/prometheus/prometheus.yml.</em></p><p>Within the prometheus.yml file scroll down to the &lsquo;scrape_configs&rsquo; section. Within that section there should be a sub-section for <code>job_name: 'node_exporter'</code>. If you followed my previous article it will look something like this</p><pre><code>  - job_name: 'node_exporter'
+</code></pre><p>If the status comes back as &lsquo;active&rsquo; you are ok to move forward enabling the service. Otherwise if you receive any errors during the status check you need to fix them before moving on.</p>
+<pre tabindex=0><code>sudo systemctl enable node_exporter.service
+</code></pre><h3 id=open-firewall-to-allow-prometheus-traffic>Open firewall to allow Prometheus traffic</h3>
+<p>Prometheus checks on Node Exporters by adding them to your list of &lsquo;targets&rsquo;. Prometheus sends requests to the addresses listed in its target list and then the corresponding node replies with the information. So in order to complete this handshake we need to open the firewall on our target server (the server we are installing Node Exporter on now). In this example I&rsquo;m using the UFW firewall baked into Ubuntu. I use the following command to open the firewall to allow specifically traffic coming from my Prometheus server to check the port that Node Exporter is broadcasting on, all other requests should be blocked. In this example replace the <code>$PROMETHEUS_SERVER</code> variable with the IP address of your Prometheus server.</p>
+<pre tabindex=0><code>sudo ufw allow from $PROMETHEUS_SERVER proto tcp to any port 9100
+</code></pre><hr>
+<h3 id=add-target-in-prometheus>Add target in Prometheus</h3>
+<p><em>To be done on the Prometheus server</em></p>
+<p>The last thing we must do is add the server we just installed Node Exporter on to our list of Targets for Prometheus. Connect to your Prometheus server and then open up your prometheus.yml file. <em>If you followed my [Promtheus Installation article] it will be located in /etc/prometheus/prometheus.yml.</em></p>
+<p>Within the prometheus.yml file scroll down to the &lsquo;scrape_configs&rsquo; section. Within that section there should be a sub-section for <code>job_name: 'node_exporter'</code>. If you followed my previous article it will look something like this</p>
+<pre tabindex=0><code>  - job_name: 'node_exporter'
     scrape_interval: 5s
     static_configs:
       - targets: ['localhost:9100']
-</code></pre><p>We&rsquo;re going to modify the - targets section just a bit to allow for better readability. Instead of listing the targets within the brackets we&rsquo;re going to make a list. Replace what you currently have for the &lsquo;node_exporter&rsquo; job with the code below, be sure to replace <code>$NEW_TARGET</code> with the URL/IP of your new target server.</p><pre><code>  - job_name: 'node_exporter'
+</code></pre><p>We&rsquo;re going to modify the - targets section just a bit to allow for better readability. Instead of listing the targets within the brackets we&rsquo;re going to make a list. Replace what you currently have for the &lsquo;node_exporter&rsquo; job with the code below, be sure to replace <code>$NEW_TARGET</code> with the URL/IP of your new target server.</p>
+<pre tabindex=0><code>  - job_name: 'node_exporter'
     scrape_interval: 5s
     static_configs:
       -targets:
@@ -45,7 +162,98 @@ sudo systemctl status node_exporter.service
         # open port 9100 on target firewall
         - localhost:9100
         - $NEWTARGET:9100
-</code></pre><p>Once that&rsquo;s done save your changes, and then restart the Prometheus server to start collecting metrics from Node Exporter. You can use the following command to restart the Prometheus service</p><pre><code>sudo systemctl restart Prometheus.service
-</code></pre></div><div class="row pl-3 pr-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/ResetSmith/ResetSmith.github.io/edit/main/content/posts/monitoring/node_exporter/index.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>Improve this page</a></div></div><hr><div class="row next-prev-navigator"><div class="col-md-6 previous-article"><a href=/posts/monitoring/prom_install/ title="Installing Prometheus" class="btn btn-outline-info"><div><i class="fas fa-chevron-circle-left"></i>Prev</div><div class=next-prev-text>Installing Prometheus</div></a></div></div><hr></div></div></div><a id=scroll-to-top class=btn><i class="fas fa-chevron-circle-up"></i></a></section><section class=toc-section id=toc-section><div class=toc-holder><h5 class="text-center pl-3">Table of Contents</h5><hr><div class=toc><nav id=TableOfContents><ul><li></li></ul></nav></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><ul><li><span>Email:</span> <span>johndoe@example.com</span></li><li><span>Phone:</span> <span>+0123456789</span></li></ul></div><div class="col-md-4 col-sm-12"><h5>Images provided by:</h5><ul><li><a href=https://www.freepik.com>www.Freepik.com</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png alt="Toha Theme Logo">
-Toha</a></div><div class="col-md-4 text-center">© 2021 Copyright.</div><div class="col-md-4 text-right"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script><script type=text/javascript src=/js/popper.min.js></script><script type=text/javascript src=/js/bootstrap.min.js></script><script type=text/javascript src=/js/navbar.js></script><script type=text/javascript src=/js/plyr.js></script><script type=text/javascript src=/js/main.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script><script src=/js/single.js></script><script>hljs.initHighlightingOnLoad();</script></body></html>
+</code></pre><p>Once that&rsquo;s done save your changes, and then restart the Prometheus server to start collecting metrics from Node Exporter. You can use the following command to restart the Prometheus service</p>
+<pre tabindex=0><code>sudo systemctl restart Prometheus.service
+</code></pre>
+</div>
+<div class="row pl-3 pr-3">
+<div class="col-md-6 share-buttons">
+</div>
+<div class="col-md-6 btn-improve-page">
+<a href=https://github.com/ResetSmith/ResetSmith.github.io/edit/main/content/posts/monitoring/node_exporter/index.md title="Improve this page" target=_blank rel=noopener>
+<i class="fas fa-code-branch"></i>
+Improve this page
+</a>
+</div>
+</div>
+<hr>
+<div class="row next-prev-navigator">
+<div class="col-md-6 previous-article">
+<a href=/posts/monitoring/prom_install/ title="Installing Prometheus" class="btn btn-outline-info">
+<div><i class="fas fa-chevron-circle-left"></i> Prev</div>
+<div class=next-prev-text>Installing Prometheus</div>
+</a>
+</div>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<a id=scroll-to-top class=btn><i class="fas fa-chevron-circle-up"></i></a>
+</section>
+<section class=toc-section id=toc-section>
+<div class=toc-holder>
+<h5 class="text-center pl-3">Table of Contents</h5>
+<hr>
+<div class=toc>
+<nav id=TableOfContents>
+<ul>
+<li></li>
+</ul>
+</nav>
+</div>
+</div>
+</section>
+</div>
+<footer class="container-fluid text-center align-content-center footer pb-2">
+<div class="container pt-5">
+<div class="row text-left">
+<div class="col-md-4 col-sm-12">
+<h5>Navigation</h5>
+<ul>
+</ul>
+</div>
+<div class="col-md-4 col-sm-12">
+<h5>Contact me:</h5>
+<ul>
+<li><span>Email: </span> <span>johndoe@example.com</span></li>
+<li><span>Phone: </span> <span>+0123456789</span></li>
+</ul>
+</div>
+<div class="col-md-4 col-sm-12">
+<h5>Images provided by:</h5>
+<ul>
+<li><a href=https://www.freepik.com>www.Freepik.com</a></li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+<div class=container>
+<div class="row text-left">
+<div class=col-md-4>
+<a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener>
+<img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png alt="Toha Theme Logo">
+Toha
+</a>
+</div>
+<div class="col-md-4 text-center">© 2021 Copyright.</div>
+<div class="col-md-4 text-right">
+<a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18>
+</a>
+</div>
+</div>
+</div>
+</footer>
+<script type=text/javascript src=/js/jquery-3.4.1.min.js></script>
+<script type=text/javascript src=/js/popper.min.js></script>
+<script type=text/javascript src=/js/bootstrap.min.js></script>
+<script type=text/javascript src=/js/navbar.js></script>
+<script type=text/javascript src=/js/plyr.js></script>
+<script type=text/javascript src=/js/main.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script>
+<script src=/js/single.js></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
