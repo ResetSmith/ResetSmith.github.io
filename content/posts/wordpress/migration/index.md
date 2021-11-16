@@ -1,6 +1,6 @@
 ---
 title: "Migrating a WordPress website"
-date: 2021-04-05T10:03:55-07:00
+date: 2021-09-24
 hero: post.jpg
 author:
   name: Reset_Smith

@@ -1,7 +1,7 @@
 ---
 title: "Installing Blackbox"
-date: 2021-11-09
-hero: 66260.jpg
+date: 2021-11-16
+hero: Wavy_Tech-28_Single-07.jpg
 author:
   name: Reset_Smith
   # image: /images/authors/
