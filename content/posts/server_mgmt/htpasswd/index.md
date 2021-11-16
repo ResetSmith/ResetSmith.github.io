@@ -1,7 +1,7 @@
 ---
 title: "Setting up password authentication with Apache"
-date: 2021-04-13T10:03:55-07:00
-hero: lock.jpg
+date: 2021-07-23
+hero: 3567818.jpg
 author:
   name: Reset_Smith
   # image: /images/authors/
