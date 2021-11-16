@@ -1,7 +1,7 @@
 ---
 title: "Installing Node Exporter"
 date: 2021-10-06
-hero: bitnami_node_exporter.png
+hero: 66260.jpg
 author:
   name: Reset_Smith
   # image: /images/authors/
@@ -11,7 +11,7 @@ menu:
     identifier: monitoring-node_exporter
     parent: monitoring
     weight: 60
-draft: true
+draft: false
 ---
 ---
 
