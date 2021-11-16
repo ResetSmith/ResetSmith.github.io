@@ -10,7 +10,7 @@ menu:
     name: Installing Node Exporter
     identifier: monitoring-node_exporter
     parent: monitoring
-    weight: 60
+    weight: 20
 draft: false
 ---
 ---
