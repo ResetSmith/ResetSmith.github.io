@@ -13,8 +13,6 @@ menu:
     weight: 60
 ---
 
-# How we have been installing SSL certificates on our Apache servers
-
 ## Obtain certificate using Certbot
 
 Adapted from the [Certbot website](https://certbot.eff.org/lets-encrypt)
