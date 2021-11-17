@@ -1,7 +1,7 @@
 ---
 title: "Enabling SSL with Apache"
 date: 2021-09-14
-hero: 3198965.jpg
+hero: Safe-cuate.png
 author:
   name: Reset_Smith
   # image: /images/authors/
