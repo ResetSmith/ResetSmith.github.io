@@ -7,7 +7,7 @@ author:
   # image: /images/authors/
 menu:
   sidebar:
-    name: Prometheus: Node exporter
+    name: Prometheus Node exporter
     identifier: monitoring-node_exporter
     parent: monitoring
     weight: 20
