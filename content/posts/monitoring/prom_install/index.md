@@ -7,7 +7,7 @@ author:
   # image: /images/authors/
 menu:
   sidebar:
-    name: Prometheus Getting started
+    name: Getting started
     identifier: monitoring-prom_install
     parent: monitoring
     weight: 10

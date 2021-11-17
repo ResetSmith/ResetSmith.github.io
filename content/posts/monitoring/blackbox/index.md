@@ -7,7 +7,7 @@ author:
   # image: /images/authors/
 menu:
   sidebar:
-    name: Prometheus Blackbox exporter
+    name: Blackbox exporter
     identifier: monitoring-blackbox
     parent: monitoring
     weight: 30
