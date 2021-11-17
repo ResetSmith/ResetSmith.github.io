@@ -1,5 +1,5 @@
 ---
-title: "Installing Prometheus"
+title: "Prometheus: Getting started with Prometheus and Grafana"
 date: 2021-11-05
 hero: 5985256.jpg
 author:
@@ -7,8 +7,8 @@ author:
   # image: /images/authors/
 menu:
   sidebar:
-    name: Installing Prometheus
-    identifier: monitoring-prometheus
+    name: Prometheus: Getting started
+    identifier: monitoring-prom_install
     parent: monitoring
     weight: 10
 ---

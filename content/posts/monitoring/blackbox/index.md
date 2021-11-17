@@ -1,5 +1,5 @@
 ---
-title: "Installing Blackbox"
+title: "Prometheus: Installing the Blackbox exporter"
 date: 2021-11-16
 hero: 504_Error_Gateway_Timeout-rafiki.png
 author:
@@ -7,7 +7,7 @@ author:
   # image: /images/authors/
 menu:
   sidebar:
-    name: Installing the Blackbox exporter for Prometheus
+    name: Prometheus: Blackbox exporter
     identifier: monitoring-blackbox
     parent: monitoring
     weight: 30

@@ -1,5 +1,5 @@
 ---
-title: "Installing Node Exporter"
+title: "Prometheus: Installing the Node exporter"
 date: 2021-11-09
 hero: 5648291.jpg
 author:
@@ -7,7 +7,7 @@ author:
   # image: /images/authors/
 menu:
   sidebar:
-    name: Installing Node Exporter
+    name: Prometheus: Node exporter
     identifier: monitoring-node_exporter
     parent: monitoring
     weight: 20
