@@ -1,118 +1,14 @@
-<!doctype html><html>
-<head>
-<title>Installing Blackbox</title>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta http-equiv=x-ua-compatible content="ie=edge">
-<link rel=stylesheet href=/css/bootstrap.min.css>
-<link rel=stylesheet href=/css/layouts/main.css>
-<link rel=stylesheet href=/css/navigators/navbar.css>
-<link rel=stylesheet href=/css/plyr.css>
-<link rel=stylesheet href=/css/flag-icon.min.css>
-<link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet>
-<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css>
-<meta property="og:title" content="Installing Blackbox">
-<meta property="og:description" content="Blackbox exporter is a tool to probe remote targets over a variety of protocols. Or from the Blackbox exporter Github page:
+<!doctype html><html><head><title>Installing Blackbox</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=/css/bootstrap.min.css><link rel=stylesheet href=/css/layouts/main.css><link rel=stylesheet href=/css/navigators/navbar.css><link rel=stylesheet href=/css/plyr.css><link rel=stylesheet href=/css/flag-icon.min.css><link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css><meta property="og:title" content="Installing Blackbox"><meta property="og:description" content="Blackbox exporter is a tool to probe remote targets over a variety of protocols. Or from the Blackbox exporter Github page:
  The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP.
- In practice I use it to monitor connectivity to websites. Through the Blackbox exporter I can capture HTTPS response times, SSL certificate statuses, and some additional website metrics. Additionally using the Alertmanager tool it&rsquo;s possible to create alerts based on HTTPS response times, HTTPS status codes, or SSL certificate status.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://resettech.net/posts/monitoring/blackbox/"><meta property="article:section" content="posts">
-<meta property="article:published_time" content="2021-11-16T00:00:00+00:00">
-<meta property="article:modified_time" content="2021-11-16T00:00:00+00:00">
-<meta name=description content="Installing Blackbox">
-<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css>
-<link rel=stylesheet href=/css/layouts/single.css>
-<link rel=stylesheet href=/css/navigators/sidebar.css>
-<link rel=stylesheet href=/css/style.css>
-</head>
-<body data-spy=scroll data-target=#TableOfContents data-offset=80>
-<div class="container-fluid bg-dimmed wrapper">
-<nav class="navbar navbar-expand-xl top-navbar final-navbar shadow">
-<div class=container>
-<button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
-<span class=navbar-toggler-icon></span>
-</button>
-<a class=navbar-brand href=/>
-Reset_Smith's Blog</a>
+ In practice I use it to monitor connectivity to websites. Through the Blackbox exporter I can capture HTTPS response times, SSL certificate statuses, and some additional website metrics. Additionally using the Alertmanager tool it&rsquo;s possible to create alerts based on HTTPS response times, HTTPS status codes, or SSL certificate status."><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/posts/monitoring/blackbox/"><meta property="article:published_time" content="2021-11-16T00:00:00+00:00"><meta property="article:modified_time" content="2021-11-16T00:00:00+00:00"><meta name=description content="Installing Blackbox"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/single.css><link rel=stylesheet href=/css/navigators/sidebar.css><link rel=stylesheet href=/css/style.css></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
+<span class=navbar-toggler-icon></span></button>
+<a class=navbar-brand href=/>Reset_Smith's Blog</a>
 <button class="navbar-toggler navbar-light" id=toc-toggler type=button onclick=toggleTOC()>
-<span class=navbar-toggler-icon></span>
-</button>
-<div class="collapse navbar-collapse lang-selector" id=top-nav-items>
-<ul class="navbar-nav ml-auto">
-</ul>
-</div>
-</div>
-</nav>
-<section class=sidebar-section id=sidebar-section>
-<div class=sidebar-holder>
-<div class=sidebar id=sidebar>
-<form class=mx-auto method=get action=/search>
-<input type=text name=keyword placeholder=Search data-search id=search-box>
-</form>
-<div class=sidebar-tree>
-<ul class=tree id=tree>
-<li id=list-heading><a href=/posts data-filter=all>Posts</a></li>
-<div class=subtree>
-<li>
-<i class="fas fa-plus-circle"></i><a href=/posts/server_mgmt/>Server Management</a>
-<ul>
-<li><a href=/posts/server_mgmt/htpasswd/ title="Basic Auth with Apache">Basic Auth with Apache</a></li>
-<li><a href=/posts/server_mgmt/add_ssl/ title="Enabling SSL">Enabling SSL</a></li>
-</ul>
-</li>
-<li>
-<i class="fas fa-plus-circle"></i><a href=/posts/wordpress/>WordPress</a>
-<ul>
-<li><a href=/posts/wordpress/new_lamp/ title="Deploying a LAMP server">Deploying a LAMP server</a></li>
-<li><a href=/posts/wordpress/migration/ title="WordPress Migrations">WordPress Migrations</a></li>
-</ul>
-</li>
-<li><a href=/posts/hugo/ title=Hugo>Hugo</a></li>
-<li>
-<i class="fas fa-minus-circle"></i><a class=active href=/posts/monitoring/>Monitoring</a>
-<ul class=active>
-<li><a href=/posts/monitoring/prom_install/ title="Installing Prometheus">Installing Prometheus</a></li>
-<li><a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter">Installing Node Exporter</a></li>
-<li><a class=active href=/posts/monitoring/blackbox/ title="Installing the Blackbox exporter for Prometheus">Installing the Blackbox exporter for Prometheus</a></li>
-</ul>
-</li>
-</div>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section class=content-section id=content-section>
-<div class=content>
-<div class="container p-0 read-area">
-<div class="hero-area col-sm-12" id=hero-area style=background-image:url(https://resettech.net/images/default-hero.jpg)>
-</div>
-<div class=page-content>
-<div class="author-profile ml-auto align-self-lg-center">
-<img class=rounded-circle src=/images/authors/reset_smith_hua4f6218794f907357bf1ed85aa384e41_361770_120x120_fit_q75_box.jpg alt="Author Image">
-<h5 class=author-name>Reset_Smith</h5>
-<p>November 16, 2021</p>
-</div>
-<div class=title>
-<h1>Installing Blackbox</h1>
-</div>
-<div class=post-content id=post-content>
-<p>Blackbox exporter is a tool to probe remote targets over a variety of protocols. Or from the <a href=https://github.com/prometheus/blackbox_exporter>Blackbox exporter Github</a> page:</p>
-<blockquote>
-<p>The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP.</p>
-</blockquote>
-<p>In practice I use it to monitor connectivity to websites. Through the Blackbox exporter I can capture HTTPS response times, SSL certificate statuses, and some additional website metrics. Additionally using the Alertmanager tool it&rsquo;s possible to create alerts based on HTTPS response times, HTTPS status codes, or SSL certificate status.</p>
-<p>Blackbox exporter can be run from just about any remote machine. In the example we&rsquo;re working on in this article Blackbox exporter is using &lsquo;GET&rsquo; requests to pull get HTTP information from remote targets. For this example I am installing Blackbox exporter on the same machine as I have installed Prometheus previously, however it could also be installed on yet another VPS and still report back to the central Prometheus server. It&rsquo;s important to recognize that the results you receive from Blackbox exporter are going to be relative to where you install it. Again, in this example I am installing Blackbox on a DigitalOcean VPS (the Prometheus server) and using it monitor other DigitalOcean VPS (my other websites), so the results I get for load times, HTTPS responses, etc., may not necessarily reflect those of my end users who are not in a DigitalOcean data center.</p>
-<h2 id=download-blackbox-exporter>Download Blackbox Exporter</h2>
-<p>For this installation of Blackbox exporter I will not be creating a new user, instead we will be using the same &lsquo;exporter&rsquo; user we created previously. Otherwise, like before I&rsquo;ll leave it up to you on where do to run these commands from, but typically I like to do my downloads to the /tmp folder. Regardless of where you start, we&rsquo;ll first download the Blackbox exporter app, then uncompress it, and then move the app files to their working directory.</p>
-<pre tabindex=0><code>curl -O -L https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/posts data-filter=all>Posts</a></li><div class=subtree><li><i class="fas fa-plus-circle"></i><a href=/posts/server_mgmt/>Server Management</a><ul><li><a href=/posts/server_mgmt/htpasswd/ title="Basic Auth with Apache">Basic Auth with Apache</a></li><li><a href=/posts/server_mgmt/add_ssl/ title="Enabling SSL">Enabling SSL</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/posts/wordpress/>WordPress</a><ul><li><a href=/posts/wordpress/new_lamp/ title="Deploying a LAMP server">Deploying a LAMP server</a></li><li><a href=/posts/wordpress/migration/ title="WordPress Migrations">WordPress Migrations</a></li></ul></li><li><a href=/posts/hugo/ title=Hugo>Hugo</a></li><li><i class="fas fa-minus-circle"></i><a class=active href=/posts/monitoring/>Monitoring</a><ul class=active><li><a href=/posts/monitoring/prom_install/ title="Installing Prometheus">Installing Prometheus</a></li><li><a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter">Installing Node Exporter</a></li><li><a class=active href=/posts/monitoring/blackbox/ title="Installing the Blackbox exporter for Prometheus">Installing the Blackbox exporter for Prometheus</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class=content><div class="container p-0 read-area"><div class="hero-area col-sm-12" id=hero-area style=background-image:url(https://resettech.net/posts/monitoring/blackbox/504_Error_Gateway_Timeout-rafiki.png)></div><div class=page-content><div class="author-profile ml-auto align-self-lg-center"><img class=rounded-circle src=/images/authors/reset_smith_hua4f6218794f907357bf1ed85aa384e41_361770_120x120_fit_q75_box.jpg alt="Author Image"><h5 class=author-name>Reset_Smith</h5><p>November 16, 2021</p></div><div class=title><h1>Installing Blackbox</h1></div><div class=post-content id=post-content><p>Blackbox exporter is a tool to probe remote targets over a variety of protocols. Or from the <a href=https://github.com/prometheus/blackbox_exporter>Blackbox exporter Github</a> page:</p><blockquote><p>The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP.</p></blockquote><p>In practice I use it to monitor connectivity to websites. Through the Blackbox exporter I can capture HTTPS response times, SSL certificate statuses, and some additional website metrics. Additionally using the Alertmanager tool it&rsquo;s possible to create alerts based on HTTPS response times, HTTPS status codes, or SSL certificate status.</p><p>Blackbox exporter can be run from just about any remote machine. In the example we&rsquo;re working on in this article Blackbox exporter is using &lsquo;GET&rsquo; requests to pull get HTTP information from remote targets. For this example I am installing Blackbox exporter on the same machine as I have installed Prometheus previously, however it could also be installed on yet another VPS and still report back to the central Prometheus server. It&rsquo;s important to recognize that the results you receive from Blackbox exporter are going to be relative to where you install it. Again, in this example I am installing Blackbox on a DigitalOcean VPS (the Prometheus server) and using it monitor other DigitalOcean VPS (my other websites), so the results I get for load times, HTTPS responses, etc., may not necessarily reflect those of my end users who are not in a DigitalOcean data center.</p><h2 id=download-blackbox-exporter>Download Blackbox Exporter</h2><p>For this installation of Blackbox exporter I will not be creating a new user, instead we will be using the same &lsquo;exporter&rsquo; user we created previously. Otherwise, like before I&rsquo;ll leave it up to you on where do to run these commands from, but typically I like to do my downloads to the /tmp folder. Regardless of where you start, we&rsquo;ll first download the Blackbox exporter app, then uncompress it, and then move the app files to their working directory.</p><pre><code>curl -O -L https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
 tar xzf blackbox_exporter-*.*.linux-amd64.tar.gz
 sudo mv /blackbox_exporter /usr/local/bin/metrics/blackbox_exporter
-</code></pre><h2 id=make-configuration-file>Make configuration file</h2>
-<p>Next we need to create a configuration file for Blackbox exporter. Within the configuration file you can set the parameters for Blackbox that determine which protocols are used. In this example we will check our target websites every 5 seconds, using &lsquo;GET&rsquo; to pull HTTP statuses, including SSL status, response times, and current HTTP version. First create blackbox.yml</p>
-<pre tabindex=0><code>sudo touch /etc/blackbox/blackbox.yml
-</code></pre><p>Then fill in the .yml file with the content below</p>
-<pre tabindex=0><code>modules:
+</code></pre><h2 id=make-configuration-file>Make configuration file</h2><p>Next we need to create a configuration file for Blackbox exporter. Within the configuration file you can set the parameters for Blackbox that determine which protocols are used. In this example we will check our target websites every 5 seconds, using &lsquo;GET&rsquo; to pull HTTP statuses, including SSL status, response times, and current HTTP version. First create blackbox.yml</p><pre><code>sudo touch /etc/blackbox/blackbox.yml
+</code></pre><p>Then fill in the .yml file with the content below</p><pre><code>modules:
   http_prometheus:
      prober: http
      timeout: 5s
@@ -123,11 +19,8 @@ sudo mv /blackbox_exporter /usr/local/bin/metrics/blackbox_exporter
        fail_if_not_ssl: true
        tls_config:
          insecure_skip_verify: true
-</code></pre><h2 id=create-a-service>Create a service</h2>
-<p>Now we will create a service to run the Blackbox app and then &lsquo;enable&rsquo; it so it will run automatically on startup. First we create the service file</p>
-<pre tabindex=0><code>sudo touch /etc/systemd/system/blackbox_exporter.service
-</code></pre><p>Then we fill it in with the following</p>
-<pre tabindex=0><code>[Unit]
+</code></pre><h2 id=create-a-service>Create a service</h2><p>Now we will create a service to run the Blackbox app and then &lsquo;enable&rsquo; it so it will run automatically on startup. First we create the service file</p><pre><code>sudo touch /etc/systemd/system/blackbox_exporter.service
+</code></pre><p>Then we fill it in with the following</p><pre><code>[Unit]
 Description=Blackbox exporter for Prometheus
 Wants=network-online.target
 After=network-online.target
@@ -142,14 +35,10 @@ ExecStart=/usr/local/bin/metrics/blackbox/blackbox_exporter \
 
 [Install]
 WantedBy=multi-user.target
-</code></pre><p>From here we are ready to &lsquo;enable&rsquo; the service. But first we should start the service manually and then check our configuration for any errors using the following commands.</p>
-<pre tabindex=0><code>sudo systemctl start blackbox_exporter.service
+</code></pre><p>From here we are ready to &lsquo;enable&rsquo; the service. But first we should start the service manually and then check our configuration for any errors using the following commands.</p><pre><code>sudo systemctl start blackbox_exporter.service
 sudo systemctl status blackbox_exporter.service
-</code></pre><p>If the status returns &lsquo;OK&rsquo; then we should go ahead and enable the service</p>
-<pre tabindex=0><code>sudo systemctl enable blackbox_exporter.service
-</code></pre><h2 id=create-new-job-in-your-prometheus-configuration>Create new job in your Prometheus configuration</h2>
-<p>Now that we have Blackbox running, we need to configure Prometheus to pull the data from the Blackbox exporter. Below is an example job that you should copy and add to the end of your &lsquo;prometheus.yml&rsquo; configuration file we made previously. You can replace the example targets with the websites you wish to monitor. If you have installed Blackbox exporter on a different host than Prometheus, you would define the address for your Blackbox server at the bottom in the &lsquo;replacement:&rsquo; line.</p>
-<pre tabindex=0><code>  - job_name: 'blackbox'
+</code></pre><p>If the status returns &lsquo;OK&rsquo; then we should go ahead and enable the service</p><pre><code>sudo systemctl enable blackbox_exporter.service
+</code></pre><h2 id=create-new-job-in-your-prometheus-configuration>Create new job in your Prometheus configuration</h2><p>Now that we have Blackbox running, we need to configure Prometheus to pull the data from the Blackbox exporter. Below is an example job that you should copy and add to the end of your &lsquo;prometheus.yml&rsquo; configuration file we made previously. You can replace the example targets with the websites you wish to monitor. If you have installed Blackbox exporter on a different host than Prometheus, you would define the address for your Blackbox server at the bottom in the &lsquo;replacement:&rsquo; line.</p><pre><code>  - job_name: 'blackbox'
     metrics_path: /probe
     params:
       module: [http_2xx]
@@ -168,101 +57,7 @@ sudo systemctl status blackbox_exporter.service
         target_label: instance
       - target_label: __address__
         replacement: localhost:9115
-</code></pre><p>After this you should restart the Prometheus service to pull in the Blackbox data.</p>
-<pre tabindex=0><code>sudo systemctl restart prometheus.service
-</code></pre>
-</div>
-<div class="row pl-3 pr-3">
-<div class="col-md-6 share-buttons">
-</div>
-<div class="col-md-6 btn-improve-page">
-<a href=https://github.com/ResetSmith/ResetSmith.github.io/edit/main/content/posts/monitoring/blackbox/index.md title="Improve this page" target=_blank rel=noopener>
-<i class="fas fa-code-branch"></i>
-Improve this page
-</a>
-</div>
-</div>
-<hr>
-<div class="row next-prev-navigator">
-<div class="col-md-6 previous-article">
-<a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter" class="btn btn-outline-info">
-<div><i class="fas fa-chevron-circle-left"></i> Prev</div>
-<div class=next-prev-text>Installing Node Exporter</div>
-</a>
-</div>
-</div>
-<hr>
-</div>
-</div>
-</div>
-<a id=scroll-to-top class=btn><i class="fas fa-chevron-circle-up"></i></a>
-</section>
-<section class=toc-section id=toc-section>
-<div class=toc-holder>
-<h5 class="text-center pl-3">Table of Contents</h5>
-<hr>
-<div class=toc>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#download-blackbox-exporter>Download Blackbox Exporter</a></li>
-<li><a href=#make-configuration-file>Make configuration file</a></li>
-<li><a href=#create-a-service>Create a service</a></li>
-<li><a href=#create-new-job-in-your-prometheus-configuration>Create new job in your Prometheus configuration</a></li>
-</ul>
-</nav>
-</div>
-</div>
-</section>
-</div>
-<footer class="container-fluid text-center align-content-center footer pb-2">
-<div class="container pt-5">
-<div class="row text-left">
-<div class="col-md-4 col-sm-12">
-<h5>Navigation</h5>
-<ul>
-</ul>
-</div>
-<div class="col-md-4 col-sm-12">
-<h5>Contact me:</h5>
-<ul>
-<li><span>Email: </span> <span>johndoe@example.com</span></li>
-<li><span>Phone: </span> <span>+0123456789</span></li>
-</ul>
-</div>
-<div class="col-md-4 col-sm-12">
-<h5>Images provided by:</h5>
-<ul>
-<li><a href=https://www.freepik.com>www.Freepik.com</a></li>
-</ul>
-</div>
-</div>
-</div>
-<hr>
-<div class=container>
-<div class="row text-left">
-<div class=col-md-4>
-<a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener>
-<img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png alt="Toha Theme Logo">
-Toha
-</a>
-</div>
-<div class="col-md-4 text-center">© 2021 Copyright.</div>
-<div class="col-md-4 text-right">
-<a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18>
-</a>
-</div>
-</div>
-</div>
-</footer>
-<script type=text/javascript src=/js/jquery-3.4.1.min.js></script>
-<script type=text/javascript src=/js/popper.min.js></script>
-<script type=text/javascript src=/js/bootstrap.min.js></script>
-<script type=text/javascript src=/js/navbar.js></script>
-<script type=text/javascript src=/js/plyr.js></script>
-<script type=text/javascript src=/js/main.js></script>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script>
-<script src=/js/single.js></script>
-<script>hljs.initHighlightingOnLoad()</script>
-</body>
-</html>
+</code></pre><p>After this you should restart the Prometheus service to pull in the Blackbox data.</p><pre><code>sudo systemctl restart prometheus.service
+</code></pre></div><div class="row pl-3 pr-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/ResetSmith/ResetSmith.github.io/edit/main/content/posts/monitoring/blackbox/index.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>Improve this page</a></div></div><hr><div class="row next-prev-navigator"><div class="col-md-6 previous-article"><a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter" class="btn btn-outline-info"><div><i class="fas fa-chevron-circle-left"></i>Prev</div><div class=next-prev-text>Installing Node Exporter</div></a></div></div><hr></div></div></div><a id=scroll-to-top class=btn><i class="fas fa-chevron-circle-up"></i></a></section><section class=toc-section id=toc-section><div class=toc-holder><h5 class="text-center pl-3">Table of Contents</h5><hr><div class=toc><nav id=TableOfContents><ul><li><a href=#download-blackbox-exporter>Download Blackbox Exporter</a></li><li><a href=#make-configuration-file>Make configuration file</a></li><li><a href=#create-a-service>Create a service</a></li><li><a href=#create-new-job-in-your-prometheus-configuration>Create new job in your Prometheus configuration</a></li></ul></nav></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><ul><li><span>Email:</span> <span>johndoe@example.com</span></li><li><span>Phone:</span> <span>+0123456789</span></li></ul></div><div class="col-md-4 col-sm-12"><h5>Images provided by:</h5><ul><li><a href=https://www.freepik.com>www.Freepik.com</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png alt="Toha Theme Logo">
+Toha</a></div><div class="col-md-4 text-center">© 2021 Copyright.</div><div class="col-md-4 text-right"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script><script type=text/javascript src=/js/popper.min.js></script><script type=text/javascript src=/js/bootstrap.min.js></script><script type=text/javascript src=/js/navbar.js></script><script type=text/javascript src=/js/plyr.js></script><script type=text/javascript src=/js/main.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script><script src=/js/single.js></script><script>hljs.initHighlightingOnLoad();</script></body></html>
