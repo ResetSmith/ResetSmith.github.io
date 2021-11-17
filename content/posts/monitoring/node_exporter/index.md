@@ -1,7 +1,7 @@
 ---
 title: "Installing Node Exporter"
 date: 2021-11-09
-hero: 3040061.jpg
+hero: 5648291.jpg
 author:
   name: Reset_Smith
   # image: /images/authors/
