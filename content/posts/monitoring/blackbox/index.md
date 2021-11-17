@@ -1,7 +1,7 @@
 ---
 title: "Installing Blackbox"
 date: 2021-11-16
-hero: 504_Error_Gateway_Timeout-rafiki.jpg
+hero: 504_Error_Gateway_Timeout-rafiki.png
 author:
   name: Reset_Smith
   # image: /images/authors/
