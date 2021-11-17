@@ -65,9 +65,9 @@ Reset_Smith's Blog</a>
 <li>
 <i class="fas fa-plus-circle"></i><a href=/posts/monitoring/>Monitoring</a>
 <ul>
-<li><a href=/posts/monitoring/prom_install/ title="Installing Prometheus">Installing Prometheus</a></li>
-<li><a href=/posts/monitoring/node_exporter/ title="Installing Node Exporter">Installing Node Exporter</a></li>
-<li><a href=/posts/monitoring/blackbox/ title="Installing the Blackbox exporter for Prometheus">Installing the Blackbox exporter for Prometheus</a></li>
+<li><a href=/posts/monitoring/prom_install/ title="Prometheus Getting started">Prometheus Getting started</a></li>
+<li><a href=/posts/monitoring/node_exporter/ title="Prometheus Node exporter">Prometheus Node exporter</a></li>
+<li><a href=/posts/monitoring/blackbox/ title="Prometheus Blackbox exporter">Prometheus Blackbox exporter</a></li>
 </ul>
 </li>
 </div>
@@ -86,7 +86,7 @@ Reset_Smith's Blog</a>
 <img class=card-img-top src=/posts/monitoring/blackbox/504_Error_Gateway_Timeout-rafiki.png alt="Hero Image">
 </div>
 <div class=card-body>
-<h5 class=card-title>Installing Blackbox</h5>
+<h5 class=card-title>Prometheus: Installing the Blackbox exporter</h5>
 <p class="card-text post-summary">Blackbox exporter is a tool to probe remote targets over a variety of protocols. Or from the Blackbox exporter Github page:
 The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP.
 In practice I use it to monitor connectivity to websites. Through the Blackbox exporter I can capture HTTPS response times, SSL certificate statuses, and some additional website metrics. Additionally using the Alertmanager tool it&rsquo;s possible to create alerts based on HTTPS response times, HTTPS status codes, or SSL certificate status.</p>
@@ -105,7 +105,7 @@ In practice I use it to monitor connectivity to websites. Through the Blackbox e
 <img class=card-img-top src=/posts/monitoring/node_exporter/5648291.jpg alt="Hero Image">
 </div>
 <div class=card-body>
-<h5 class=card-title>Installing Node Exporter</h5>
+<h5 class=card-title>Prometheus: Installing the Node exporter</h5>
 <p class="card-text post-summary">Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally with a few extra steps.
 These directions go through the process I use for installing Node Exporter on remote virtual private servers running Ubuntu 20.04. To begin we&rsquo;ll assume you have access to a remote machine/VPS through SSH or other &lsquo;terminal&rsquo; access with &lsquo;sudo&rsquo; permissions.</p>
 </div>
@@ -123,7 +123,7 @@ These directions go through the process I use for installing Node Exporter on re
 <img class=card-img-top src=/posts/monitoring/prom_install/5985256.jpg alt="Hero Image">
 </div>
 <div class=card-body>
-<h5 class=card-title>Installing Prometheus</h5>
+<h5 class=card-title>Prometheus: Getting started with Prometheus and Grafana</h5>
 <p class="card-text post-summary">Prometheus is an open-source application created for systems monitoring and alerting. The Prometheus server application can produce limited visualizations of data that it collects and stores from Exporters which send it the data. Prometheus and it&rsquo;s Exporters are good for measuring numerical values over time, things such as: Data Storage/Memory Usage, Network Stats, and Process Monitoring.
 Prometheus is often paired with the open-source visualization software Grafana which improves the end-user experience by making queries easier and better looking.</p>
 </div>
