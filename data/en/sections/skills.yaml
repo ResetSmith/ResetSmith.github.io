@@ -36,6 +36,6 @@ skills:
   summary: "Hugo is relatively new to me. Originally I picked it to quickly utilize my own Markdown notes from Github to create internal documentation. I liked it so I have been working on it now for my personal website."
   url: "https://gohugo.io"
 
-- name: Cloud Computing and Hosting
+- name: Cloud Computing
   logo: "/images/sections/skills/cloud.png"
-  summary: "I have experience working with several of the major cloud providers, such as DigitalOcean, Lindoe, and Amazon Web Services."
+  summary: "I have experience working with several of the major cloud providers, such as DigitalOcean, Lindoe, and Amazon Web Services. I'm also familar with the creation and management of DNS and it's related records."
