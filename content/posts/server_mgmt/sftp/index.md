@@ -1,5 +1,5 @@
 ---
-title: "Setting up password authentication with Apache"
+title: "Using VSFTP to setup FTP access to remote servers"
 date: 2021-10-12
 hero: 3567818.jpg
 author:
@@ -7,7 +7,7 @@ author:
   # image: /images/authors/
 menu:
   sidebar:
-    name: Basic Auth with Apache
+    name: VSFTP
     identifier: svr_mgmt-sftp
     parent: svr_mgmt
     weight: 10
