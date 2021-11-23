@@ -12,10 +12,11 @@ menu:
     parent: svr_mgmt
     weight: 60
 ---
+Today this tutorial will walkthrough using Certbot to obtain a SSL certificate and then applying the certificate to your website with Apache. This tutorial assumes you have SSH access or another way to run terminal commands on a Debian based server with Apache already installed. For this particular example I ran these commands on a basic DigitalOcean Droplet running Ubuntu 20.04.
 
 ## Obtain certificate using Certbot
 
-Adapted from the [Certbot website](https://certbot.eff.org/lets-encrypt)
+We'll be using the Cerbot app to request a SSL certificate from LetsEncrypt. The first thing we'll do is install Certbot using the snapd package manger (this is preferred by Certbot as opposed to using apt). Snapd should be installed by default on Ubuntu 20.04, if you do not already have Snapd installed you can find the directions for getting it off their website (snapcraft.io)[https://snapcraft.io/docs/installing-snapd].
 
 1. Update snapd
 ```
@@ -28,6 +29,7 @@ sudo snap install --classic certbot
 ```
 
 3. Prepare the Certbot command
+This creates a symbolic link for the certbot command, allowing it to be run by any user with the necessary permissions.
 ```
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 ```
@@ -70,14 +72,14 @@ Redirect permanent / https://$FQDN/
 </VirtualHost>
 
 <VirtualHost *:443>
-ServerAdmin webmaster@casat.org
-DocumentRoot /var/www/html/$HOSTNAME
-ServerName  $FQDN
-ServerAlias www.$FQDN
+ServerAdmin  $EMAIL_GOES_HERE
+DocumentRoot $PATH_TO_WEBROOT
+ServerName   $FQDN
+ServerAlias  www.$FQDN
 SSLEngine on
 SSLCertificateFile    /etc/letsencrypt/live/$FQDN/fullchain.pem
 SSLCertificateKeyFile /etc/letsencrypt/live/$FQDN/privkey.pem
-    <Directory /var/www/html/$HOSTNAME/>
+    <Directory $PATH_TO_WEBROOT>
     Options FollowSymLinks
     AllowOverride All
     Require all granted
@@ -108,3 +110,5 @@ sudo apache2ctl configtest
 ```
 sudo systemctl restart apache2.service
 ```
+
+Adapted from the [Certbot website](https://certbot.eff.org/lets-encrypt)
