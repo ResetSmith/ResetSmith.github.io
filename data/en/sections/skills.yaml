@@ -13,7 +13,7 @@ section:
 skills:
 - name: Linux
   logo: "/images/sections/skills/linux.png"
-  summary: "I am familiar with using debian based servers and navigating from the terminal. I also have experience writing Bash scripts to automate processes."
+  summary: "I am familiar with using debian based servers and navigating from the terminal. I also have experience writing Bash scripts to automate processes and am familar with using version control systems such as Github."
   url: "https://ubuntu.com"
 
 - name: Windows
@@ -38,4 +38,4 @@ skills:
 
 - name: Cloud Computing
   logo: "/images/sections/skills/cloud.png"
-  summary: "I have experience working with several of the major cloud providers, such as DigitalOcean, Lindoe, and Amazon Web Services. I'm also familar with the creation and management of DNS and it's related records."
+  summary: "I have experience working with several of the major cloud providers, such as DigitalOcean, Lindoe, and Amazon Web Services. I'm also familar with the creation and management of DNS records ."
