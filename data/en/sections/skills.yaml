@@ -28,7 +28,7 @@ skills:
 
 - name: WordPress
   logo: "/images/sections/skills/wordpress.png"
-  summary: "I have several years of experience managing WordPress server stacks. And I am familiar with securing and troubleshooting WordPress in a business enviornment for Web Designers."
+  summary: "I have several years of experience managing WordPress server stacks. And I am familiar with securing and troubleshooting WordPress in a business environment for Web Designers."
   url: "https://wordpress.org"
 
 - name: Hugo
