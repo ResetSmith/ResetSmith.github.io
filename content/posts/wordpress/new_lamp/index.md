@@ -1,6 +1,6 @@
 ---
 title: "Setting up a LAMP server for WordPress"
-# date: 2021-09-16
+date: 2021-09-16
 hero: post.jpg
 author:
   name: Reset_Smith
