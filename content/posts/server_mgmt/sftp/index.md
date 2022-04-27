@@ -21,7 +21,7 @@ For this particular tutorial I will be configuring VSFTPD on an Ubuntu 20.04 ser
 ## Install VSFTPD
 Update your package list
 ```
-sudo apt upadate
+sudo apt update
 ```
 
 Install VSFTPD
@@ -101,4 +101,22 @@ pasv_max_port=50000
 userlist_enable=YES
 userlist_file=/etc/vsftpd.users
 userlist_deny=NO
+```
+```
+rsa_cert_file=/etc/ssl/private/vsftpd.pem
+rsa_private_key_file=/etc/ssl/private/vsftpd.pem
+```
+```
+ssl_enable=YES
+allow_anon_ssl=NO
+force_local_data_ssl=YES
+force_local_logins_ssl=YES
+ssl_tlsv1=YES
+ssl_sslv2=NO
+ssl_sslv3=NO
+require_ssl_reuse=NO
+ssl_ciphers=HIGH
+```
+```
+sudo systemctl restart vsftpd.service
 ```
