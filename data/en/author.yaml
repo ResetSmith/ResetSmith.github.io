@@ -6,9 +6,7 @@ greeting: "Hi, I am"
 image: "images/authors/reset_smith.jpg"
 # give your some contact information. they will be used in the footer
 contactInfo:
-  email: <!-- MUNGED TEXT - EDIT THIS COMMENT TAG -->
-<a href="&#x6d;&#97;&#000105;&#x6c;&#x74;&#x6f;&#x3a;&#x6a;&#x6d;&#x61;&#x72;&#x6b;&#115;&#64;&#00099;&#x61;&#x73;&#x61;&#116;&#x2e;&#000111;&#x72;&#x67;?subject=&cc=&bcc=&body=" style="" class="" id="">&#000106;&#109;&#97;&#x72;&#107;&#000115;&#x40;&#x63;&#00097;&#x73;&#x61;&#000116;&#00046;&#000111;&#x72;&#x67;</a>
-<!-- END OF MUNGED TEXT - EDIT THIS COMMENT TAG -->
+  email: <!-- MUNGED TEXT - EDIT THIS COMMENT TAG --><a href="&#x6d;&#97;&#000105;&#x6c;&#x74;&#x6f;&#x3a;&#x6a;&#x6d;&#x61;&#x72;&#x6b;&#115;&#64;&#00099;&#x61;&#x73;&#x61;&#116;&#x2e;&#000111;&#x72;&#x67;?subject=&cc=&bcc=&body=" style="" class="" id="">&#000106;&#109;&#97;&#x72;&#107;&#000115;&#x40;&#x63;&#00097;&#x73;&#x61;&#000116;&#00046;&#000111;&#x72;&#x67;</a><!-- END OF MUNGED TEXT - EDIT THIS COMMENT TAG -->
   #email: "johndoe@example.com"
   phone: "+0123456789"
 
