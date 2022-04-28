@@ -1,91 +1,82 @@
 <!doctype html><html><head><title>Elastic stack notes</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=/css/bootstrap.min.css><link rel=stylesheet href=/css/layouts/main.css><link rel=stylesheet href=/css/navigators/navbar.css><link rel=stylesheet href=/css/plyr.css><link rel=stylesheet href=/css/flag-icon.min.css><link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css><meta property="og:title" content="Elastic stack notes"><meta property="og:description" content="Installing ElasticSearch install java
-sudo apt install default-jre default-jdk Install Elasticsearch
+sudo apt install default-jre default-jdkInstall Elasticsearch
 get public GPG key
-curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - add elastic to sources list
-echo &#34;deb https://artifacts.elastic.co/packages/7.x/apt stable main&#34; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list check for updates
-sudo apt update install elasticsearch
-sudo apt install elasticsearch edit elasticsearch.yml config file
-sudo vim /etc/elasticsearch/elasticsearch.yml update network.host to read localhost
-network.host: localhost start elasticsearch service and then enable"><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/notes/monitoring/elastic/"><meta property="article:section" content="notes"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/notes.css><link rel=stylesheet href=/css/navigators/sidebar.css></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -add elastic to sources list
+echo &#34;deb https://artifacts.elastic.co/packages/7.x/apt stable main&#34; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.listcheck for updates
+sudo apt updateinstall elasticsearch
+sudo apt install elasticsearchedit elasticsearch.yml config file
+sudo vim /etc/elasticsearch/elasticsearch.ymlupdate network.host to read localhost
+network.host: localhoststart elasticsearch service and then enable"><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/notes/monitoring/elastic/"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/notes.css><link rel=stylesheet href=/css/navigators/sidebar.css></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
 <span class=navbar-toggler-icon></span></button>
 <a class=navbar-brand href=/>Reset_Smith's Blog</a>
 <button class="navbar-toggler navbar-light" id=toc-toggler type=button onclick=toggleTOC()>
-<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/notes data-filter=all>Notes</a></li><div class=subtree><li><a href=/notes/ubuntu/ title=Ubuntu>Ubuntu</a></li><li><a href=/notes/ubuntu_18/ title="Ubuntu 18">Ubuntu 18</a></li><li><a href=/notes/wordpress/ title=WordPress>WordPress</a></li><li><a href=/notes/hugo/ title=Hugo>Hugo</a></li><li><i class="fas fa-plus-circle"></i><a href=/notes/apache/>Apache</a><ul><li><a href=/notes/apache/apache_notes/ title="Apache Notes">Apache Notes</a></li><li><a href=/notes/apache/ex_configs/ title="Apache Conf Ex">Apache Conf Ex</a></li></ul></li><li><i class="fas fa-minus-circle"></i><a class=active href=/notes/monitoring/>Monitoring</a><ul class=active><li><a href=/notes/monitoring/prometheus/ title=Prometheus>Prometheus</a></li><li><a class=active href=/notes/monitoring/elastic/ title=Elastic>Elastic</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class="content container-fluid" id=content><div class="container-fluid note-card-holder" id=note-card-holder><div class=note-card><div class=item><h5 class=note-title><span>Installing ElasticSearch</span></h5><div class=card><div class=card-body><p>install java</p><pre tabindex=0><code>sudo apt install default-jre default-jdk
-</code></pre><p>Install Elasticsearch<br>get public GPG key</p><pre tabindex=0><code>curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-</code></pre><p>add elastic to sources list</p><pre tabindex=0><code>echo &#34;deb https://artifacts.elastic.co/packages/7.x/apt stable main&#34; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
-</code></pre><p>check for updates</p><pre tabindex=0><code>sudo apt update
-</code></pre><p>install elasticsearch</p><pre tabindex=0><code>sudo apt install elasticsearch
-</code></pre><p>edit elasticsearch.yml config file</p><pre tabindex=0><code>sudo vim /etc/elasticsearch/elasticsearch.yml
-</code></pre><p>update network.host to read localhost</p><pre tabindex=0><code>network.host: localhost
-</code></pre><p>start elasticsearch service and then enable</p><pre tabindex=0><code>sudo systemctl start elasticsearch
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/notes data-filter=all>Notes</a></li><div class=subtree><li><a href=/notes/ubuntu/ title=Ubuntu>Ubuntu</a></li><li><a href=/notes/ubuntu_18/ title="Ubuntu 18">Ubuntu 18</a></li><li><a href=/notes/wordpress/ title=WordPress>WordPress</a></li><li><a href=/notes/hugo/ title=Hugo>Hugo</a></li><li><i class="fas fa-plus-circle"></i><a href=/notes/apache/>Apache</a><ul><li><a href=/notes/apache/apache_notes/ title="Apache Notes">Apache Notes</a></li><li><a href=/notes/apache/ex_configs/ title="Apache Conf Ex">Apache Conf Ex</a></li></ul></li><li><i class="fas fa-minus-circle"></i><a class=active href=/notes/monitoring/>Monitoring</a><ul class=active><li><a href=/notes/monitoring/prometheus/ title=Prometheus>Prometheus</a></li><li><a class=active href=/notes/monitoring/elastic/ title=Elastic>Elastic</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class="content container-fluid" id=content><div class="container-fluid note-card-holder" id=note-card-holder><div class=note-card><div class=item><h5 class=note-title><span>Installing ElasticSearch</span></h5><div class=card><div class=card-body><p>install java</p><pre><code>sudo apt install default-jre default-jdk
+</code></pre><p>Install Elasticsearch<br>get public GPG key</p><pre><code>curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+</code></pre><p>add elastic to sources list</p><pre><code>echo &quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&quot; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+</code></pre><p>check for updates</p><pre><code>sudo apt update
+</code></pre><p>install elasticsearch</p><pre><code>sudo apt install elasticsearch
+</code></pre><p>edit elasticsearch.yml config file</p><pre><code>sudo vim /etc/elasticsearch/elasticsearch.yml
+</code></pre><p>update network.host to read localhost</p><pre><code>network.host: localhost
+</code></pre><p>start elasticsearch service and then enable</p><pre><code>sudo systemctl start elasticsearch
 sudo systemctl enable elasticsearch
-</code></pre><p>IF the service fails to start due to &lsquo;Timeout&rsquo; you may need to increase the timeout time</p><p>Make a folder</p><pre tabindex=0><code>sudo mkdir /etc/systemd/system/elasticsearch.service.d
-</code></pre><p>Now create a file and add the content to increase timeout time to 900 seconds</p><pre tabindex=0><code>echo -e &#34;[Service]\nTimeoutStartSec=900&#34; | sudo tee /etc/systemd/system/elasticsearch.service.d/startup-timeout.conf
-</code></pre><p>test that its working</p><pre tabindex=0><code>curl -X GET &#34;localhost:9200&#34;
-</code></pre></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Installing Kibana</span></h5><div class=card><div class=card-body><p>Install Kibana</p><pre tabindex=0><code>sudo apt install kibana
-</code></pre><p>start and enable</p><pre tabindex=0><code>sudo systemctl enable kibana
+</code></pre><p>IF the service fails to start due to &lsquo;Timeout&rsquo; you may need to increase the timeout time</p><p>Make a folder</p><pre><code>sudo mkdir /etc/systemd/system/elasticsearch.service.d
+</code></pre><p>Now create a file and add the content to increase timeout time to 900 seconds</p><pre><code>echo -e &quot;[Service]\nTimeoutStartSec=900&quot; | sudo tee /etc/systemd/system/elasticsearch.service.d/startup-timeout.conf
+</code></pre><p>test that its working</p><pre><code>curl -X GET &quot;localhost:9200&quot;
+</code></pre></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Installing Kibana</span></h5><div class=card><div class=card-body><p>Install Kibana</p><pre><code>sudo apt install kibana
+</code></pre><p>start and enable</p><pre><code>sudo systemctl enable kibana
 sudo systemctl start kibana
-</code></pre><p>Install and configure Apache w/ ACL</p></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Installing Logstash</span></h5><div class=card><div class=card-body><p>Install Logstash</p><pre tabindex=0><code>sudo apt install logstash
-</code></pre><p>create files to process input</p><pre tabindex=0><code>sudo vim /etc/logstash/conf.d/02-beats-input.conf
-</code></pre><p>copy below into that file</p><pre tabindex=0><code>input {
+</code></pre><p>Install and configure Apache w/ ACL</p></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Installing Logstash</span></h5><div class=card><div class=card-body><p>Install Logstash</p><pre><code>sudo apt install logstash
+</code></pre><p>create files to process input</p><pre><code>sudo vim /etc/logstash/conf.d/02-beats-input.conf
+</code></pre><p>copy below into that file</p><pre><code>input {
   beats {
     port =&gt; 5044
   }
 }
-</code></pre><p>create output file</p><pre tabindex=0><code>sudo vim /etc/logstash/conf.d/30-elasticsearch-output.conf
-</code></pre><p>copy below into that file</p><pre tabindex=0><code>output {
+</code></pre><p>create output file</p><pre><code>sudo vim /etc/logstash/conf.d/30-elasticsearch-output.conf
+</code></pre><p>copy below into that file</p><pre><code>output {
   if [@metadata][pipeline] {
     elasticsearch {
-    hosts =&gt; [&#34;localhost:9200&#34;]
+    hosts =&gt; [&quot;localhost:9200&quot;]
     manage_template =&gt; false
-    index =&gt; &#34;%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}&#34;
-    pipeline =&gt; &#34;%{[@metadata][pipeline]}&#34;
+    index =&gt; &quot;%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}&quot;
+    pipeline =&gt; &quot;%{[@metadata][pipeline]}&quot;
     }
   } else {
     elasticsearch {
-    hosts =&gt; [&#34;localhost:9200&#34;]
+    hosts =&gt; [&quot;localhost:9200&quot;]
     manage_template =&gt; false
-    index =&gt; &#34;%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}&#34;
+    index =&gt; &quot;%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}&quot;
     }
   }
 }
-</code></pre><p>test logstash</p><pre tabindex=0><code>sudo -u logstash /usr/share/logstash/bin/logstash --path.settings /etc/logstash -t
-</code></pre><p>need to see - <code>Config Validation Result: OK. Exiting Logstash</code></p><p>if ok, start and enable</p><pre tabindex=0><code>sudo systemctl start logstash
+</code></pre><p>test logstash</p><pre><code>sudo -u logstash /usr/share/logstash/bin/logstash --path.settings /etc/logstash -t
+</code></pre><p>need to see - <code>Config Validation Result: OK. Exiting Logstash</code></p><p>if ok, start and enable</p><pre><code>sudo systemctl start logstash
 sudo systemctl enable logstash
-</code></pre></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Installing Filebeat</span></h5><div class=card><div class=card-body><p>Installing Filebeat</p><pre tabindex=0><code>sudo apt install filebeat
-</code></pre><p>configure yml file</p><pre tabindex=0><code>sudo vim /etc/filebeat/filebeat.yml
-</code></pre><p>from here we need to disable the elasticsearch output</p><pre tabindex=0><code>...
+</code></pre></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Installing Filebeat</span></h5><div class=card><div class=card-body><p>Installing Filebeat</p><pre><code>sudo apt install filebeat
+</code></pre><p>configure yml file</p><pre><code>sudo vim /etc/filebeat/filebeat.yml
+</code></pre><p>from here we need to disable the elasticsearch output</p><pre><code>...
 #output.elasticsearch:
   # Array of hosts to connect to.
-  #hosts: [&#34;localhost:9200&#34;]
+  #hosts: [&quot;localhost:9200&quot;]
 ...
-</code></pre><p>and then enable the logstash output</p><pre tabindex=0><code>output.logstash:
+</code></pre><p>and then enable the logstash output</p><pre><code>output.logstash:
   # The Logstash hosts
-  hosts: [&#34;localhost:5044&#34;]
-</code></pre><p>list filebeat modules</p><pre tabindex=0><code>sudo filebeat modules list
-</code></pre><p>enable filebeat modules</p><pre tabindex=0><code>sudo filebeat modules enable system apache
-</code></pre><p>create filebeat ingest pipeline</p><pre tabindex=0><code>sudo filebeat setup --pipelines --modules system
-</code></pre><p>load template index into elasticsearch</p><pre tabindex=0><code>sudo filebeat setup --index-management -E output.logstash.enabled=false -E &#39;output.elasticsearch.hosts=[&#34;localhost:9200&#34;]&#39;
-</code></pre><p>need to see - <code>Index setup finished.</code></p><p>load filebeat dashboards into Kibana</p><pre tabindex=0><code>sudo filebeat setup -E output.logstash.enabled=false -E output.elasticsearch.hosts=[&#39;localhost:9200&#39;] -E setup.kibana.host=localhost:5601
-</code></pre><p>start and enable filebeat</p><pre tabindex=0><code>sudo systemctl start filebeat
+  hosts: [&quot;localhost:5044&quot;]
+</code></pre><p>list filebeat modules</p><pre><code>sudo filebeat modules list
+</code></pre><p>enable filebeat modules</p><pre><code>sudo filebeat modules enable system apache
+</code></pre><p>create filebeat ingest pipeline</p><pre><code>sudo filebeat setup --pipelines --modules system
+</code></pre><p>load template index into elasticsearch</p><pre><code>sudo filebeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=[&quot;localhost:9200&quot;]'
+</code></pre><p>need to see - <code>Index setup finished.</code></p><p>load filebeat dashboards into Kibana</p><pre><code>sudo filebeat setup -E output.logstash.enabled=false -E output.elasticsearch.hosts=['localhost:9200'] -E setup.kibana.host=localhost:5601
+</code></pre><p>start and enable filebeat</p><pre><code>sudo systemctl start filebeat
 sudo systemctl enable filebeat
-</code></pre></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Adding Filebeat to other sources</span></h5><div class=card><div class=card-body><p>Adding filebeat to other sources</p><pre tabindex=0><code>curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-echo &#34;deb https://artifacts.elastic.co/packages/7.x/apt stable main&#34; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+</code></pre></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Adding Filebeat to other sources</span></h5><div class=card><div class=card-body><p>Adding filebeat to other sources</p><pre><code>curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo &quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&quot; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
 sudo apt update
 sudo apt install filebeat
-</code></pre><pre tabindex=0><code>vim /etc/filebeat/filebeat.yml
-</code></pre><p>hashout the Elasticsearch output section and then fill in the logstash output section with the correct remote IP</p><pre tabindex=0><code>sudo filebeat modules enable system apache
+</code></pre><pre><code>vim /etc/filebeat/filebeat.yml
+</code></pre><p>hashout the Elasticsearch output section and then fill in the logstash output section with the correct remote IP</p><pre><code>sudo filebeat modules enable system apache
 sudo systemctl start filebeat.service
 sudo systemctl enable filebeat.service
-</code></pre></div></div></div></div></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><a href="mailto:JohnDMarks@gmail.com?subject=&cc=&bcc=&body=">JohnDMarks@gmail.com</a></div><div class="col-md-4 col-sm-12"><h5>Images provided by:</h5><ul><li><a href=https://www.freepik.com>www.Freepik.com</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png alt="Toha Theme Logo">
+</code></pre></div></div></div></div></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><a href="mailto:JohnDMarks@gmail.com?subject=&cc=&bcc=&body=">JohnDMarks@gmail.com</a></div><div class="col-md-4 col-sm-12"><h5>Images provided by:</h5><ul><li><a href=https://www.freepik.com>www.Freepik.com</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png alt="Toha Theme Logo">
 Toha</a></div><div class="col-md-4 text-center">© 2021 Copyright.</div><div class="col-md-4 text-right"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script>
-<script type=text/javascript src=/js/popper.min.js></script>
-<script type=text/javascript src=/js/bootstrap.min.js></script>
-<script type=text/javascript src=/js/navbar.js></script>
-<script type=text/javascript src=/js/plyr.js></script>
-<script type=text/javascript src=/js/main.js></script>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script>
-<script src=/js/imagesloaded.pkgd.min.js></script>
-<script src=/js/note.js></script>
-<script>hljs.initHighlightingOnLoad()</script></body></html>
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script><script type=text/javascript src=/js/popper.min.js></script><script type=text/javascript src=/js/bootstrap.min.js></script><script type=text/javascript src=/js/navbar.js></script><script type=text/javascript src=/js/plyr.js></script><script type=text/javascript src=/js/main.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script><script src=/js/imagesloaded.pkgd.min.js></script><script src=/js/note.js></script><script>hljs.initHighlightingOnLoad();</script></body></html>
