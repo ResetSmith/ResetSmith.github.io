@@ -47,3 +47,10 @@ params:
   # Currently, you can just hide it from the footer.
   newsletter:
     enable: false
+
+  # Enables Google Analytics via the theme
+  features:
+    analytics:
+      enabled: true
+      google:
+        id: G-KLVVMMV4CY
