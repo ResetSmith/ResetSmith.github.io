@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apache on Reset_Smith's Blog</title><link>https://resettech.net/notes/apache/</link><description>Recent content in Apache on Reset_Smith's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://resettech.net/notes/apache/index.xml" rel="self" type="application/rss+xml"/><item><title>Apache Notes</title><link>https://resettech.net/notes/apache/apache_notes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/apache/apache_notes/</guid><description>General Show active Vhost configuration in Apache
-apache2ctl -S Enable vhost in apache
-a2ensite $VHOST.conf Disable vhost in apache
-a2dissite $VHOST.conf Enable SSL in apache
-a3enmod ssl Check for errors in apache
-apache2ctl configtest Basic Auth with Apache Virtualhost Note This will NOT work while using wordpress with .htaccess file Install Apache utils package
+apache2ctl -S
+Enable vhost in apache
+a2ensite $VHOST.conf
+Disable vhost in apache
+a2dissite $VHOST.conf
+Enable SSL in apache
+a3enmod ssl
+Check for errors in apache
+apache2ctl configtest
+Basic Auth with Apache Virtualhost Note This will NOT work while using wordpress with .htaccess file Install Apache utils package
 apt-get update
-apt-get install apache2-utils create password file and user
+apt-get install apache2-utils
+create password file and user
 htpasswd -c /etc/apache2/.</description></item><item><title>Apache Conf Examples</title><link>https://resettech.net/notes/apache/ex_configs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/apache/ex_configs/</guid><description>HTTP Vhost for WordPress &amp;lt;VirtualHost *:80&amp;gt;
 ServerAdmin $EMAIL
 ServerName $FQDN
@@ -18,7 +24,8 @@ Require all granted
 &amp;lt;/Directory&amp;gt;
 ErrorLog ${APACHE_LOG_DIR}/error.log
 CustomLog ${APACHE_LOG_DIR}/access.log combined
-&amp;lt;/VirtualHost&amp;gt; HTTPS Vhost for WordPress &amp;lt;VirtualHost *:80&amp;gt;
+&amp;lt;/VirtualHost&amp;gt;
+HTTPS Vhost for WordPress &amp;lt;VirtualHost *:80&amp;gt;
 ServerName $FQDN
 ServerAlias www.$FQDN
 Redirect permanent / https://$FQDN/
