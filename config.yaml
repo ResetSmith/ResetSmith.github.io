@@ -21,6 +21,9 @@ markup:
 # Enable global emoji support
 enableEmoji: true
 
+# Google analytics support
+googleAnalytics: "G-KLVVMMV4CY"
+
 # Site parameters
 params:
   # GitHub repo URL of your site
