@@ -1,17 +1,80 @@
-<!doctype html><html><head><title>Ansible Notes</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=/css/bootstrap.min.css><link rel=stylesheet href=/css/layouts/main.css><link rel=stylesheet href=/css/navigators/navbar.css><link rel=stylesheet href=/css/plyr.css><link rel=stylesheet href=/css/flag-icon.min.css><link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css><meta property="og:title" content="Ansible Notes"><meta property="og:description" content=" WordPress Backups "><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/notes/ansible/"><meta property="article:section" content="notes"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/notes.css><link rel=stylesheet href=/css/navigators/sidebar.css><script async src="https://www.googletagmanager.com/gtag/js?id=G-KLVVMMV4CY"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-KLVVMMV4CY',{anonymize_ip:!1})}</script></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
+<!doctype html><html><head><title>Ansible Notes</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=/css/bootstrap.min.css><link rel=stylesheet href=/css/layouts/main.css><link rel=stylesheet href=/css/navigators/navbar.css><link rel=stylesheet href=/css/plyr.css><link rel=stylesheet href=/css/flag-icon.min.css><link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css><meta property="og:title" content="Ansible Notes"><meta property="og:description" content="WordPress Backups Backup WordPress servers. Assumes WordPress is installed at /var/www/wordpress
+ - hosts: all become: true vars_files: - $PATH_TO_VARS_FILE tasks: - name: Update repositories apt: update_cache=yes force_apt_get=yes cache_valid_time=3600 - name: Check if server is a WordPress host stat: path: /var/www/wordpress register: wp_check - name: Install prerequisites python3-pip apt: name: python3-pip state: present when: wp_check.stat.exists - name: Install prerequisites boto3 pip: name: - boto3 - botocore - name: Create temporary folder for backups on source file: path: &#34;/tmp/{{ ansible_host }}&#34; state: directory mode: '0755' tags: [ backup ] - name: Copy WordPress wp-content folder to backup folder copy: src: /var/www/wordpress/wp-content dest: &#34;/tmp/{{ ansible_host }}&#34; mode: '0755' remote_src: yes tags: [ backup ] - name: Do a MySQL dump to copy the database mysql_db: name: wordpress state: dump login_user: root login_password: &#34;{{ mysql_root_pw }}&#34; target: &#34;/tmp/{{ ansible_host }}/backup."><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/notes/ansible/"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/notes.css><link rel=stylesheet href=/css/navigators/sidebar.css><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','G-KLVVMMV4CY','auto');ga('send','pageview');}</script></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
 <span class=navbar-toggler-icon></span></button>
 <a class=navbar-brand href=/>Reset_Smith's Blog</a>
 <button class="navbar-toggler navbar-light" id=toc-toggler type=button onclick=toggleTOC()>
-<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/notes data-filter=all>Notes</a></li><div class=subtree><li><a href=/notes/ubuntu/ title=Ubuntu>Ubuntu</a></li><li><a href=/notes/ubuntu_18/ title="Ubuntu 18">Ubuntu 18</a></li><li><a href=/notes/wordpress/ title=WordPress>WordPress</a></li><li><a href=/notes/hugo/ title=Hugo>Hugo</a></li><li><i class="fas fa-plus-circle"></i><a href=/notes/apache/>Apache</a><ul><li><a href=/notes/apache/apache_notes/ title="Apache Notes">Apache Notes</a></li><li><a href=/notes/apache/ex_configs/ title="Apache Conf Ex">Apache Conf Ex</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/notes/monitoring/>Monitoring</a><ul><li><a href=/notes/monitoring/prometheus/ title=Prometheus>Prometheus</a></li><li><a href=/notes/monitoring/elastic/ title=Elastic>Elastic</a></li></ul></li><li><i class="fas fa-minus-circle"></i><a class=active href>notes-ansible</a><ul class=active><li><a class=active href=/notes/ansible/ title="Ansible Notes">Ansible Notes</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class="content container-fluid" id=content><div class="container-fluid note-card-holder" id=note-card-holder><div class=note-card><div class=item><h5 class=note-title><span>WordPress Backups</span></h5><div class=card><div class=card-body></div></div></div></div></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><a href="mailto:JohnDMarks@gmail.com?subject=&cc=&bcc=&body=">Email Me</a></div><div class="col-md-4 col-sm-12"><h5>Images provided by:</h5><ul><li><a href=https://www.freepik.com>www.Freepik.com</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png alt="Toha Theme Logo">
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/notes data-filter=all>Notes</a></li><div class=subtree><li><a href=/notes/ubuntu/ title=Ubuntu>Ubuntu</a></li><li><a href=/notes/ubuntu_18/ title="Ubuntu 18">Ubuntu 18</a></li><li><a href=/notes/wordpress/ title=WordPress>WordPress</a></li><li><a href=/notes/hugo/ title=Hugo>Hugo</a></li><li><i class="fas fa-plus-circle"></i><a href=/notes/apache/>Apache</a><ul><li><a href=/notes/apache/apache_notes/ title="Apache Notes">Apache Notes</a></li><li><a href=/notes/apache/ex_configs/ title="Apache Conf Ex">Apache Conf Ex</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/notes/monitoring/>Monitoring</a><ul><li><a href=/notes/monitoring/prometheus/ title=Prometheus>Prometheus</a></li><li><a href=/notes/monitoring/elastic/ title=Elastic>Elastic</a></li></ul></li><li><i class="fas fa-minus-circle"></i><a class=active href>notes-ansible</a><ul class=active><li><a class=active href=/notes/ansible/ title="Ansible Notes">Ansible Notes</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class="content container-fluid" id=content><div class="container-fluid note-card-holder" id=note-card-holder><div class=note-card><div class=item><h5 class=note-title><span>WordPress Backups</span></h5><div class=card><div class=card-body><p>Backup WordPress servers.
+Assumes WordPress is installed at /var/www/wordpress</p><pre><code>
+- hosts: all
+  become: true
+  vars_files:
+    - $PATH_TO_VARS_FILE
+
+  tasks:
+    - name: Update repositories
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+    - name: Check if server is a WordPress host
+      stat:
+        path: /var/www/wordpress
+      register: wp_check
+
+    - name: Install prerequisites python3-pip
+      apt:
+        name: python3-pip
+        state: present
+      when: wp_check.stat.exists
+
+    - name: Install prerequisites boto3
+      pip:
+        name:
+          - boto3
+          - botocore
+
+    - name: Create temporary folder for backups on source
+      file:
+        path: &quot;/tmp/{{ ansible_host }}&quot;
+        state: directory
+        mode: '0755'
+      tags: [ backup ]
+
+    - name: Copy WordPress wp-content folder to backup folder
+      copy:
+        src: /var/www/wordpress/wp-content
+        dest: &quot;/tmp/{{ ansible_host }}&quot;
+        mode: '0755'
+        remote_src: yes
+      tags: [ backup ]
+
+    - name: Do a MySQL dump to copy the database
+      mysql_db:
+        name: wordpress
+        state: dump
+        login_user: root
+        login_password: &quot;{{ mysql_root_pw }}&quot;
+        target: &quot;/tmp/{{ ansible_host }}/backup.sql&quot;
+
+    - name: Compress backup directory
+      archive:
+        path: &quot;/tmp/{{ ansible_host }}&quot;
+        dest: &quot;/tmp/{{ ansible_host }}.{{ ansible_date_time.date }}.tar.gz&quot;
+
+    - name: Copy backup file to storage
+      aws_s3:
+        aws_access_key: &quot;{{ do_access_key }}&quot;
+        aws_secret_key: &quot;{{ do_secret_key }}&quot;
+        region: sfo3
+        s3_url: &quot;$DO_SPACES_URL_GOES_HERE&quot;
+        bucket: &quot;backups&quot;
+        src: &quot;/tmp/{{ ansible_host }}.{{ ansible_date_time.date }}.tar.gz&quot;
+        object: &quot;{{ ansible_date_time.date }}/{{ ansible_host }}.tar.gz&quot;
+        mode: put
+
+    - name: Cleanup temporary files on source
+      shell: rm -rf /tmp/{{ ansible_host }} ; rm -rf /tmp/{{ ansible_host }}.*
+      args:
+        warn: false
+
+</code></pre></div></div></div></div></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><a href="mailto:JohnDMarks@gmail.com?subject=&cc=&bcc=&body=">Email Me</a></div><div class="col-md-4 col-sm-12"><h5>Images provided by:</h5><ul><li><a href=https://www.freepik.com>www.Freepik.com</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png alt="Toha Theme Logo">
 Toha</a></div><div class="col-md-4 text-center">© 2021 Copyright.</div><div class="col-md-4 text-right"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script>
-<script type=text/javascript src=/js/popper.min.js></script>
-<script type=text/javascript src=/js/bootstrap.min.js></script>
-<script type=text/javascript src=/js/navbar.js></script>
-<script type=text/javascript src=/js/plyr.js></script>
-<script type=text/javascript src=/js/main.js></script>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script>
-<script src=/js/imagesloaded.pkgd.min.js></script>
-<script src=/js/note.js></script>
-<script>hljs.initHighlightingOnLoad()</script></body></html>
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script><script type=text/javascript src=/js/popper.min.js></script><script type=text/javascript src=/js/bootstrap.min.js></script><script type=text/javascript src=/js/navbar.js></script><script type=text/javascript src=/js/plyr.js></script><script type=text/javascript src=/js/main.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script><script src=/js/imagesloaded.pkgd.min.js></script><script src=/js/note.js></script><script>hljs.initHighlightingOnLoad();</script></body></html>
