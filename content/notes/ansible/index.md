@@ -10,9 +10,10 @@ menu:
 ---
 
 {{< note title="WordPress Backups" >}}
-Backup WordPress servers. Assumes WordPress is installed at /var/www/wordpress
+Backup WordPress servers.
+Assumes WordPress is installed at /var/www/wordpress
 ```
----
+
 - hosts: all
   become: true
   vars_files:
