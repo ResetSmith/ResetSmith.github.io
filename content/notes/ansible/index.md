@@ -3,14 +3,13 @@ title: Ansible Notes
 weight: 10
 menu:
   notes:
-    name: Ansible Notes
-    identifier: notes-ansible-ansible_notes
-    parent: notes-ansible
+    name: Ansible
+    identifier: notes-ansible
     weight: 10
 ---
 
-{{< note title="WordPress Backups" >}}
-Backup WordPress servers.
+{{< note title="WordPress Backups with Ansible" >}}
+Playbook for backing up WordPress servers
 Assumes WordPress is installed at /var/www/wordpress
 ```
 
