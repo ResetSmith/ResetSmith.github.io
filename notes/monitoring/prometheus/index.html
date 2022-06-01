@@ -1,22 +1,23 @@
 <!doctype html><html><head><title>Prometheus stack notes</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=/css/bootstrap.min.css><link rel=stylesheet href=/css/layouts/main.css><link rel=stylesheet href=/css/navigators/navbar.css><link rel=stylesheet href=/css/plyr.css><link rel=stylesheet href=/css/flag-icon.min.css><link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css><meta property="og:title" content="Prometheus stack notes"><meta property="og:description" content="Node Exporter installation create folder for exporter apps
-sudo mkdir /usr/local/bin/metricssudo mkdir /etc/metricssudo useradd -rs /bin/false exportersudo chmod -R 777 /usr/local/bin/metricssudo chmod -R 777 /etc/metricssudo chown -R exporter:exporter /usr/local/bin/metricssudo chown -R exporter:exporter /etc/metricsInstall node_exporter
-curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gztar xzvf node_exporter-*.*-amd64.tar.gzsudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exportercreate service
-sudo vim /etc/systemd/system/node_exporter.service[Unit]Description=Node exporter for PrometheusAfter=network.target[Service]User=exporterType=simpleExecStart=/usr/local/bin/node_exporter/node_exporter[Install]WantedBy=multi-user.targetstart and enable service"><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/notes/monitoring/prometheus/"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/notes.css><link rel=stylesheet href=/css/navigators/sidebar.css><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','G-KLVVMMV4CY','auto');ga('send','pageview');}</script></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
+sudo mkdir /usr/local/bin/metricssudo mkdir /etc/metricssudo useradd -rs /bin/false exportersudo chmod -R 777 /usr/local/bin/metricssudo chmod -R 777 /etc/metricssudo chown -R exporter:exporter /usr/local/bin/metricssudo chown -R exporter:exporter /etc/metrics Install node_exporter
+curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gztar xzvf node_exporter-*.*-amd64.tar.gzsudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exporter create service
+sudo vim /etc/systemd/system/node_exporter.service [Unit]Description=Node exporter for PrometheusAfter=network.target[Service]User=exporterType=simpleExecStart=/usr/local/bin/node_exporter/node_exporter[Install]WantedBy=multi-user.target start and enable service"><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/notes/monitoring/prometheus/"><meta property="article:section" content="notes"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/notes.css><link rel=stylesheet href=/css/navigators/sidebar.css><script async src="https://www.googletagmanager.com/gtag/js?id=G-KLVVMMV4CY"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-KLVVMMV4CY',{anonymize_ip:!1})}</script></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
 <span class=navbar-toggler-icon></span></button>
 <a class=navbar-brand href=/>Reset_Smith's Blog</a>
 <button class="navbar-toggler navbar-light" id=toc-toggler type=button onclick=toggleTOC()>
-<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/notes data-filter=all>Notes</a></li><div class=subtree><li><a href=/notes/ansible/ title=Ansible>Ansible</a></li><li><a href=/notes/ubuntu/ title=Ubuntu>Ubuntu</a></li><li><a href=/notes/ubuntu_18/ title="Ubuntu 18">Ubuntu 18</a></li><li><a href=/notes/wordpress/ title=WordPress>WordPress</a></li><li><a href=/notes/hugo/ title=Hugo>Hugo</a></li><li><i class="fas fa-plus-circle"></i><a href=/notes/apache/>Apache</a><ul><li><a href=/notes/apache/apache_notes/ title="Apache Notes">Apache Notes</a></li><li><a href=/notes/apache/ex_configs/ title="Apache Conf Ex">Apache Conf Ex</a></li></ul></li><li><i class="fas fa-minus-circle"></i><a class=active href=/notes/monitoring/>Monitoring</a><ul class=active><li><a class=active href=/notes/monitoring/prometheus/ title=Prometheus>Prometheus</a></li><li><a href=/notes/monitoring/elastic/ title=Elastic>Elastic</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class="content container-fluid" id=content><div class="container-fluid note-card-holder" id=note-card-holder><div class=note-card><div class=item><h5 class=note-title><span>Node Exporter installation</span></h5><div class=card><div class=card-body><p>create folder for exporter apps</p><pre><code>sudo mkdir /usr/local/bin/metrics
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/notes data-filter=all>Notes</a></li><div class=subtree><li><a href=/notes/ansible/ title=Ansible>Ansible</a></li><li><a href=/notes/ubuntu/ title=Ubuntu>Ubuntu</a></li><li><a href=/notes/ubuntu_18/ title="Ubuntu 18">Ubuntu 18</a></li><li><a href=/notes/wordpress/ title=WordPress>WordPress</a></li><li><a href=/notes/hugo/ title=Hugo>Hugo</a></li><li><i class="fas fa-plus-circle"></i><a href=/notes/apache/>Apache</a><ul><li><a href=/notes/apache/apache_notes/ title="Apache Notes">Apache Notes</a></li><li><a href=/notes/apache/ex_configs/ title="Apache Conf Ex">Apache Conf Ex</a></li></ul></li><li><i class="fas fa-minus-circle"></i><a class=active href=/notes/monitoring/>Monitoring</a><ul class=active><li><a class=active href=/notes/monitoring/prometheus/ title=Prometheus>Prometheus</a></li><li><a href=/notes/monitoring/elastic/ title=Elastic>Elastic</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class="content container-fluid" id=content><div class="container-fluid note-card-holder" id=note-card-holder><div class=note-card><div class=item><h5 class=note-title><span>Node Exporter installation</span></h5><div class=card><div class=card-body><p>create folder for exporter apps</p><pre tabindex=0><code>sudo mkdir /usr/local/bin/metrics
 sudo mkdir /etc/metrics
 sudo useradd -rs /bin/false exporter
 sudo chmod -R 777 /usr/local/bin/metrics
 sudo chmod -R 777 /etc/metrics
 sudo chown -R exporter:exporter /usr/local/bin/metrics
 sudo chown -R exporter:exporter /etc/metrics
-</code></pre><p>Install node_exporter</p><pre><code>curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
+</code></pre><p>Install node_exporter</p><pre tabindex=0><code>curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
 tar xzvf node_exporter-*.*-amd64.tar.gz
 sudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exporter
-</code></pre><p>create service</p><pre><code>sudo vim /etc/systemd/system/node_exporter.service
-</code></pre><pre><code>[Unit]
+</code></pre><p>create service</p><pre tabindex=0><code>sudo vim /etc/systemd/system/node_exporter.service
+</code></pre><pre tabindex=0><code>[Unit]
 Description=Node exporter for Prometheus
 After=network.target
 
@@ -27,16 +28,16 @@ ExecStart=/usr/local/bin/node_exporter/node_exporter
 
 [Install]
 WantedBy=multi-user.target
-</code></pre><p>start and enable service</p><pre><code>sudo systemctl start node_exporter.service
+</code></pre><p>start and enable service</p><pre tabindex=0><code>sudo systemctl start node_exporter.service
 sudo systemctl status node_exporter.service
 sudo systemctl enable node_exporter.service
-</code></pre><p>open firewall on server</p><pre><code>sudo ufw allow from $PANOPTICON proto tcp to any port 9100
+</code></pre><p>open firewall on server</p><pre tabindex=0><code>sudo ufw allow from $PANOPTICON proto tcp to any port 9100
 </code></pre></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Install Promtail</span></h5><div class=card><div class=card-body><p>Install Promtail
-from <a href=https://github.com/grafana/loki/releases/>https://github.com/grafana/loki/releases/</a></p><pre><code>curl -O -L https://github.com/grafana/loki/releases/download/v2.3.0/promtail-linux-amd64.zip
+from <a href=https://github.com/grafana/loki/releases/>https://github.com/grafana/loki/releases/</a></p><pre tabindex=0><code>curl -O -L https://github.com/grafana/loki/releases/download/v2.3.0/promtail-linux-amd64.zip
 sudo apt install unzip
 unzip promtail-linux-amd64.zip
 sudo mv promtail-linux-amd64 /usr/local/bin/promtail
-</code></pre><p>make conf file</p><pre><code>sudo vim /etc/metrics/promtail.yml
+</code></pre><p>make conf file</p><pre tabindex=0><code>sudo vim /etc/metrics/promtail.yml
 
 server:
   http_listen_port: 9080
@@ -57,8 +58,8 @@ scrape_configs:
       job: system logs
       host: $HOSTNAME
       __path__: /var/log/*log
-</code></pre><p>create service</p><pre><code>sudo vim /etc/systemd/system/promtail.service
-</code></pre><pre><code>[Unit]
+</code></pre><p>create service</p><pre tabindex=0><code>sudo vim /etc/systemd/system/promtail.service
+</code></pre><pre tabindex=0><code>[Unit]
 Description=Promtail service
 After=network.target
 
@@ -69,21 +70,21 @@ ExecStart=/usr/local/bin/promtail -config.file /etc/metrics/promtail.yml
 
 [Install]
 WantedBy=multi-user.target
-</code></pre><p>start and enable service</p><pre><code>sudo systemctl start promtail.service
+</code></pre><p>start and enable service</p><pre tabindex=0><code>sudo systemctl start promtail.service
 sudo sytemctl status promtail.service
 sudo systemctl enable promtail.service
-</code></pre><p>open firewall on LOKI server</p><pre><code>sudo ufw allow from $REMOTE_IP proto tcp to any port 3100
-</code></pre></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Installing Blackbox Exporter</span></h5><div class=card><div class=card-body><p>Installing BlackBox Exporter</p><pre><code>curl -O -L https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
+</code></pre><p>open firewall on LOKI server</p><pre tabindex=0><code>sudo ufw allow from $REMOTE_IP proto tcp to any port 3100
+</code></pre></div></div></div></div><div class=note-card><div class=item><h5 class=note-title><span>Installing Blackbox Exporter</span></h5><div class=card><div class=card-body><p>Installing BlackBox Exporter</p><pre tabindex=0><code>curl -O -L https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
 tar xzf blackbox_exporter-*.*.linux-amd64.tar.gz
 sudo mv /blackbox_exporter /usr/local/bin/metrics/blackbox_exporter
-</code></pre><p>make conf file</p><pre><code>sudo vim /etc/metrics/blackbox.yml
+</code></pre><p>make conf file</p><pre tabindex=0><code>sudo vim /etc/metrics/blackbox.yml
 
 modules:
   http_prometheus:
      prober: http
      timeout: 5s
      http:
-       valid_http_versions: [&quot;HTTP/1.1&quot;, &quot;HTTP/2&quot;]
+       valid_http_versions: [&#34;HTTP/1.1&#34;, &#34;HTTP/2&#34;]
        method: GET
        fail_if_ssl: false
        fail_if_not_ssl: true
@@ -103,7 +104,7 @@ modules:
     prober: tcp
     tcp:
       query_response:
-      - expect: &quot;^+OK&quot;
+      - expect: &#34;^+OK&#34;
       tls: true
       tls_config:
         insecure_skip_verify: false
@@ -111,19 +112,19 @@ modules:
     prober: tcp
     tcp:
       query_response:
-      - expect: &quot;^SSH-2.0-&quot;
-      - send: &quot;SSH-2.0-blackbox-ssh-check&quot;
+      - expect: &#34;^SSH-2.0-&#34;
+      - send: &#34;SSH-2.0-blackbox-ssh-check&#34;
   irc_banner:
     prober: tcp
     tcp:
       query_response:
-      - send: &quot;NICK prober&quot;
-      - send: &quot;USER prober prober prober :prober&quot;
-      - expect: &quot;PING :([^ ]+)&quot;
-        send: &quot;PONG ${1}&quot;
-      - expect: &quot;^:[^ ]+ 001&quot;
+      - send: &#34;NICK prober&#34;
+      - send: &#34;USER prober prober prober :prober&#34;
+      - expect: &#34;PING :([^ ]+)&#34;
+        send: &#34;PONG ${1}&#34;
+      - expect: &#34;^:[^ ]+ 001&#34;
   icmp:
-</code></pre><p>create blackbox service</p><pre><code>sudo vim /etc/systemd/system/blackbox_exporter.service
+</code></pre><p>create blackbox service</p><pre tabindex=0><code>sudo vim /etc/systemd/system/blackbox_exporter.service
 
 [Unit]
 Description=Blackbox exporter for Prometheus
@@ -135,15 +136,24 @@ User=exporter
 Type=simple
 ExecStart=/usr/local/bin/metrics/blackbox/blackbox_exporter \
  --config.file=/etc/metrics/blackbox.yml \
- --web.listen-address=&quot;:9115&quot;
+ --web.listen-address=&#34;:9115&#34;
 
 
 [Install]
 WantedBy=multi-user.target
-</code></pre><p>enable service</p><pre><code>sudo systemctl start blackbox_exporter.service
+</code></pre><p>enable service</p><pre tabindex=0><code>sudo systemctl start blackbox_exporter.service
 sudo systemctl status blackbox_exporter.service
 sudo systemctl enable blackbox_exporter.service
-</code></pre><p>open UFW port on server</p><pre><code>sudo ufw allow from 137.184.43.210 proto tcp to any port 9115
-</code></pre><p>add target to prometheus.yml file on panopticon server</p></div></div></div></div></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><a href="mailto:JohnDMarks@gmail.com?subject=&cc=&bcc=&body=">Email Me</a></div><div class="col-md-4 col-sm-12"><h5>Images provided by:</h5><ul><li><a href=https://www.freepik.com>www.Freepik.com</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png alt="Toha Theme Logo">
+</code></pre><p>open UFW port on server</p><pre tabindex=0><code>sudo ufw allow from 137.184.43.210 proto tcp to any port 9115
+</code></pre><p>add target to prometheus.yml file on panopticon server</p></div></div></div></div></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><a href="mailto:JohnDMarks@gmail.com?subject=&cc=&bcc=&body=">Email Me</a></div><div class="col-md-4 col-sm-12"><h5>Images provided by:</h5><ul><li><a href=https://www.freepik.com>www.Freepik.com</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png alt="Toha Theme Logo">
 Toha</a></div><div class="col-md-4 text-center">© 2021 Copyright.</div><div class="col-md-4 text-right"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script><script type=text/javascript src=/js/popper.min.js></script><script type=text/javascript src=/js/bootstrap.min.js></script><script type=text/javascript src=/js/navbar.js></script><script type=text/javascript src=/js/plyr.js></script><script type=text/javascript src=/js/main.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script><script src=/js/imagesloaded.pkgd.min.js></script><script src=/js/note.js></script><script>hljs.initHighlightingOnLoad();</script></body></html>
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script>
+<script type=text/javascript src=/js/popper.min.js></script>
+<script type=text/javascript src=/js/bootstrap.min.js></script>
+<script type=text/javascript src=/js/navbar.js></script>
+<script type=text/javascript src=/js/plyr.js></script>
+<script type=text/javascript src=/js/main.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script>
+<script src=/js/imagesloaded.pkgd.min.js></script>
+<script src=/js/note.js></script>
+<script>hljs.initHighlightingOnLoad()</script></body></html>
