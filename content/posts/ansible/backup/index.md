@@ -21,9 +21,7 @@ Creating backups for WordPress websites using Ansible is a pretty simple process
 To complete this tutorial you will need:
 
 - A server with a WordPress website that will be the target of our backups
-
 - Ansible installed on either your local machine or another server with access to the WordPress target
-
 - A DigitalOcean account with a Space created
     - And an associated [Spaces access key](https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key#creating-an-access-key)
 
