@@ -7,7 +7,7 @@ author:
   # image: /images/authors/
 menu:
   sidebar:
-    name: Deploying a LAMP server
+    name: Deploying a LAMP server Ubuntu 22.04
     identifier: wordpress-new_lamp
     parent: wordpress
     weight: 10
