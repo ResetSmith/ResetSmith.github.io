@@ -15,8 +15,6 @@ draft: false
 ---
 This tutorial has been updated for 2022.
 
-{{< toc >}}
-
 This tutorial will walk-through the process of installing Apache, MySql, and PHP on an Ubuntu 22.04 DigitalOcean Droplet. The server created here will eventually host a WordPress website, I will indicate when settings are specific to WordPress and you can alternate from there if you are doing something different. These directions are for DigitalOcean but should be similar for most VPS providers. Before starting this process you should obtain an Ubuntu 22.04 droplet from DigitalOcean, a 'Basic' Droplet with 2GB of memory should suffice for a basic low-traffic website and you can scale up from there in the future if you need to. In addition to obtaining the droplet, you should configure the server for SSH access. If you need assistance with that, DigitalOcean has articles about [configuring new droplets](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04) and about [adding SSH keys to existing droplets](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/).
 
 {{< alert type="info" >}}
