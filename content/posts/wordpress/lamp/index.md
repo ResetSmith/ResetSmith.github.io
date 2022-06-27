@@ -13,7 +13,7 @@ menu:
     weight: 50
 ---
 
-This tutorial will walkthrough the process of installing Apache, MySql, and PHP on an Ubuntu 20.04 DigitalOcean Droplet. The server created here will eventually host a WordPress website, I will indicate when settings are specific to WordPress and you can alternate from there if you are doing something different. These directions are for DigitalOcean but should be similar for most VPS providers. Before starting this process you should obtain an [Ubuntu 20.04 droplet](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ubuntu-20-04-server-on-a-digitalocean-droplet) from DigitalOcean and make sure your [SSH access is working.](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/)
+This tutorial will walk through the process of installing Apache, MySql, and PHP on an Ubuntu 20.04 DigitalOcean Droplet. The server created here will eventually host a WordPress website, I will indicate when settings are specific to WordPress and you can alternate from there if you are doing something different. These directions are for DigitalOcean but should be similar for most VPS providers. Before starting this process you should obtain an [Ubuntu 20.04 droplet](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ubuntu-20-04-server-on-a-digitalocean-droplet) from DigitalOcean and make sure your [SSH access is working.](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/)
 
 {{< alert type="info" >}}
 **Ubuntu Versions**\

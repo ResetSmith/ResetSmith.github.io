@@ -13,9 +13,9 @@ menu:
     weight: 10
 draft: false
 ---
-This tutorial has been updated for 2022.
+*This tutorial has been updated for 2022.*
 
-This tutorial will walk-through the process of installing Apache, MySql, and PHP on an Ubuntu 22.04 DigitalOcean Droplet. The server created here will eventually host a WordPress website, I will indicate when settings are specific to WordPress and you can alternate from there if you are doing something different. These directions are for DigitalOcean but should be similar for most VPS providers. Before starting this process you should obtain an Ubuntu 22.04 droplet from DigitalOcean, a 'Basic' Droplet with 2GB of memory should suffice for a basic low-traffic website and you can scale up from there in the future if you need to. In addition to obtaining the droplet, you should configure the server for SSH access. If you need assistance with that, DigitalOcean has articles about [configuring new droplets](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04) and about [adding SSH keys to existing droplets](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/).
+In this tutorial we will walk-through the process of installing Apache, MySql, and PHP on an Ubuntu 22.04 DigitalOcean Droplet. The server created here will eventually host a WordPress website, I will indicate when settings are specific to WordPress and you can alternate from there if you are doing something different. These directions are for DigitalOcean but should be similar for most VPS providers. Before starting this process you should obtain an Ubuntu 22.04 droplet from DigitalOcean, a 'Basic' Droplet with 2GB of memory should suffice for a basic low-traffic website and you can scale up from there in the future if you need to. In addition to obtaining the droplet, you should configure the server for SSH access. If you need assistance with that, DigitalOcean has articles about [configuring new droplets](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04) and about [adding SSH keys to existing droplets](https://docs.digitalocean.com/products/droplets/how-to/add-ssh-keys/).
 
 {{< alert type="info" >}}
 **Ubuntu Versions**\
@@ -34,7 +34,7 @@ Once you are connected to your server, the first thing you should do is check fo
 ```
 sudo apt update
 ```
-Once that is down checking, we'll run the waiting updates with
+Once that is done checking, we'll run the waiting updates with
 ```
 sudo apt upgrade
 ```
@@ -45,9 +45,9 @@ With the server updated we can get Apache installed. We'll run this command to d
 sudo apt install apache2
 ```
 
-And when once that is completed you can navigate to the IP address of the server in your web browser and should be greeted with the Apache2 Default Page. There is still some work to be done in order to get Apache to properly serve up a webpage. But this is all we need for now, we'll create a VirtualHost file and configure it on a later step.
+And once that is completed you can navigate to the IP address of the server in your web browser and should be greeted with the Apache2 Default Page. There is still some work to be done in order to get Apache to properly serve up a webpage. But this is all we need for now, we'll create a VirtualHost file and configure it on a later step.
 
-{{< alert type="warn" >}}
+{{< alert type="warning" >}}
 **Connection Errors**\
 If your server will not display the Apache Configuration/Default page and you followed the steps in the *DigitalOcean initial server setup* it's likely your connection is being blocked by the UFW firewall. You can open your Firewall to allow Apache connections with the following command
 ```
@@ -64,7 +64,7 @@ Once that is done reload your web browser and the Apache Configuration/Default p
 
 ### Installing MySql
 
-Next up for our LAMP is the 'M', MySql. MySql is a Database application that help us organize our content for our future website. There are many Database options, but MySql is the most common for WordPress so that's what we'll use here.
+Next up for our LAMP is the 'M', MySql. MySql is a Database application that help us organize our content for our future website. There are many database options, but MySql is the most common for WordPress so that is what we'll use here.
 
 First up is to download the mysql-server app by running
 ```
@@ -75,38 +75,38 @@ Once MySql is downloaded we should go through the initial setup. Run this comman
 mysql_secure_installation
 ```
 
-You will be prompted through a series of questions, the first should be if you would like to enforce password strength requirements (I recommend yes). Next you will be prompted to define a 'root' password, make sure you copy this down you will most likely need it in the future. After you set the password you will be asked to remove anonymous users, you should. You should also disallow remote root logins, and finally go ahead and reload the privilege tables when prompted which updates the currently logged in accounts to match the new settings.
+You will be prompted through a series of questions, the first should be if you would like to enforce password strength requirements (I recommend yes). Next you will be prompted to define a 'root' password, make sure you copy this down you will most likely need it in the future (not this tutorial but in general). After you set the password you will be asked to remove anonymous users, you should. You should also disallow remote root logins, and finally go ahead and reload the privilege tables when prompted which updates the currently logged in accounts to match the new settings.
 
-After that we'll be done with MySql for now.
+After that we are done with MySql for now.
 
 ### Installing PHP
 
-The final piece of our LAMP server is the 'P', for PHP. PHP is a programming scripting language that WordPress and many other web applications are built on. Since this tutorial is about getting WordPress installed we'll be installing PHP and some necessary add-ons for WordPress.
+The final piece of our LAMP server is the 'P', for PHP. PHP is a programming scripting language that WordPress and many other web applications are built on. Since this tutorial is about getting WordPress installed we'll be installing PHP and some additional necessary add-ons for WordPress.
 
 ```
 sudo apt install php php-mysql php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip
 ```
 
-These are some of the commonly needed PHP extensions for WordPress. It's possible that you may need other or additional extensions for particular WordPress plugins, make sure to check your documentation.
+These are some of the commonly needed PHP extensions for WordPress. It's possible that you may need other extensions for particular WordPress plugins, make sure to check your documentation.
 
 ---
 
 ## Configuring the LAMP apps
 
-Now that the we have all the necessary applications installed for our LAMP stack, we need to complete configuring them for serving up a WordPress website. In order to complete these steps you will want to have a URL already registered, and the DNS for that URL pointing to our DigitalOcean droplet. From here on out the URL will be referred to as the FQDN (fully qualified domain name).
+Now that the we have all the necessary applications installed for our LAMP stack, we need to complete configuring them for serving up a WordPress website. In order to complete these steps you will want to have a URL already registered (a website name like resettech.net, or www.google.com), and the DNS for that URL pointing to our DigitalOcean droplet. From here on out the URL will be referred to as the FQDN (fully qualified domain name).
 
 ### Configuring the MySql database
 
 The first thing we will do is setup a MySql database for WordPress and then create a user for WordPress to use to access that database. In this section there are three variables that you will need to determine, the name of the database, the username you want for the database user, and then what password do you want for that user. I will be using the WordPress defaults (except for the password which I will make up) for the variables here, but you may want to update them to something else depending on your use case. In this example and future documentation we'll assume the MySql database is named 'wordpress', the database user is 'wp_user', and the password is 'NotMyPassword123'.
 
 
-Connect to your server via SSH or the Droplet Console, and then connect to the MySql app by typing in
+From your server terminal connect to the MySql application by typing in
 ```
 sudo mysql -u root
 ```
 If you are prompted for a password, it is looking for your Ubuntu 'Sudo' password.  
 
-This will create a database in MySql named 'wordpress' and then set the Character Set and Collate options to utf8 which is what WordPress needs.
+Next we will create a database in MySql named 'wordpress' and then set the Character Set and Collate options to utf8 which is what WordPress needs.
 ```
 CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 ```
