@@ -8,7 +8,7 @@ author:
 menu:
   sidebar:
     name: Deploying a LAMP server Ubuntu 22.04
-    identifier: wordpress-new_lamp
+    identifier: wordpress-new_lamp_22
     parent: wordpress
     weight: 10
 draft: false
