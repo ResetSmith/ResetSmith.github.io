@@ -11,7 +11,7 @@ menu:
     identifier: wordpress-new_lamp
     parent: wordpress
     weight: 10
-draft: true
+draft: false
 ---
 This tutorial has been updated for 2022.
 
@@ -144,8 +144,8 @@ Next we will fill the content of the VirtualHost file by opening it with a text 
 ```
 sudo vim /etc/apache2/sites-available/resettech.conf
 ```
-### ### ### ###
-Now we will create the VirtualHost content. I'm including a very basic VirtualHost example below that can be copy and pasted. However there are several variables that need to be edited to work with your respective website. In the top section the variable $ADMIN_EMAIL should be replaced with an active email address and the $DOMAIN_NAME variable should be replaced with your FQDN (ie: resettech.net).
+
+Now we will create the VirtualHost content. I'm including a basic VirtualHost example below that can be copy and pasted. However there are several variables that need to be edited to work with your respective website. In the top section the 'ServerAdmin' email should be replaced with an active email address and the 'ServerName' and 'ServerAlias' variables should be replaced with your FQDN (ie: resettech.net and www.resettech.net).
 
 {{< alert type="info" >}}
 **www vs non-www**\
@@ -153,11 +153,12 @@ In my example the website is being setup for non-www, if you would prefer your s
 {{< /alert >}}
 
 The other variable you need to define is the path to your WordPress installation (the DocumentRoot and Directory variables in the example below). Since we have not downloaded or installed WordPress yet (covered in a later step), we'll go ahead and use the location we will be installing WordPress to later /var/www/wordpress. It is possible to install WordPress to another location, but it is best practice to install your public web files in /var/www and the WordPress default location is /var/www/wordpress. In my experience the only time you should consider using a different path for the installation is if you expect to run multiple WordPress websites off of one server. 
+
 ```
 <VirtualHost *:80>
-ServerAdmin  $ADMIN_EMAIL
-ServerName   $DOMAIN_NAME
-ServerAlias  www.$DOMAIN_NAME
+ServerAdmin  admin@resettech.net
+ServerName   resettech.net
+ServerAlias  www.resettech.net
 DocumentRoot /var/www/wordpress
 
  <Directory /var/www/wordpress/>
@@ -185,12 +186,12 @@ Then we need to disable the default VirtualHost file that Apache comes with.
 sudo a2dissite 000-default.conf
 ```
 
-Before proceeding further you can check the syntax of your Apache Virtualhost file by running this command. If you receive any errors you will need to correct them before moving on.
+Before proceeding further you can check the syntax of your Apache Virtualhost file by running this command. You will get a warning that the current DocumentRoot folder does not exist. That is correct, but we will be creating that folder in a later step. If you see any additional errors, they will need to be corrected before moving on.
 ```
 sudo apache2ctl configtest
 ```
 
-You will get a warning that the current DocumentRoot folder does not exist. That is correct, but we will be creating that folder in a later step. Now we will enable the rewrite module in Apache that is required for WordPress.
+Now we will enable the rewrite module in Apache that is required for WordPress.
 ```
 sudo a2enmod rewrite
 ```
@@ -296,11 +297,11 @@ Now you should be able to navigate to your domain in your web browser and see th
 
 ## Installing wp-cli
 
-wp-cli is a tool for managing WordPress from the terminal. We use it to manage WordPress when the web interface is inaccessible and to apply bulk changes to the MySQL database after a server migration. You can find more information on the [wp-cli website.](https://wp-cli.org/)
+wp-cli is a tool for managing WordPress from the terminal. I use it to manage WordPress when the web interface is inaccessible and to apply bulk changes to the MySQL database after a server migration. You can find more information on the [wp-cli website.](https://wp-cli.org/)
 
 {{< alert type="info" >}}
 **Running commands**\
-To use wp-cli you navigate to the WordPress web root folder, for our websites that should be /var/www/$DOMAIN_NAME/. From there you can run the wp-cli commands in the terminal. You can find a list of commands on the [WordPress website.](https://developer.wordpress.org/cli/commands/)
+To use wp-cli you navigate to the WordPress web root folder, in this example that is /var/www/wordpress. From there you can run the wp-cli commands in the terminal. You can find a list of commands on the [WordPress website.](https://developer.wordpress.org/cli/commands/)
 {{< /alert >}}
 
 Download the wp-cli app
@@ -317,3 +318,7 @@ Move the app to the proper location for the app to be run by all users.
 ```
 mv wp-cli.phar /usr/local/bin/wp
 ```
+
+---
+
+That's it. You are now up and running with the latest version of WordPress and the wp-cli tool installed. From here you can start adding content to your website, or you may want to continue on to installing a SSL certificate to get your website on HTTPS.
