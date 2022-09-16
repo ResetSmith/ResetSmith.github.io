@@ -6,7 +6,7 @@ greeting: "Hi, I am"
 image: "images/authors/reset_smith.jpg"
 # give your some contact information. they will be used in the footer
 contactInfo:
-  email: "johndoe@example.com"
+  email: "Reset_Smith@resettech.net"
   phone: "+0123456789"
 
 # some summary about what you do
