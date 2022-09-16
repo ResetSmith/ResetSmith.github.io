@@ -1,48 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reset_Smith's Blog</title><link>https://resettech.net/</link><description>Recent content on Reset_Smith's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 25 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://resettech.net/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Notes</title><link>https://resettech.net/notes/ansible/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/ansible/</guid><description>WordPress Backups with Ansible Playbook for backing up WordPress servers Assumes WordPress is installed at /var/www/wordpress
-- hosts: all become: true vars_files: - $PATH_TO_VARS_FILE tasks: - name: Update repositories apt: update_cache=yes force_apt_get=yes cache_valid_time=3600 - name: Check if server is a WordPress host stat: path: /var/www/wordpress register: wp_check - name: Install prerequisites python3-pip apt: name: python3-pip state: present when: wp_check.stat.exists - name: Install prerequisites boto3 pip: name: - boto3 - botocore - name: Create temporary folder for backups on source file: path: &amp;quot;/tmp/{{ ansible_host }}&amp;quot; state: directory mode: '0755' tags: [ backup ] - name: Copy WordPress wp-content folder to backup folder copy: src: /var/www/wordpress/wp-content dest: &amp;quot;/tmp/{{ ansible_host }}&amp;quot; mode: '0755' remote_src: yes tags: [ backup ] - name: Do a MySQL dump to copy the database mysql_db: name: wordpress state: dump login_user: root login_password: &amp;quot;{{ mysql_root_pw }}&amp;quot; target: &amp;quot;/tmp/{{ ansible_host }}/backup.</description></item><item><title>Apache Notes</title><link>https://resettech.net/notes/apache/apache_notes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/apache/apache_notes/</guid><description>General Show active Vhost configuration in Apache
-apache2ctl -S
-Enable vhost in apache
-a2ensite $VHOST.conf
-Disable vhost in apache
-a2dissite $VHOST.conf
-Enable SSL in apache
-a3enmod ssl
-Check for errors in apache
-apache2ctl configtest
-Basic Auth with Apache Virtualhost Note This will NOT work while using wordpress with .htaccess file Install Apache utils package
+- hosts: all become: true vars_files: - $PATH_TO_VARS_FILE tasks: - name: Update repositories apt: update_cache=yes force_apt_get=yes cache_valid_time=3600 - name: Check if server is a WordPress host stat: path: /var/www/wordpress register: wp_check - name: Install prerequisites python3-pip apt: name: python3-pip state: present when: wp_check.stat.exists - name: Install prerequisites boto3 pip: name: - boto3 - botocore - name: Create temporary folder for backups on source file: path: &amp;#34;/tmp/{{ ansible_host }}&amp;#34; state: directory mode: &amp;#39;0755&amp;#39; tags: [ backup ] - name: Copy WordPress wp-content folder to backup folder copy: src: /var/www/wordpress/wp-content dest: &amp;#34;/tmp/{{ ansible_host }}&amp;#34; mode: &amp;#39;0755&amp;#39; remote_src: yes tags: [ backup ] - name: Do a MySQL dump to copy the database mysql_db: name: wordpress state: dump login_user: root login_password: &amp;#34;{{ mysql_root_pw }}&amp;#34; target: &amp;#34;/tmp/{{ ansible_host }}/backup.</description></item><item><title>Apache Notes</title><link>https://resettech.net/notes/apache/apache_notes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/apache/apache_notes/</guid><description>General Show active Vhost configuration in Apache
+apache2ctl -S Enable vhost in apache
+a2ensite $VHOST.conf Disable vhost in apache
+a2dissite $VHOST.conf Enable SSL in apache
+a3enmod ssl Check for errors in apache
+apache2ctl configtest Basic Auth with Apache Virtualhost Note This will NOT work while using wordpress with .htaccess file Install Apache utils package
 apt-get update
-apt-get install apache2-utils
-create password file and user
-htpasswd -c /etc/apache2/.</description></item><item><title>Elastic stack notes</title><link>https://resettech.net/notes/monitoring/elastic/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/monitoring/elastic/</guid><description>Installing ElasticSearch install java
-sudo apt install default-jre default-jdk
-Install Elasticsearch
+apt-get install apache2-utils create password file and user
+htpasswd -c /etc/apache2/.htpasswd $USERNAME LEAVE OFF -c for additional users</description></item><item><title>Elastic stack notes</title><link>https://resettech.net/notes/monitoring/elastic/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/monitoring/elastic/</guid><description>Installing ElasticSearch install java
+sudo apt install default-jre default-jdk Install Elasticsearch
 get public GPG key
-curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-add elastic to sources list
-echo &amp;quot;deb https://artifacts.elastic.co/packages/7.x/apt stable main&amp;quot; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
-check for updates
-sudo apt update
-install elasticsearch
-sudo apt install elasticsearch
-edit elasticsearch.yml config file
-sudo vim /etc/elasticsearch/elasticsearch.yml
-update network.host to read localhost
-network.host: localhost
-start elasticsearch service and then enable</description></item><item><title>Prometheus stack notes</title><link>https://resettech.net/notes/monitoring/prometheus/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/monitoring/prometheus/</guid><description>Node Exporter installation create folder for exporter apps
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - add elastic to sources list
+echo &amp;#34;deb https://artifacts.elastic.co/packages/7.x/apt stable main&amp;#34; | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list check for updates
+sudo apt update install elasticsearch
+sudo apt install elasticsearch edit elasticsearch.yml config file
+sudo vim /etc/elasticsearch/elasticsearch.yml update network.host to read localhost
+network.host: localhost start elasticsearch service and then enable</description></item><item><title>Prometheus stack notes</title><link>https://resettech.net/notes/monitoring/prometheus/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/monitoring/prometheus/</guid><description>Node Exporter installation create folder for exporter apps
 sudo mkdir /usr/local/bin/metrics
 sudo mkdir /etc/metrics
 sudo useradd -rs /bin/false exporter
 sudo chmod -R 777 /usr/local/bin/metrics
 sudo chmod -R 777 /etc/metrics
 sudo chown -R exporter:exporter /usr/local/bin/metrics
-sudo chown -R exporter:exporter /etc/metrics
-Install node_exporter
+sudo chown -R exporter:exporter /etc/metrics Install node_exporter
 curl -O -L https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
 tar xzvf node_exporter-*.*-amd64.tar.gz
-sudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exporter
-create service
-sudo vim /etc/systemd/system/node_exporter.service
-[Unit]
+sudo mv node_exporter-*.*-amd64 /usr/local/bin/node_exporter create service
+sudo vim /etc/systemd/system/node_exporter.service [Unit]
 Description=Node exporter for Prometheus
 After=network.target
 [Service]
@@ -50,8 +34,7 @@ User=exporter
 Type=simple
 ExecStart=/usr/local/bin/node_exporter/node_exporter
 [Install]
-WantedBy=multi-user.target
-start and enable service</description></item><item><title>Apache Conf Examples</title><link>https://resettech.net/notes/apache/ex_configs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/apache/ex_configs/</guid><description>HTTP Vhost for WordPress &amp;lt;VirtualHost *:80&amp;gt;
+WantedBy=multi-user.target start and enable service</description></item><item><title>Apache Conf Examples</title><link>https://resettech.net/notes/apache/ex_configs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/apache/ex_configs/</guid><description>HTTP Vhost for WordPress &amp;lt;VirtualHost *:80&amp;gt;
 ServerAdmin $EMAIL
 ServerName $FQDN
 ServerAlias www.$FQDN
@@ -63,8 +46,7 @@ Require all granted
 &amp;lt;/Directory&amp;gt;
 ErrorLog ${APACHE_LOG_DIR}/error.log
 CustomLog ${APACHE_LOG_DIR}/access.log combined
-&amp;lt;/VirtualHost&amp;gt;
-HTTPS Vhost for WordPress &amp;lt;VirtualHost *:80&amp;gt;
+&amp;lt;/VirtualHost&amp;gt; HTTPS Vhost for WordPress &amp;lt;VirtualHost *:80&amp;gt;
 ServerName $FQDN
 ServerAlias www.$FQDN
 Redirect permanent / https://$FQDN/
@@ -186,13 +168,12 @@ Initial setup Search depends on additional output content type of JSON in config
 In this tutorial we will walk-through the process of installing Apache, MySql, and PHP on an Ubuntu 22.04 DigitalOcean Droplet. The server created here will eventually host a WordPress website, I will indicate when settings are specific to WordPress and you can alternate from there if you are doing something different. These directions are for DigitalOcean but should be similar for most VPS providers.</description></item><item><title>Prometheus: Installing the Blackbox exporter</title><link>https://resettech.net/posts/monitoring/blackbox/</link><pubDate>Tue, 16 Nov 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/monitoring/blackbox/</guid><description>Blackbox exporter is a tool to probe remote targets over a variety of protocols. Or from the Blackbox exporter Github page:
 The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP.
 In practice I use it to monitor connectivity to websites. Through the Blackbox exporter I can capture HTTPS response times, SSL certificate statuses, and some additional website metrics. Additionally using the Alertmanager tool it&amp;rsquo;s possible to create alerts based on HTTPS response times, HTTPS status codes, or SSL certificate status.</description></item><item><title>Prometheus: Installing the Node exporter</title><link>https://resettech.net/posts/monitoring/node_exporter/</link><pubDate>Tue, 09 Nov 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/monitoring/node_exporter/</guid><description>Previously we installed Node Exporter on our Prometheus host. However in practice you will likely be installing Node Exporter on another VPS or other remote machine. The process is largely similar to installing it locally with a few extra steps.
-These directions go through the process I use for installing Node Exporter on remote virtual private servers running Ubuntu 20.04. To begin we&amp;rsquo;ll assume you have access to a remote machine/VPS through SSH or other &amp;lsquo;terminal&amp;rsquo; access with &amp;lsquo;sudo&amp;rsquo; permissions.</description></item><item><title>Prometheus: Getting started with Prometheus and Grafana</title><link>https://resettech.net/posts/monitoring/prom_install/</link><pubDate>Fri, 05 Nov 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/monitoring/prom_install/</guid><description>Prometheus is an open-source application created for systems monitoring and alerting. The Prometheus server application can produce limited visualizations of data that it collects and stores from Exporters which send it the data. Prometheus and it&amp;rsquo;s Exporters are good for measuring numerical values over time, things such as: Data Storage/Memory Usage, Network Stats, and Process Monitoring.
+These directions go through the process I use for installing Node Exporter on remote virtual private servers running Ubuntu 20.04. To begin we&amp;rsquo;ll assume you have access to a remote machine/VPS through SSH or other &amp;rsquo;terminal&amp;rsquo; access with &amp;lsquo;sudo&amp;rsquo; permissions.</description></item><item><title>Prometheus: Getting started with Prometheus and Grafana</title><link>https://resettech.net/posts/monitoring/prom_install/</link><pubDate>Fri, 05 Nov 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/monitoring/prom_install/</guid><description>Prometheus is an open-source application created for systems monitoring and alerting. The Prometheus server application can produce limited visualizations of data that it collects and stores from Exporters which send it the data. Prometheus and it&amp;rsquo;s Exporters are good for measuring numerical values over time, things such as: Data Storage/Memory Usage, Network Stats, and Process Monitoring.
 Prometheus is often paired with the open-source visualization software Grafana which improves the end-user experience by making queries easier and better looking.</description></item><item><title>Setting up password authentication with Apache</title><link>https://resettech.net/posts/server_mgmt/htpasswd/</link><pubDate>Tue, 12 Oct 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/server_mgmt/htpasswd/</guid><description>This is referred to as Apache &amp;lsquo;Basic Auth&amp;rsquo;. Following these directions will add a username and password prompt to a website or specific webpage. Typically we use this to hide a &amp;lsquo;Dev&amp;rsquo; website so it can still be accessible but not open to the public.
 Using htpasswd to generate users and passwords Install Dependencies Make sure you have Apache Extended Utilities installed sudo apt update
-sudo apt install apache2-utils
-Create first user with htpasswd sudo htpasswd -c /etc/apache2/htpasswd.</description></item><item><title>Migrating a WordPress website</title><link>https://resettech.net/posts/wordpress/migration/</link><pubDate>Fri, 24 Sep 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/wordpress/migration/</guid><description>When migrating a WordPress website from one server/VPS to another there are two things we need to make sure we capture; the MySql database and the wp-content folder. The instructions below will walkthrough copying both the MySql database and the wp-content folders from an existing WordPress installation to another &amp;lsquo;blank&amp;rsquo; WordPress installation on a different VPS.
+sudo apt install apache2-utils Create first user with htpasswd sudo htpasswd -c /etc/apache2/htpasswd.</description></item><item><title>Migrating a WordPress website</title><link>https://resettech.net/posts/wordpress/migration/</link><pubDate>Fri, 24 Sep 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/wordpress/migration/</guid><description>When migrating a WordPress website from one server/VPS to another there are two things we need to make sure we capture; the MySql database and the wp-content folder. The instructions below will walkthrough copying both the MySql database and the wp-content folders from an existing WordPress installation to another &amp;lsquo;blank&amp;rsquo; WordPress installation on a different VPS.
 Copying the data This should be done on the server you want to copy.</description></item><item><title>Setting up a LAMP server for WordPress</title><link>https://resettech.net/posts/wordpress/lamp/</link><pubDate>Thu, 16 Sep 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/wordpress/lamp/</guid><description>This tutorial will walk through the process of installing Apache, MySql, and PHP on an Ubuntu 20.04 DigitalOcean Droplet. The server created here will eventually host a WordPress website, I will indicate when settings are specific to WordPress and you can alternate from there if you are doing something different. These directions are for DigitalOcean but should be similar for most VPS providers. Before starting this process you should obtain an Ubuntu 20.</description></item><item><title>Enabling SSL with Apache</title><link>https://resettech.net/posts/server_mgmt/add_ssl/</link><pubDate>Tue, 14 Sep 2021 00:00:00 +0000</pubDate><guid>https://resettech.net/posts/server_mgmt/add_ssl/</guid><description>Today this tutorial will walkthrough using Certbot to obtain a SSL certificate and then applying the certificate to your website with Apache. This tutorial assumes you have SSH access or another way to run terminal commands on a Debian based server with Apache already installed. For this particular example I ran these commands on a basic DigitalOcean Droplet running Ubuntu 20.04.
-Obtain certificate using Certbot We&amp;rsquo;ll be using the Cerbot app to request a SSL certificate from LetsEncrypt.</description></item><item><title>Hugo Notes</title><link>https://resettech.net/notes/hugo/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/hugo/</guid><description>Updating Hugo folder permissions permissions for content folder for Hugo
+Obtain certificate using Certbot We&amp;rsquo;ll be using the Cerbot app to request a SSL certificate from LetsEncrypt.</description></item><item><title>Hugo Notes</title><link>https://resettech.net/notes/hugo/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/hugo/</guid><description> Updating Hugo folder permissions permissions for content folder for Hugo
 sudo chmod 755 /var/www/$HUGO_FOLDER
 find /var/www/$HUGO_FOLDER/ -type f -exec chmod 644 {} \;
 sudo chown -R www-data:www-data /var/www/$HUGO_FOLDER</description></item><item><title>Search Results</title><link>https://resettech.net/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/search/</guid><description>This file exists solely to respond to /search URL with the related search layout template.
@@ -203,20 +184,13 @@ Initial setup Search depends on additional output content type of JSON in config
 Manually add PHP repository and check again sudo apt install software-properties-common
 sudo add-apt-repository ppa:ondrej/php
 sudo apt update
-sudo apt upgrade
-Check PHP version again php -v
-If PHP still shows 7.2 then 7.4 needs to be manually installed
-Install PHP 7.4 sudo apt install php7.</description></item><item><title>Ubuntu Notes</title><link>https://resettech.net/notes/ubuntu/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/ubuntu/</guid><description>General stuff Change hostname
-hostnamectl set-hostname $HOSTNAME
-Must also check the following files and update if necessary
+sudo apt upgrade Check PHP version again php -v If PHP still shows 7.2 then 7.4 needs to be manually installed
+Install PHP 7.4 sudo apt install php7.4 Enable PHP 7.</description></item><item><title>Ubuntu Notes</title><link>https://resettech.net/notes/ubuntu/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/ubuntu/</guid><description>General stuff Change hostname
+hostnamectl set-hostname $HOSTNAME Must also check the following files and update if necessary
 vim /etc/hostname
-vim /etc/hosts
-Restart server to take effect Set servertime
-timedatectl
-sets server time to local &amp;lsquo;Pacific&amp;rsquo; time
-sudo timedatectl set-timezone America/Los_Angeles
-Turns on colored propmts in terminal
-sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
-~/.bashrc custom prompts For users:
-export PS1=&amp;quot;\u @\[$(tput sgr0)\]\[\033[38;5;10m\]\H\[$(tput sgr0)\] \A\n[\[$(tput sgr0)\]\[\033[38;5;10m\]\w\[$(tput sgr0)\]] \\$ \[$(tput sgr0)\]&amp;quot;
-For root:</description></item><item><title>WordPress Notes</title><link>https://resettech.net/notes/wordpress/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/wordpress/</guid><description/></item></channel></rss>
+vim /etc/hosts Restart server to take effect Set servertime
+timedatectl sets server time to local &amp;lsquo;Pacific&amp;rsquo; time
+sudo timedatectl set-timezone America/Los_Angeles Turns on colored propmts in terminal
+sed -i &amp;#39;s/#force_color_prompt=yes/force_color_prompt=yes/g&amp;#39; ~/.bashrc ~/.bashrc custom prompts For users:
+export PS1=&amp;#34;\u @\[$(tput sgr0)\]\[\033[38;5;10m\]\H\[$(tput sgr0)\] \A\n[\[$(tput sgr0)\]\[\033[38;5;10m\]\w\[$(tput sgr0)\]] \\$ \[$(tput sgr0)\]&amp;#34; For root:
+export PS1=&amp;#34;\[$(tput bold)\]\[\033[38;5;10m\]\u\[$(tput sgr0)\] @\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;10m\]\H\[$(tput sgr0)\] \A\n[\[$(tput sgr0)\]\[\033[38;5;10m\]\w\[$(tput sgr0)\]] \\$ \[$(tput sgr0)\]&amp;#34; if you see a permission denied error, update permissions of .</description></item><item><title>WordPress Notes</title><link>https://resettech.net/notes/wordpress/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/wordpress/</guid><description/></item></channel></rss>

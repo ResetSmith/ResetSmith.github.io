@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Notes on Reset_Smith's Blog</title><link>https://resettech.net/notes/</link><description>Recent content in Notes on Reset_Smith's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 08 Jun 2010 08:06:25 +0600</lastBuildDate><atom:link href="https://resettech.net/notes/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Notes</title><link>https://resettech.net/notes/ansible/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/ansible/</guid><description>WordPress Backups with Ansible Playbook for backing up WordPress servers Assumes WordPress is installed at /var/www/wordpress
-- hosts: all become: true vars_files: - $PATH_TO_VARS_FILE tasks: - name: Update repositories apt: update_cache=yes force_apt_get=yes cache_valid_time=3600 - name: Check if server is a WordPress host stat: path: /var/www/wordpress register: wp_check - name: Install prerequisites python3-pip apt: name: python3-pip state: present when: wp_check.stat.exists - name: Install prerequisites boto3 pip: name: - boto3 - botocore - name: Create temporary folder for backups on source file: path: &amp;quot;/tmp/{{ ansible_host }}&amp;quot; state: directory mode: '0755' tags: [ backup ] - name: Copy WordPress wp-content folder to backup folder copy: src: /var/www/wordpress/wp-content dest: &amp;quot;/tmp/{{ ansible_host }}&amp;quot; mode: '0755' remote_src: yes tags: [ backup ] - name: Do a MySQL dump to copy the database mysql_db: name: wordpress state: dump login_user: root login_password: &amp;quot;{{ mysql_root_pw }}&amp;quot; target: &amp;quot;/tmp/{{ ansible_host }}/backup.</description></item><item><title>Resultados de Búsqueda</title><link>https://resettech.net/search/</link><pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate><guid>https://resettech.net/search/</guid><description>Este archivo existe únicamente para responder a la URL /search con la plantilla de diseño search relacionada.
+- hosts: all become: true vars_files: - $PATH_TO_VARS_FILE tasks: - name: Update repositories apt: update_cache=yes force_apt_get=yes cache_valid_time=3600 - name: Check if server is a WordPress host stat: path: /var/www/wordpress register: wp_check - name: Install prerequisites python3-pip apt: name: python3-pip state: present when: wp_check.stat.exists - name: Install prerequisites boto3 pip: name: - boto3 - botocore - name: Create temporary folder for backups on source file: path: &amp;#34;/tmp/{{ ansible_host }}&amp;#34; state: directory mode: &amp;#39;0755&amp;#39; tags: [ backup ] - name: Copy WordPress wp-content folder to backup folder copy: src: /var/www/wordpress/wp-content dest: &amp;#34;/tmp/{{ ansible_host }}&amp;#34; mode: &amp;#39;0755&amp;#39; remote_src: yes tags: [ backup ] - name: Do a MySQL dump to copy the database mysql_db: name: wordpress state: dump login_user: root login_password: &amp;#34;{{ mysql_root_pw }}&amp;#34; target: &amp;#34;/tmp/{{ ansible_host }}/backup.</description></item><item><title>Resultados de Búsqueda</title><link>https://resettech.net/search/</link><pubDate>Tue, 08 Jun 2010 08:06:25 +0600</pubDate><guid>https://resettech.net/search/</guid><description>Este archivo existe únicamente para responder a la URL /search con la plantilla de diseño search relacionada.
 No se muestra ningún contenido aquí, todo el contenido se basa en la plantilla layouts/page/search.html
 Establecer una prioridad muy baja en el mapa del sitio le dirá a los motores de búsqueda que éste no es un contenido importante.
 Esta implementación utiliza Fusejs, jquery y mark.js
@@ -47,7 +47,7 @@ Initial setup Search depends on additional output content type of JSON in config
 No content shown here is rendered, all content is based in the template layouts/page/search.html
 Setting a very low sitemap priority will tell search engines this is not important content.
 This implementation uses Fusejs, jquery and mark.js
-Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description></item><item><title>Hugo Notes</title><link>https://resettech.net/notes/hugo/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/hugo/</guid><description>Updating Hugo folder permissions permissions for content folder for Hugo
+Initial setup Search depends on additional output content type of JSON in config.toml ``` [outputs] home = [&amp;ldquo;HTML&amp;rdquo;, &amp;ldquo;JSON&amp;rdquo;] ```</description></item><item><title>Hugo Notes</title><link>https://resettech.net/notes/hugo/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/hugo/</guid><description> Updating Hugo folder permissions permissions for content folder for Hugo
 sudo chmod 755 /var/www/$HUGO_FOLDER
 find /var/www/$HUGO_FOLDER/ -type f -exec chmod 644 {} \;
 sudo chown -R www-data:www-data /var/www/$HUGO_FOLDER</description></item><item><title>Search Results</title><link>https://resettech.net/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/search/</guid><description>This file exists solely to respond to /search URL with the related search layout template.
@@ -58,20 +58,13 @@ Initial setup Search depends on additional output content type of JSON in config
 Manually add PHP repository and check again sudo apt install software-properties-common
 sudo add-apt-repository ppa:ondrej/php
 sudo apt update
-sudo apt upgrade
-Check PHP version again php -v
-If PHP still shows 7.2 then 7.4 needs to be manually installed
-Install PHP 7.4 sudo apt install php7.</description></item><item><title>Ubuntu Notes</title><link>https://resettech.net/notes/ubuntu/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/ubuntu/</guid><description>General stuff Change hostname
-hostnamectl set-hostname $HOSTNAME
-Must also check the following files and update if necessary
+sudo apt upgrade Check PHP version again php -v If PHP still shows 7.2 then 7.4 needs to be manually installed
+Install PHP 7.4 sudo apt install php7.4 Enable PHP 7.</description></item><item><title>Ubuntu Notes</title><link>https://resettech.net/notes/ubuntu/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/ubuntu/</guid><description>General stuff Change hostname
+hostnamectl set-hostname $HOSTNAME Must also check the following files and update if necessary
 vim /etc/hostname
-vim /etc/hosts
-Restart server to take effect Set servertime
-timedatectl
-sets server time to local &amp;lsquo;Pacific&amp;rsquo; time
-sudo timedatectl set-timezone America/Los_Angeles
-Turns on colored propmts in terminal
-sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/g' ~/.bashrc
-~/.bashrc custom prompts For users:
-export PS1=&amp;quot;\u @\[$(tput sgr0)\]\[\033[38;5;10m\]\H\[$(tput sgr0)\] \A\n[\[$(tput sgr0)\]\[\033[38;5;10m\]\w\[$(tput sgr0)\]] \\$ \[$(tput sgr0)\]&amp;quot;
-For root:</description></item><item><title>WordPress Notes</title><link>https://resettech.net/notes/wordpress/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/wordpress/</guid><description/></item></channel></rss>
+vim /etc/hosts Restart server to take effect Set servertime
+timedatectl sets server time to local &amp;lsquo;Pacific&amp;rsquo; time
+sudo timedatectl set-timezone America/Los_Angeles Turns on colored propmts in terminal
+sed -i &amp;#39;s/#force_color_prompt=yes/force_color_prompt=yes/g&amp;#39; ~/.bashrc ~/.bashrc custom prompts For users:
+export PS1=&amp;#34;\u @\[$(tput sgr0)\]\[\033[38;5;10m\]\H\[$(tput sgr0)\] \A\n[\[$(tput sgr0)\]\[\033[38;5;10m\]\w\[$(tput sgr0)\]] \\$ \[$(tput sgr0)\]&amp;#34; For root:
+export PS1=&amp;#34;\[$(tput bold)\]\[\033[38;5;10m\]\u\[$(tput sgr0)\] @\[$(tput sgr0)\]\[$(tput bold)\]\[\033[38;5;10m\]\H\[$(tput sgr0)\] \A\n[\[$(tput sgr0)\]\[\033[38;5;10m\]\w\[$(tput sgr0)\]] \\$ \[$(tput sgr0)\]&amp;#34; if you see a permission denied error, update permissions of .</description></item><item><title>WordPress Notes</title><link>https://resettech.net/notes/wordpress/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://resettech.net/notes/wordpress/</guid><description/></item></channel></rss>
