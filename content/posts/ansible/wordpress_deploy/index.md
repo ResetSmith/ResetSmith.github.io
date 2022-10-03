@@ -25,6 +25,8 @@ This tutorial will go through the playbook in sections, but you can find a compl
 
 Starting from the top there is the section containing the Inventory File and Variable definitions along with the first directive to run the playbook as Sudo.
 
+---
+
 ## The Header
 
 ```yaml
@@ -56,6 +58,8 @@ mysql_users:
 ```
 
 That's it for the 'header' section of the wp_install, next up is the 'Tasks' section. The Tasks section of the playbook is list of directives that are actually taking some kind of action. This will become more clear as you review the directives themselves.
+
+---
 
 ## Initial Tasks
 
@@ -125,6 +129,8 @@ After the restart the next Task is to install MySQL. I had quite a bit of troubl
       shell: /usr/sbin/a2dissite 000-default.conf
       notify: Restart Apache
 ```
+
+---
 
 ## Configuration Tasks
 
