@@ -43,7 +43,7 @@ The 'become: true' directive is about running commands as Sudo, and running it a
 
 The 'vars_files:' directive looks at a Variable file I have saved in another location. If you are following my same Playbook folder organization the 'mysql_vars.yml' file should be located in /playbooks/secrets/mysql_vars.yml, which you will need to create if you have cloned by playbooks from github.  The vars file contains the variables needed for the Geerlingguy.mysql role we'll be running later. But below is an example of what that file should look like, I'll go into more detail further on.
 
-### *Example mysql_vars.yml*
+##### *Example mysql_vars.yml*
 ```yaml
 # These are the variables needed for the GeerlingGuy MySQL role
 
