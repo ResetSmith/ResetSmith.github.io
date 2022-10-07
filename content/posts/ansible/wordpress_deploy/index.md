@@ -79,6 +79,8 @@ That's it for the 'header' section of the wp_install, next up is the 'Tasks' sec
 
 This is the start of our Ansible playbooks tasks section, as you can tell by the 'tasks:' directive and underneath that the tasks are listed out in order that they should run. The first of these two tasks checks for updates, the 'cache_valid_time' directive says that if the last check for updates occurred in the last 3600 seconds (60 minutes) then do not pull updates from the web/repos. The second task here simply installs the updates found by the previous task.
 
+---
+
 ```yaml
 # Installs dependencies needed for WordPress: Apache, MySQL and PHP
     - name: Installing Apache and PHP
@@ -151,6 +153,8 @@ Be aware that the 'ServerName' and 'ServerAlias' directives are being set progra
 
 After creating the new wordpress.conf file, the next task enables the Apache rewrite module required by WordPress. Then Ansible goes on to tell Apache to enable the newly created wordpress.conf and disables the 000-default.conf file that Apache ships with.
 
+---
+
 ```yaml
 # Adds Apache connections to the list for Fail2Ban to monitor
 # This task checks for a Fail2Ban installation in the default location
@@ -188,6 +192,8 @@ After creating the new wordpress.conf file, the next task enables the Apache rew
 
 This block is only relevant if you are using Fail2Ban to help manage your Firewall. The initial task in this section checks if Fail2Ban is installed on the server (in the default location). If it is then it will add a few rules for monitoring Apache traffic. If a Fail2Ban installation is not found then nothing is changed.
 
+---
+
 ## Installing WordPress
 
 The next several tasks are all for the installation of WordPress.
@@ -220,6 +226,8 @@ The next several tasks are all for the installation of WordPress.
 ```
 
 The initial task in this sequence checks for an existing WordPress installation in the same location (/var/www/wordpress), if one is found then the next several tasks are skipped. The next task creates the wordpress folder assigns the correct permissions and gives ownership to the Apache www-data user account. The final task in that sequence downloads WordPress into the /var/www/wordpress folder.
+
+---
 
 ```yaml
 # Copies the 'wp-config.php' and '.htaccess' files to the wordpress root directory
