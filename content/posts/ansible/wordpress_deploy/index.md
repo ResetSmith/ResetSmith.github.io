@@ -7,8 +7,8 @@ author:
   # image: /images/authors/
 menu:
   sidebar:
-    name: Ansible Backups
-    identifier: ansible-backup
+    name: WordPress Ansible Deployment
+    identifier: ansible-wordpress
     parent: ansible
     weight: 15
 #draft: true
@@ -132,7 +132,7 @@ After the restart the next Task is to install MySQL. I had quite a bit of troubl
 
 ---
 
-## Configuration Tasks
+## Apache Configuration Tasks
 
 Now that we have most the of the necessary pieces installed, the next tasks will focus on editing or creating the configuration files for previously installed applications.
 
@@ -169,3 +169,112 @@ Be aware that the 'ServerName' and 'ServerAlias' directives are being set progra
 
 After creating the new wordpress.conf file, the next task enables the Apache rewrite module required by WordPress. Then Ansible goes on to tell Apache to enable the newly created wordpress.conf and disables the 000-default.conf file that Apache ships with.
 
+```yaml
+# Adds Apache connections to the list for Fail2Ban to monitor
+# This task checks for a Fail2Ban installation in the default location
+    - name: Checks for Fail2Ban installation
+      stat:
+        path: /usr/bin/fail2ban-client
+      register: f2b_check
+
+# The following task is skipped if no Fail2Ban installation is found
+    - name: Adding Apache connections to Fail2Ban firewall monitoring list
+      when: f2b_check.stat.exists
+      blockinfile:
+        path: /etc/fail2ban/jail.local
+        block: |
+          # Apache jail
+          #
+          [apache]
+          enabled   = true
+          port      = http,https
+          filter    = apache-auth
+          logpath   = /var/log/apache*/*error.log
+          maxretry  = 3
+
+          [apache-overflows]
+          enabled   = true
+          filter    = apache-overflows
+          logpath   = /var/log/apache*/*error.log
+
+          [apache-badbots]
+          enabled   = true
+          filter    = apache-badbots
+          logpath   = /var/log/apache*/*access.log
+      notify: Restart Fail2ban
+```
+
+This block is only relevant if you are using Fail2Ban to help manage your Firewall. The initial task in this section checks if Fail2Ban is installed on the server (in the default location). If it is then it will add a few rules for monitoring Apache traffic. If a Fail2Ban installation is not found then nothing is changed.
+
+## Installing WordPress
+
+The next several tasks are all for the installation of WordPress.
+
+```yaml
+# Install WordPress
+# If an existing WordPress installation is found at /var/www/wordpress then the next several tasks are skipped
+    - name: Checks for existing WordPress installation
+      stat:
+        path: /var/www/wordpress
+      register: wp_check
+
+# Creates WordPress root folder and assigns the correct permissions
+    - name: Creating the WordPress root directory
+      when: not wp_check.stat.exists
+      file:
+        path: /var/www/wordpress
+        state: directory
+        owner: "www-data"
+        group: "www-data"
+        mode: '0755'
+
+# Downloads WordPress and installs the files to the wordpress root directory
+    - name: Downloading and unpacking the latest version of WordPress
+      when: not wp_check.stat.exists
+      unarchive:
+        src: https://wordpress.org/latest.tar.gz
+        dest: /var/www/
+        remote_src: yes
+```
+
+The initial task in this sequence checks for an existing WordPress installation in the same location (/var/www/wordpress), if one is found then the next several tasks are skipped. The next task creates the wordpress folder assigns the correct permissions and gives ownership to the Apache www-data user account. The final task in that sequence downloads WordPress into the /var/www/wordpress folder.
+
+```yaml
+# Copies the 'wp-config.php' and '.htaccess' files to the wordpress root directory
+# Variables used in the wp-config.php file are pulled from /secrets/mysql_vars.yml
+    - name: Copying updated wp-config.php from file
+      when: not wp_check.stat.exists
+      template:
+        src: "files/wp-config.php.j2"
+        dest: /var/www/wordpress/wp-config.php
+
+    - name: Updating the MySQL database reference in wp-config.php
+      when: not wp_check.stat.exists    
+      replace:
+        path: /var/www/wordpress/wp-config.php
+        regexp: 'MYSQL_DBNAME'
+        replace: "{{ item.name }}"
+      with_items: "{{ mysql_databases }}"
+
+    - name: Updating the MySQL user name in wp-config.php
+      when: not wp_check.stat.exists      
+      replace:
+        path: /var/www/wordpress/wp-config.php
+        regexp: 'MYSQL_UNAME'
+        replace: "{{ item.name }}"
+      with_items: "{{ mysql_users }}"
+
+    - name: Updating the MySQL user password in wp-config.php
+      when: not wp_check.stat.exists       
+      replace:
+        path: /var/www/wordpress/wp-config.php
+        regexp: 'MYSQL_PASS'
+        replace: "{{ item.password }}"
+      with_items: "{{ mysql_users }}"
+# Copies .htaccess
+    - name: Copy .htaccess from file
+      when: not wp_check.stat.exists
+      template:
+        src: "files/htaccess.j2"
+        dest: /var/www/wordpress/.htaccess
+```
