@@ -114,32 +114,6 @@ After the restart the next Task is to install MySQL. I had quite a bit of troubl
 
 ---
 
-```yaml
-# Apache Configuration
-# Creates Apache VirtualHost file, using the ansible hostname
-# The ansible hostname is determined automatically from the server's hostname
-# The server's hostname is set during creation in DigitalOcean or by using the 'hostnamectl' command on the server prior to running this playbook
-    - name: Creating the Apache VirtualHost file
-      template:
-        src: "files/apache.conf.j2"
-        dest: /etc/apache2/sites-available/wordpress.conf
-      notify: Reload Apache
-# Enables the Apache rewrite module, necessary for WordPress
-    - name: Enabling the Apache rewrite module
-      shell: /usr/sbin/a2enmod rewrite
-      notify: Reload Apache
-# Enables the new Apache VirtualHost file and disables the default one
-    - name: Enabling the new site in Apache
-      shell: /usr/sbin/a2ensite wordpress.conf
-      notify: Reload Apache
-
-    - name: Disabling the default Apache site
-      shell: /usr/sbin/a2dissite 000-default.conf
-      notify: Restart Apache
-```
-
----
-
 ## Apache Configuration Tasks
 
 Now that we have most the of the necessary pieces installed, the next tasks will focus on editing or creating the configuration files for previously installed applications.
