@@ -23,11 +23,11 @@ The WordPress installer playbook I created is the wp_install.yml playbook. The p
 
 This tutorial will go through the playbook in sections, but you can find a complete copy of the [playbook in Github](https://github.com/ResetSmith/playbooks/blob/main/wordpress/wp_install.yml).
 
-Starting from the top there is the section containing the Inventory File and Variable definitions along with the first directive to run the playbook as Sudo.
-
 ---
 
 ## The Header
+
+Starting from the top there is the section containing the Inventory File and Variable definitions along with the first directive to run the playbook as Sudo.
 
 ```yaml
 ---
@@ -37,7 +37,11 @@ Starting from the top there is the section containing the Inventory File and Var
     - ../secrets/mysql_vars.yml
 ```
 
-So for this playbook I have the hosts set to 'all'. I do have my Ansible hosts file setup for different groups but by-and-large the bulk of my servers are WordPress servers so I leave the hosts directive set to 'all' so this playbook will happily run on any server I target regardless of it's group within the hosts file. The 'become: true' directive is about running commands as Sudo, and running it at this level applies Sudo to every task below. This is one of my first playbooks I wrote, and since then have gotten away from applying Sudo at this level, and instead prefer to add this directive to the particular tasks that actually need it. At some point I will revisit this playbook and update the Sudo method but for now this works, and you just need to recognize that all the tasks below will be performed as Sudo. The 'vars_files:' directive looks at a Variable file I have saved in another location. If you are following my same Playbook folder organization the 'mysql_vars.yml' file should be located in /playbooks/secrets/mysql_vars.yml, which you will need to create if you have cloned by playbooks from github.  The vars file contains the variables needed for the Geerlingguy.mysql role we'll be running later. But below is an example of what that file should look like, I'll go into more detail further on.
+So for this playbook I have the hosts set to 'all'. I do have my Ansible hosts file setup for different groups but by-and-large the bulk of my servers are WordPress servers so I leave the hosts directive set to 'all' so this playbook will happily run on any server I target regardless of which group within the hosts file it belongs to.
+
+The 'become: true' directive is about running commands as Sudo, and running it at this level applies Sudo to every task below. This is one of my first playbooks I wrote, and since then have gotten away from applying Sudo at this level, and instead prefer to add this directive to the particular tasks that actually need it. At some point I will revisit this playbook and update the Sudo method but for now this works, and you just need to recognize that all the tasks below will be performed as Sudo. 
+
+The 'vars_files:' directive looks at a Variable file I have saved in another location. If you are following my same Playbook folder organization the 'mysql_vars.yml' file should be located in /playbooks/secrets/mysql_vars.yml, which you will need to create if you have cloned by playbooks from github.  The vars file contains the variables needed for the Geerlingguy.mysql role we'll be running later. But below is an example of what that file should look like, I'll go into more detail further on.
 
 ```yaml
 # These are the variables needed for the GeerlingGuy MySQL role
@@ -95,6 +99,8 @@ This is the start of our Ansible playbooks tasks section, as you can tell by the
 
 Now that we have the updates out of the way the next two tasks take care of installing some of the necessary dependencies for a WordPress installation. The first task installs Apache2 and PHP, along with the python3 MySQL Driver, the PHP MySQL module, and the PHP module for Apache2. The second task installs the PHP plugins needed by WordPress. The final task in this sequence reboots the server prior to moving on to the next tasks. I've found this restart is necessary to prevent errors further into the installation.
 
+---
+
 ```yaml
 # Uses the pre-created role by GeerlingGuy to install mysql
 # The role is installed by Ansible in the '/etc/ansible/galaxy.roles/' folder
@@ -105,6 +111,8 @@ Now that we have the updates out of the way the next two tasks take care of inst
 ```
 
 After the restart the next Task is to install MySQL. I had quite a bit of trouble getting the MySQL installation to work correctly via Ansible, and eventually settled on using an Ansible Role for MySQL installations created by [Jeff Geerling](https://github.com/geerlingguy) who has written many Ansible Roles for public use. The specific role I am using here is [Ansible-role-mysql](https://github.com/geerlingguy/ansible-role-mysql). You will need to have downloaded and installed this role prior to running this playbook, along with creating the necessary variable file created at the start of this tutorial. The MySQL role has quite a few tasks to go through, so just let it do it's thing and once completed the playbook will move on the next tasks.
+
+---
 
 ```yaml
 # Apache Configuration
