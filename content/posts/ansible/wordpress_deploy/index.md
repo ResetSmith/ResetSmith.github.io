@@ -11,7 +11,7 @@ menu:
     identifier: ansible-wordpress
     parent: ansible
     weight: 15
-draft: true
+draft: false
 ---
 
 
@@ -269,3 +269,90 @@ The initial task in this sequence checks for an existing WordPress installation 
         src: "files/htaccess.j2"
         dest: /var/www/wordpress/.htaccess
 ```
+
+This long block handles much of the configuration for the WordPress website. The first task in the list copies the pre-made wp-config.php and then the next several tasks programmatically fill in the necessary MySQL variables with the information from the mysql_vars.yml file defined at the beginning. The next task in that sequence creates the .htaccess file WordPress needs by copying it as well. 
+
+{{< alert type="info" >}}
+**.htaccess File**\
+The .htaccess file I provide for this playbook includes a section of custom PHP values. Often I have run up against the incredibly low limits for file upload sizes and execution time in WordPress. So the .htaccess file in this playbook includes customized PHP limits to reduce those annoyances. If these cause you problems you can either modify or eliminate the Custom PHP values section of the .htaccess file.
+{{< /alert >}}
+
+---
+
+```yaml
+# Updates ownership and permissions for the WordPress files and directories
+    - name: Setting ownership of the WordPress directory
+      when: not wp_check.stat.exists
+      file:
+        path: /var/www/wordpress
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data
+
+    - name: Correcting permissions for wordpress directories
+      when: not wp_check.stat.exists
+      shell: "/usr/bin/find /var/www/wordpress/ -type d -exec chmod 755 {} \\;"
+
+    - name: Correcting permissions for wordpress files
+      when: not wp_check.stat.exists
+      shell: "/usr/bin/find /var/www/wordpress/ -type f -exec chmod 644 {} \\;"
+```
+
+This task block is the end of the WordPress installation. It makes sure that the 'wordpress' folder is owned by the Apache user. The other tasks in the block ensure that both the subfolders and files have the correct read/write permissions.
+
+---
+
+## Optional Tasks
+
+```yaml
+# UFW Configuration
+# Opens up the necessary port on the firewall to allow HTTP traffic in
+    - name: Opening port 80(HTTP) and 443(HTTPS) on firewall to allow web traffic
+      ufw:
+        rule: allow
+        name: Apache Full
+
+# Installs wp-cli tool
+# This is an addon which helps manage Wordpress from the terminal
+    - name: Checking to see if the wp-cli tool is already installed
+      stat:
+        path: /usr/local/bin/wp
+      register: wp_cli_check
+
+    - name: Downloading and installing the wp-cli tool
+      when: not wp_cli_check.stat.exists      
+      get_url:
+        url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+        dest: /usr/local/bin/wp
+        mode: '755'
+```
+
+These two sets of task blocks are purely optional depending on your setup. If you are using the default Firewall that ships with Ubuntu, UFW (uncomplicated firewall), then the first task simply opens up both Ports 80 and 443 for web traffic. Port 80 is necessary for unencrypted (Non-SSL/HTTPS) traffic, and Port 443 is for encrypted (SSL/HTTPS) traffic. Although this example does not setup this website for HTTPS/443 traffic, that will be covered in a later tutorial, I usually go ahead and open it so as to simplify my installation process.
+
+The second set of tasks there is to install the [WordPress CLI tool](https://wp-cli.org/). If you are not already using this to assist in managing your WordPress websites you should take a look. The wp-cli tool is a really handy tool to have when you need to fix something broken on a site and cannot get to the web-admin interface, or just need to manage users, plugins, or themes programmatically. It also has a very robust search-and-replace tool for MySQL databases that make updating URLs a piece of cake. If you are interested in using some of my other Ansible playbooks for WordPress you should have this installed as some of them use wp-cli commands in the playbooks to more easily complete WordPress tasks.
+
+---
+
+## Final Tasks
+
+```yaml
+# Restarts Apache and Fail2ban services to pull changes
+  handlers:
+    - name: Reload Apache
+      service:
+        name: apache2
+        state: reloaded
+
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
+
+    - name: Restart Fail2ban
+      service:
+        name: fail2ban
+        state: restarted
+```
+
+These are the last tasks in the playbook. These 'handlers' check to see if Ansible did anything to modify the systems listed and if so, go ahead and restart them. The services are restarted in order to apply changes that were made during the playbook. Once these tasks complete you should be able to navigate to your website now via it's URL and find a brand new WordPress installation waiting.
