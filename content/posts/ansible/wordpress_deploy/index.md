@@ -11,7 +11,7 @@ menu:
     identifier: ansible-wordpress
     parent: ansible
     weight: 15
-draft: false
+draft: False
 ---
 
 
