@@ -1,7 +1,7 @@
 ---
 title: "Automate Deploying WordPress with Ansible"
-date: 2022-10-03
-hero: 504_Error_Gateway_Timeout-rafiki.png
+date: 2022-10-10
+hero: post.jpg
 author:
   name: Reset_Smith
   # image: /images/authors/
