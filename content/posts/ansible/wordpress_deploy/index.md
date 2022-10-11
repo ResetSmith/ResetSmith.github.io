@@ -17,7 +17,7 @@ draft: False
 
 Ansible is a framework for automating deployment and maintenance of remote systems. This tutorial will go through the creation of my own WordPress playbook for Ansible. You can find all of my WordPress playbooks in Github in my [Playbooks repository](https://github.com/ResetSmith/playbooks).
 
-## wp_install.yml playbook
+## The Playbook
 
 The WordPress installer playbook I created is the wp_install.yml playbook. The playbook handles the installation and configuration of Apache, MySQL, PHP, and WordPress on top of an Ubuntu server (Tested on 22.04). This playbook is friendly to being run on multiple targets at once as long as the prerequisites have been completed.
 
@@ -25,7 +25,7 @@ This tutorial will go through the playbook in sections, but you can find a compl
 
 ---
 
-## The Header
+## The Header Section
 
 Starting from the top there is the section containing the Inventory File and Variable definitions along with the first directive to run the playbook as Sudo.
 
@@ -195,7 +195,7 @@ This block is only relevant if you are using Fail2Ban to help manage your Firewa
 
 ---
 
-## Installing WordPress
+## WordPress Installation Tasks
 
 The next several tasks are all for the installation of WordPress.
 
