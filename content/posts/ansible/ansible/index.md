@@ -1,5 +1,5 @@
 ---
-title: "Ansible: Why"
+title: "Ansible: Getting started"
 date: 2022-10-03
 hero: post.jpg
 author:

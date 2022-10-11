@@ -1,5 +1,5 @@
 ---
-title: "Automate Deploying WordPress with Ansible"
+title: "Ansible: Automate your WordPress deployments"
 date: 2022-10-10
 hero: post.jpg
 author:
