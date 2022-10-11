@@ -20,6 +20,8 @@ Prometheus is often paired with the open-source visualization software [Grafana]
 
 Through this article series I'll go through setting up a Prometheus server on a remote VPS (In this case a 'droplet' on DigitalOcean). The series will cover Installing Prometheus, Installing Grafana, Installing Node Exporter on both local and remote sources, Installing Black Box locally, Installing Loki, and Finally Installing Promtail on both local and remote sources.
 
+![Prometheus Dashboard Example 1](grafana_ex_anon.png)
+
 ## Getting Started
 
 *For the purposes of this article you will need SSH access to a VPS or local machine running Ubuntu 20.04 LTS*
