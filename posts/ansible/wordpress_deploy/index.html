@@ -1,223 +1,233 @@
 <!doctype html><html><head><title>Ansible: Automate your WordPress deployments</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=/css/bootstrap.min.css><link rel=stylesheet href=/css/layouts/main.css><link rel=stylesheet href=/css/navigators/navbar.css><link rel=stylesheet href=/css/plyr.css><link rel=stylesheet href=/css/flag-icon.min.css><link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;500;600" rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css><meta property="og:title" content="Ansible: Automate your WordPress deployments"><meta property="og:description" content="Ansible is a framework for automating deployment and maintenance of remote systems. This tutorial will go through the creation of my own WordPress playbook for Ansible. You can find all of my WordPress playbooks in Github in my Playbooks repository.
-The Playbook The WordPress installer playbook I created is the wp_install.yml playbook. The playbook handles the installation and configuration of Apache, MySQL, PHP, and WordPress on top of an Ubuntu server (Tested on 22."><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/posts/ansible/wordpress_deploy/"><meta property="article:published_time" content="2022-10-10T00:00:00+00:00"><meta property="article:modified_time" content="2022-10-10T00:00:00+00:00"><meta name=description content="Ansible: Automate your WordPress deployments"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/single.css><link rel=stylesheet href=/css/navigators/sidebar.css><link rel=stylesheet href=/css/style.css><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','G-KLVVMMV4CY','auto');ga('send','pageview');}</script></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
+The Playbook The WordPress installer playbook I created is the wp_install.yml playbook. The playbook handles the installation and configuration of Apache, MySQL, PHP, and WordPress on top of an Ubuntu server (Tested on 22."><meta property="og:type" content="article"><meta property="og:url" content="https://resettech.net/posts/ansible/wordpress_deploy/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2022-10-10T00:00:00+00:00"><meta property="article:modified_time" content="2022-10-10T00:00:00+00:00"><meta name=description content="Ansible: Automate your WordPress deployments"><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/layouts/single.css><link rel=stylesheet href=/css/navigators/sidebar.css><link rel=stylesheet href=/css/style.css><script async src="https://www.googletagmanager.com/gtag/js?id=G-KLVVMMV4CY"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-KLVVMMV4CY",{anonymize_ip:!1})}</script></head><body data-spy=scroll data-target=#TableOfContents data-offset=80><div class="container-fluid bg-dimmed wrapper"><nav class="navbar navbar-expand-xl top-navbar final-navbar shadow"><div class=container><button class="navbar-toggler navbar-light" id=sidebar-toggler type=button onclick=toggleSidebar()>
 <span class=navbar-toggler-icon></span></button>
 <a class=navbar-brand href=/>Reset_Smith's Blog</a>
 <button class="navbar-toggler navbar-light" id=toc-toggler type=button onclick=toggleTOC()>
-<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/posts data-filter=all>Posts</a></li><div class=subtree><li><i class="fas fa-plus-circle"></i><a href=/posts/server_mgmt/>Server Management</a><ul><li><a href=/posts/server_mgmt/htpasswd/ title="Basic Auth with Apache">Basic Auth with Apache</a></li><li><a href=/posts/server_mgmt/add_ssl/ title="Enabling SSL">Enabling SSL</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/posts/wordpress/>WordPress</a><ul><li><a href=/posts/wordpress/lamp_22/ title="Deploying a LAMP server Ubuntu 22.04">Deploying a LAMP server Ubuntu 22.04</a></li><li><a href=/posts/wordpress/migration/ title="WordPress Migrations">WordPress Migrations</a></li><li><a href=/posts/wordpress/lamp/ title="Deploying a LAMP server Ubuntu 20.04">Deploying a LAMP server Ubuntu 20.04</a></li></ul></li><li><i class="fas fa-minus-circle"></i><a class=active href=/posts/ansible/>Ansible</a><ul class=active><li><a href=/posts/ansible/ansible/ title="Why Ansible">Why Ansible</a></li><li><a class=active href=/posts/ansible/wordpress_deploy/ title="WordPress Ansible Deployment">WordPress Ansible Deployment</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/posts/monitoring/>Monitoring</a><ul><li><a href=/posts/monitoring/prom_install/ title="Getting started">Getting started</a></li><li><a href=/posts/monitoring/node_exporter/ title="Node exporter">Node exporter</a></li><li><a href=/posts/monitoring/blackbox/ title="Blackbox exporter">Blackbox exporter</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class=content><div class="container p-0 read-area"><div class="hero-area col-sm-12" id=hero-area style=background-image:url(https://resettech.net/posts/ansible/wordpress_deploy/post.jpg)></div><div class=page-content><div class="author-profile ml-auto align-self-lg-center"><img class=rounded-circle src=/images/authors/reset_smith_hua4f6218794f907357bf1ed85aa384e41_361770_120x120_fit_q75_box.jpg alt="Author Image"><h5 class=author-name>Reset_Smith</h5><p>October 10, 2022</p></div><div class=title><h1>Ansible: Automate your WordPress deployments</h1></div><div class=post-content id=post-content><p>Ansible is a framework for automating deployment and maintenance of remote systems. This tutorial will go through the creation of my own WordPress playbook for Ansible. You can find all of my WordPress playbooks in Github in my <a href=https://github.com/ResetSmith/playbooks>Playbooks repository</a>.</p><h2 id=the-playbook>The Playbook</h2><p>The WordPress installer playbook I created is the wp_install.yml playbook. The playbook handles the installation and configuration of Apache, MySQL, PHP, and WordPress on top of an Ubuntu server (Tested on 22.04). This playbook is friendly to being run on multiple targets at once as long as the prerequisites have been completed.</p><p>This tutorial will go through the playbook in sections, but you can find a complete copy of the <a href=https://github.com/ResetSmith/playbooks/blob/main/wordpress/wp_install.yml>playbook in Github</a>.</p><hr><h2 id=the-header-section>The Header Section</h2><p>Starting from the top there is the section containing the Inventory File and Variable definitions along with the first directive to run the playbook as Sudo.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml>---
-- <span style=color:#f92672>hosts</span>: <span style=color:#ae81ff>all</span>
-  <span style=color:#f92672>become</span>: <span style=color:#66d9ef>true</span>
-  <span style=color:#f92672>vars_files</span>:
-    - <span style=color:#ae81ff>../secrets/mysql_vars.yml</span>
-</code></pre></div><p>So for this playbook I have the hosts set to &lsquo;all&rsquo;. I do have my Ansible hosts file setup for different groups but by-and-large the bulk of my servers are WordPress servers so I leave the hosts directive set to &lsquo;all&rsquo; so this playbook will happily run on any server I target regardless of which group within the hosts file it belongs to.</p><p>The &lsquo;become: true&rsquo; directive is about running commands as Sudo, and running it at this level applies Sudo to every task below. This is one of my first playbooks I wrote, and since then have gotten away from applying Sudo at this level, and instead prefer to add this directive to the particular tasks that actually need it. At some point I will revisit this playbook and update the Sudo method but for now this works, and you just need to recognize that all the tasks below will be performed as Sudo.</p><p>The &lsquo;vars_files:&rsquo; directive looks at a Variable file I have saved in another location. If you are following my same Playbook folder organization the &lsquo;mysql_vars.yml&rsquo; file should be located in /playbooks/secrets/mysql_vars.yml, which you will need to create if you have cloned by playbooks from github. The vars file contains the variables needed for the Geerlingguy.mysql role we&rsquo;ll be running later. But below is an example of what that file should look like, I&rsquo;ll go into more detail further on.</p><h5 id=example-mysql_varsyml><em>Example mysql_vars.yml</em></h5><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># These are the variables needed for the GeerlingGuy MySQL role</span>
-
-<span style=color:#75715e># MySQL root access password</span>
-<span style=color:#f92672>mysql_root_password</span>: <span style=color:#ae81ff>$MYSQL_PASSWORD</span>
-<span style=color:#75715e># Uncomment the line below if you need to overwrite an existing root user password</span>
-<span style=color:#75715e># mysql_root_password_update: true</span>
-<span style=color:#f92672>mysql_enabled_on_startup</span>: <span style=color:#66d9ef>true</span>
-
-<span style=color:#75715e># This creates the database needed for WordPress</span>
-<span style=color:#f92672>mysql_databases</span>:
-  - {<span style=color:#f92672>name: &#39;wordpress&#39;, encoding: &#39;utf8&#39;, collation</span>: <span style=color:#e6db74>&#39;utf8_general_ci&#39;</span>}
-
-<span style=color:#75715e># This creates the user WordPress will use to access the database</span>
-<span style=color:#f92672>mysql_users</span>:
-  - {<span style=color:#f92672>name: &#39;$WP_USER_NAME&#39;, password: &#39;#WP_USER_PASSWORD&#39;, host: &#39;%&#39;, priv</span>: <span style=color:#e6db74>&#39;wordpress.*:ALL&#39;</span>}
-</code></pre></div><p>That&rsquo;s it for the &lsquo;header&rsquo; section of the wp_install, next up is the &lsquo;Tasks&rsquo; section. The Tasks section of the playbook is list of directives that are actually taking some kind of action. This will become more clear as you review the directives themselves.</p><hr><h2 id=initial-tasks>Initial Tasks</h2><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml>  <span style=color:#f92672>tasks</span>:
-<span style=color:#75715e># Checks for server updates and runs them</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Updating apt repo and cache on all servers</span>
-      <span style=color:#f92672>apt</span>: <span style=color:#ae81ff>update_cache=yes force_apt_get=yes cache_valid_time=3600</span>
-
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Updating packages</span>
-      <span style=color:#f92672>apt</span>: <span style=color:#ae81ff>upgrade=dist force_apt_get=yes</span>
-</code></pre></div><p>This is the start of our Ansible playbooks tasks section, as you can tell by the &lsquo;tasks:&rsquo; directive and underneath that the tasks are listed out in order that they should run. The first of these two tasks checks for updates, the &lsquo;cache_valid_time&rsquo; directive says that if the last check for updates occurred in the last 3600 seconds (60 minutes) then do not pull updates from the web/repos. The second task here simply installs the updates found by the previous task.</p><hr><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># Installs dependencies needed for WordPress: Apache, MySQL and PHP</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Installing Apache and PHP</span>
-      <span style=color:#f92672>apt</span>: <span style=color:#ae81ff>name={{ item }} update_cache=yes state=latest</span>
-      <span style=color:#f92672>loop</span>: [ <span style=color:#e6db74>&#39;apache2&#39;</span>, <span style=color:#e6db74>&#39;python3-pymysql&#39;</span>, <span style=color:#e6db74>&#39;php&#39;</span>, <span style=color:#e6db74>&#39;php-mysql&#39;</span>, <span style=color:#e6db74>&#39;libapache2-mod-php&#39;</span> ]
-<span style=color:#75715e># Installs PHP extensions needed for WordPress</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Installing PHP extensions</span>
-      <span style=color:#f92672>apt</span>: <span style=color:#ae81ff>name={{ item }} update_cache=yes state=latest</span>
-      <span style=color:#f92672>loop</span>: [ <span style=color:#e6db74>&#39;php-curl&#39;</span>, <span style=color:#e6db74>&#39;php-gd&#39;</span>, <span style=color:#e6db74>&#39;php-mbstring&#39;</span>, <span style=color:#e6db74>&#39;php-xml&#39;</span>, <span style=color:#e6db74>&#39;php-xmlrpc&#39;</span>, <span style=color:#e6db74>&#39;php-soap&#39;</span>, <span style=color:#e6db74>&#39;php-intl&#39;</span>, <span style=color:#e6db74>&#39;php-zip&#39;</span>, <span style=color:#e6db74>&#39;php-imagick&#39;</span> ]
-<span style=color:#75715e># Restarts the system prior to running the geerlingguy.mysql role</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Restarting system prior to running Geerlingguy.MySQL role</span>
-      <span style=color:#f92672>reboot</span>:
-        <span style=color:#f92672>connect_timeout</span>: <span style=color:#ae81ff>5</span>
-        <span style=color:#f92672>reboot_timeout</span>: <span style=color:#ae81ff>300</span>
-        <span style=color:#f92672>post_reboot_delay</span>: <span style=color:#ae81ff>30</span>
-        <span style=color:#f92672>test_command</span>: <span style=color:#ae81ff>uptime</span>
-</code></pre></div><p>Now that we have the updates out of the way the next two tasks take care of installing some of the necessary dependencies for a WordPress installation. The first task installs Apache2 and PHP, along with the python3 MySQL Driver, the PHP MySQL module, and the PHP module for Apache2. The second task installs the PHP plugins needed by WordPress. The final task in this sequence reboots the server prior to moving on to the next tasks. I&rsquo;ve found this restart is necessary to prevent errors further into the installation.</p><hr><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># Uses the pre-created role by GeerlingGuy to install mysql</span>
-<span style=color:#75715e># The role is installed by Ansible in the &#39;/etc/ansible/galaxy.roles/&#39; folder</span>
-<span style=color:#75715e># Variables needed for this role are defined in &#39;/etc/ansible/playbooks/secrets/mysql_vars.yml&#39;</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Using geerlingguy.mysql role to install and configure mysql</span>
-      <span style=color:#f92672>include_role</span>:
-        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>geerlingguy.mysql</span>
-</code></pre></div><p>After the restart the next Task is to install MySQL. I had quite a bit of trouble getting the MySQL installation to work correctly via Ansible, and eventually settled on using an Ansible Role for MySQL installations created by <a href=https://github.com/geerlingguy>Jeff Geerling</a> who has written many Ansible Roles for public use. The specific role I am using here is <a href=https://github.com/geerlingguy/ansible-role-mysql>Ansible-role-mysql</a>. You will need to have downloaded and installed this role prior to running this playbook, along with creating the necessary variable file created at the start of this tutorial. The MySQL role has quite a few tasks to go through, so just let it do it&rsquo;s thing and once completed the playbook will move on the next tasks.</p><hr><h2 id=apache-configuration-tasks>Apache Configuration Tasks</h2><p>Now that we have most the of the necessary pieces installed, the next tasks will focus on editing or creating the configuration files for previously installed applications.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># Apache Configuration</span>
-<span style=color:#75715e># Creates Apache VirtualHost file, using the ansible hostname</span>
-<span style=color:#75715e># The ansible hostname is determined automatically from the server&#39;s hostname</span>
-<span style=color:#75715e># The server&#39;s hostname is set during creation in DigitalOcean or by using the &#39;hostnamectl&#39; command on the server prior to running this playbook</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Creating the Apache VirtualHost file</span>
-      <span style=color:#f92672>template</span>:
-        <span style=color:#f92672>src</span>: <span style=color:#e6db74>&#34;files/apache.conf.j2&#34;</span>
-        <span style=color:#f92672>dest</span>: <span style=color:#ae81ff>/etc/apache2/sites-available/wordpress.conf</span>
-      <span style=color:#f92672>notify</span>: <span style=color:#ae81ff>Reload Apache</span>
-<span style=color:#75715e># Enables the Apache rewrite module, necessary for WordPress</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Enabling the Apache rewrite module</span>
-      <span style=color:#f92672>shell</span>: <span style=color:#ae81ff>/usr/sbin/a2enmod rewrite</span>
-      <span style=color:#f92672>notify</span>: <span style=color:#ae81ff>Reload Apache</span>
-<span style=color:#75715e># Enables the new Apache VirtualHost file and disables the default one</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Enabling the new site in Apache</span>
-      <span style=color:#f92672>shell</span>: <span style=color:#ae81ff>/usr/sbin/a2ensite wordpress.conf</span>
-      <span style=color:#f92672>notify</span>: <span style=color:#ae81ff>Reload Apache</span>
-
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Disabling the default Apache site</span>
-      <span style=color:#f92672>shell</span>: <span style=color:#ae81ff>/usr/sbin/a2dissite 000-default.conf</span>
-      <span style=color:#f92672>notify</span>: <span style=color:#ae81ff>Restart Apache</span>
-</code></pre></div><p>The first set of tasks in the &lsquo;configuration&rsquo; section focuses on Apache. The initial task creates a simple Apache VirtualHost file to help route web traffic requests to our eventual WordPress website. The VirtualHost file is copied from an existing file that can be found on Github within my <a href=https://github.com/ResetSmith/playbooks/blob/main/wordpress/files/apache.conf.j2>WordPress playbooks files</a> folder (It would also be downloaded automatically if you clone this playbook from github). Within the conf file you should update the &lsquo;ServerAdmin&rsquo; directive to your own email address, the rest of the conf file should be left alone.</p><div class="alert alert-info"><strong>Ansible Facts</strong><br>Be aware that the &lsquo;ServerName&rsquo; and &lsquo;ServerAlias&rsquo; directives are being set programmatically by Ansible based on what your Server&rsquo;s hostname is set to. Make sure to have the server hostname defined properly prior to running this playbook.</div><p>After creating the new wordpress.conf file, the next task enables the Apache rewrite module required by WordPress. Then Ansible goes on to tell Apache to enable the newly created wordpress.conf and disables the 000-default.conf file that Apache ships with.</p><hr><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># Adds Apache connections to the list for Fail2Ban to monitor</span>
-<span style=color:#75715e># This task checks for a Fail2Ban installation in the default location</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Checks for Fail2Ban installation</span>
-      <span style=color:#f92672>stat</span>:
-        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/usr/bin/fail2ban-client</span>
-      <span style=color:#f92672>register</span>: <span style=color:#ae81ff>f2b_check</span>
-
-<span style=color:#75715e># The following task is skipped if no Fail2Ban installation is found</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Adding Apache connections to Fail2Ban firewall monitoring list</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>f2b_check.stat.exists</span>
-      <span style=color:#f92672>blockinfile</span>:
-        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/etc/fail2ban/jail.local</span>
-        <span style=color:#f92672>block</span>: |<span style=color:#e6db74>
-</span><span style=color:#e6db74>          # Apache jail
-</span><span style=color:#e6db74>          #
-</span><span style=color:#e6db74>          [apache]
-</span><span style=color:#e6db74>          enabled   = true
-</span><span style=color:#e6db74>          port      = http,https
-</span><span style=color:#e6db74>          filter    = apache-auth
-</span><span style=color:#e6db74>          logpath   = /var/log/apache*/*error.log
-</span><span style=color:#e6db74>          maxretry  = 3
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>          [apache-overflows]
-</span><span style=color:#e6db74>          enabled   = true
-</span><span style=color:#e6db74>          filter    = apache-overflows
-</span><span style=color:#e6db74>          logpath   = /var/log/apache*/*error.log
-</span><span style=color:#e6db74>
-</span><span style=color:#e6db74>          [apache-badbots]
-</span><span style=color:#e6db74>          enabled   = true
-</span><span style=color:#e6db74>          filter    = apache-badbots
-</span><span style=color:#e6db74>          logpath   = /var/log/apache*/*access.log</span>          
-      <span style=color:#f92672>notify</span>: <span style=color:#ae81ff>Restart Fail2ban</span>
-</code></pre></div><p>This block is only relevant if you are using Fail2Ban to help manage your Firewall. The initial task in this section checks if Fail2Ban is installed on the server (in the default location). If it is then it will add a few rules for monitoring Apache traffic. If a Fail2Ban installation is not found then nothing is changed.</p><hr><h2 id=wordpress-installation-tasks>WordPress Installation Tasks</h2><p>The next several tasks are all for the installation of WordPress.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># Install WordPress</span>
-<span style=color:#75715e># If an existing WordPress installation is found at /var/www/wordpress then the next several tasks are skipped</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Checks for existing WordPress installation</span>
-      <span style=color:#f92672>stat</span>:
-        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress</span>
-      <span style=color:#f92672>register</span>: <span style=color:#ae81ff>wp_check</span>
-
-<span style=color:#75715e># Creates WordPress root folder and assigns the correct permissions</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Creating the WordPress root directory</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
-      <span style=color:#f92672>file</span>:
-        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress</span>
-        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>directory</span>
-        <span style=color:#f92672>owner</span>: <span style=color:#e6db74>&#34;www-data&#34;</span>
-        <span style=color:#f92672>group</span>: <span style=color:#e6db74>&#34;www-data&#34;</span>
-        <span style=color:#f92672>mode</span>: <span style=color:#e6db74>&#39;0755&#39;</span>
-
-<span style=color:#75715e># Downloads WordPress and installs the files to the wordpress root directory</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Downloading and unpacking the latest version of WordPress</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
-      <span style=color:#f92672>unarchive</span>:
-        <span style=color:#f92672>src</span>: <span style=color:#ae81ff>https://wordpress.org/latest.tar.gz</span>
-        <span style=color:#f92672>dest</span>: <span style=color:#ae81ff>/var/www/</span>
-        <span style=color:#f92672>remote_src</span>: <span style=color:#66d9ef>yes</span>
-</code></pre></div><p>The initial task in this sequence checks for an existing WordPress installation in the same location (/var/www/wordpress), if one is found then the next several tasks are skipped. The next task creates the wordpress folder assigns the correct permissions and gives ownership to the Apache www-data user account. The final task in that sequence downloads WordPress into the /var/www/wordpress folder.</p><hr><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># Copies the &#39;wp-config.php&#39; and &#39;.htaccess&#39; files to the wordpress root directory</span>
-<span style=color:#75715e># Variables used in the wp-config.php file are pulled from /secrets/mysql_vars.yml</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Copying updated wp-config.php from file</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
-      <span style=color:#f92672>template</span>:
-        <span style=color:#f92672>src</span>: <span style=color:#e6db74>&#34;files/wp-config.php.j2&#34;</span>
-        <span style=color:#f92672>dest</span>: <span style=color:#ae81ff>/var/www/wordpress/wp-config.php</span>
-
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Updating the MySQL database reference in wp-config.php</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists    </span>
-      <span style=color:#f92672>replace</span>:
-        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress/wp-config.php</span>
-        <span style=color:#f92672>regexp</span>: <span style=color:#e6db74>&#39;MYSQL_DBNAME&#39;</span>
-        <span style=color:#f92672>replace</span>: <span style=color:#e6db74>&#34;{{ item.name }}&#34;</span>
-      <span style=color:#f92672>with_items</span>: <span style=color:#e6db74>&#34;{{ mysql_databases }}&#34;</span>
-
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Updating the MySQL user name in wp-config.php</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists      </span>
-      <span style=color:#f92672>replace</span>:
-        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress/wp-config.php</span>
-        <span style=color:#f92672>regexp</span>: <span style=color:#e6db74>&#39;MYSQL_UNAME&#39;</span>
-        <span style=color:#f92672>replace</span>: <span style=color:#e6db74>&#34;{{ item.name }}&#34;</span>
-      <span style=color:#f92672>with_items</span>: <span style=color:#e6db74>&#34;{{ mysql_users }}&#34;</span>
-
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Updating the MySQL user password in wp-config.php</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists       </span>
-      <span style=color:#f92672>replace</span>:
-        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress/wp-config.php</span>
-        <span style=color:#f92672>regexp</span>: <span style=color:#e6db74>&#39;MYSQL_PASS&#39;</span>
-        <span style=color:#f92672>replace</span>: <span style=color:#e6db74>&#34;{{ item.password }}&#34;</span>
-      <span style=color:#f92672>with_items</span>: <span style=color:#e6db74>&#34;{{ mysql_users }}&#34;</span>
-<span style=color:#75715e># Copies .htaccess</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Copy .htaccess from file</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
-      <span style=color:#f92672>template</span>:
-        <span style=color:#f92672>src</span>: <span style=color:#e6db74>&#34;files/htaccess.j2&#34;</span>
-        <span style=color:#f92672>dest</span>: <span style=color:#ae81ff>/var/www/wordpress/.htaccess</span>
-</code></pre></div><p>This long block handles much of the configuration for the WordPress website. The first task in the list copies the pre-made wp-config.php and then the next several tasks programmatically fill in the necessary MySQL variables with the information from the mysql_vars.yml file defined at the beginning. The next task in that sequence creates the .htaccess file WordPress needs by copying it as well.</p><div class="alert alert-info"><strong>.htaccess File</strong><br>The .htaccess file I provide for this playbook includes a section of custom PHP values. Often I have run up against the incredibly low limits for file upload sizes and execution time in WordPress. So the .htaccess file in this playbook includes customized PHP limits to reduce those annoyances. If these cause you problems you can either modify or eliminate the Custom PHP values section of the .htaccess file.</div><hr><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># Updates ownership and permissions for the WordPress files and directories</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Setting ownership of the WordPress directory</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
-      <span style=color:#f92672>file</span>:
-        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress</span>
-        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>directory</span>
-        <span style=color:#f92672>recurse</span>: <span style=color:#66d9ef>yes</span>
-        <span style=color:#f92672>owner</span>: <span style=color:#ae81ff>www-data</span>
-        <span style=color:#f92672>group</span>: <span style=color:#ae81ff>www-data</span>
-
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Correcting permissions for wordpress directories</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
-      <span style=color:#f92672>shell</span>: <span style=color:#e6db74>&#34;/usr/bin/find /var/www/wordpress/ -type d -exec chmod 755 {} \\;&#34;</span>
-
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Correcting permissions for wordpress files</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
-      <span style=color:#f92672>shell</span>: <span style=color:#e6db74>&#34;/usr/bin/find /var/www/wordpress/ -type f -exec chmod 644 {} \\;&#34;</span>
-</code></pre></div><p>This task block is the end of the WordPress installation. It makes sure that the &lsquo;wordpress&rsquo; folder is owned by the Apache user. The other tasks in the block ensure that both the subfolders and files have the correct read/write permissions.</p><hr><h2 id=optional-tasks>Optional Tasks</h2><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># UFW Configuration</span>
-<span style=color:#75715e># Opens up the necessary port on the firewall to allow HTTP traffic in</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Opening port 80(HTTP) and 443(HTTPS) on firewall to allow web traffic</span>
-      <span style=color:#f92672>ufw</span>:
-        <span style=color:#f92672>rule</span>: <span style=color:#ae81ff>allow</span>
-        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Apache Full</span>
-
-<span style=color:#75715e># Installs wp-cli tool</span>
-<span style=color:#75715e># This is an addon which helps manage Wordpress from the terminal</span>
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Checking to see if the wp-cli tool is already installed</span>
-      <span style=color:#f92672>stat</span>:
-        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/usr/local/bin/wp</span>
-      <span style=color:#f92672>register</span>: <span style=color:#ae81ff>wp_cli_check</span>
-
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Downloading and installing the wp-cli tool</span>
-      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_cli_check.stat.exists      </span>
-      <span style=color:#f92672>get_url</span>:
-        <span style=color:#f92672>url</span>: <span style=color:#ae81ff>https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar</span>
-        <span style=color:#f92672>dest</span>: <span style=color:#ae81ff>/usr/local/bin/wp</span>
-        <span style=color:#f92672>mode</span>: <span style=color:#e6db74>&#39;755&#39;</span>
-</code></pre></div><p>These two sets of task blocks are purely optional depending on your setup. If you are using the default Firewall that ships with Ubuntu, UFW (uncomplicated firewall), then the first task simply opens up both Ports 80 and 443 for web traffic. Port 80 is necessary for unencrypted (Non-SSL/HTTPS) traffic, and Port 443 is for encrypted (SSL/HTTPS) traffic. Although this example does not setup this website for HTTPS/443 traffic, that will be covered in a later tutorial, I usually go ahead and open it so as to simplify my installation process.</p><p>The second set of tasks there is to install the <a href=https://wp-cli.org/>WordPress CLI tool</a>. If you are not already using this to assist in managing your WordPress websites you should take a look. The wp-cli tool is a really handy tool to have when you need to fix something broken on a site and cannot get to the web-admin interface, or just need to manage users, plugins, or themes programmatically. It also has a very robust search-and-replace tool for MySQL databases that make updating URLs a piece of cake. If you are interested in using some of my other Ansible playbooks for WordPress you should have this installed as some of them use wp-cli commands in the playbooks to more easily complete WordPress tasks.</p><hr><h2 id=final-tasks>Final Tasks</h2><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># Restarts Apache and Fail2ban services to pull changes</span>
-  <span style=color:#f92672>handlers</span>:
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Reload Apache</span>
-      <span style=color:#f92672>service</span>:
-        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>apache2</span>
-        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>reloaded</span>
-
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Restart Apache</span>
-      <span style=color:#f92672>service</span>:
-        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>apache2</span>
-        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>restarted</span>
-
-    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Restart Fail2ban</span>
-      <span style=color:#f92672>service</span>:
-        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>fail2ban</span>
-        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>restarted</span>
-</code></pre></div><p>These are the last tasks in the playbook. These &lsquo;handlers&rsquo; check to see if Ansible did anything to modify the systems listed and if so, go ahead and restart them. The services are restarted in order to apply changes that were made during the playbook. Once these tasks complete you should be able to navigate to your website now via it&rsquo;s URL and find a brand new WordPress installation waiting.</p></div><div class="row pl-3 pr-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/ResetSmith/ResetSmith.github.io/edit/main/content/posts/ansible/wordpress_deploy/index.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>Improve this page</a></div></div><hr><div class="row next-prev-navigator"><div class="col-md-6 previous-article"><a href=/posts/ansible/ansible/ title="Ansible: Getting started" class="btn btn-outline-info"><div><i class="fas fa-chevron-circle-left"></i>Prev</div><div class=next-prev-text>Ansible: Getting started</div></a></div><div class="col-md-6 next-article"><a href=/posts/monitoring/prom_install/ title="Prometheus: Getting started with Prometheus and Grafana" class="btn btn-outline-info"><div>Next <i class="fas fa-chevron-circle-right"></i></div><div class=next-prev-text>Prometheus: Getting started with Prometheus and Grafana</div></a></div></div><hr></div></div></div><a id=scroll-to-top class=btn><i class="fas fa-chevron-circle-up"></i></a></section><section class=toc-section id=toc-section><div class=toc-holder><h5 class="text-center pl-3">Table of Contents</h5><hr><div class=toc><nav id=TableOfContents><ul><li><a href=#the-playbook>The Playbook</a></li><li><a href=#the-header-section>The Header Section</a></li><li><a href=#initial-tasks>Initial Tasks</a></li><li><a href=#apache-configuration-tasks>Apache Configuration Tasks</a></li><li><a href=#wordpress-installation-tasks>WordPress Installation Tasks</a></li><li><a href=#optional-tasks>Optional Tasks</a></li><li><a href=#final-tasks>Final Tasks</a></li></ul></nav></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><a href="mailto:Reset_Smith@resettech.net?subject=&cc=&bcc=&body=">Reset_Smith@resettech.net</a></div><div class="col-md-4 col-sm-12"><h5>Images provided by:</h5><ul><li><a href=https://www.freepik.com>www.Freepik.com</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_2.png alt="Toha Theme Logo">
+<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse lang-selector" id=top-nav-items><ul class="navbar-nav ml-auto"></ul></div></div></nav><section class=sidebar-section id=sidebar-section><div class=sidebar-holder><div class=sidebar id=sidebar><form class=mx-auto method=get action=/search><input type=text name=keyword placeholder=Search data-search id=search-box></form><div class=sidebar-tree><ul class=tree id=tree><li id=list-heading><a href=/posts data-filter=all>Posts</a></li><div class=subtree><li><i class="fas fa-plus-circle"></i><a href=/posts/server_mgmt/>Server Management</a><ul><li><a href=/posts/server_mgmt/htpasswd/ title="Basic Auth with Apache">Basic Auth with Apache</a></li><li><a href=/posts/server_mgmt/add_ssl/ title="Enabling SSL">Enabling SSL</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/posts/wordpress/>WordPress</a><ul><li><a href=/posts/wordpress/lamp_22/ title="Deploying a LAMP server Ubuntu 22.04">Deploying a LAMP server Ubuntu 22.04</a></li><li><a href=/posts/wordpress/migration/ title="WordPress Migrations">WordPress Migrations</a></li><li><a href=/posts/wordpress/lamp/ title="Deploying a LAMP server Ubuntu 20.04">Deploying a LAMP server Ubuntu 20.04</a></li></ul></li><li><i class="fas fa-minus-circle"></i><a class=active href=/posts/ansible/>Ansible</a><ul class=active><li><a href=/posts/ansible/ansible/ title="Why Ansible">Why Ansible</a></li><li><a class=active href=/posts/ansible/wordpress_deploy/ title="WordPress Ansible Deployment">WordPress Ansible Deployment</a></li></ul></li><li><i class="fas fa-plus-circle"></i><a href=/posts/monitoring/>Monitoring</a><ul><li><a href=/posts/monitoring/prom_install/ title="Getting started">Getting started</a></li><li><a href=/posts/monitoring/node_exporter/ title="Node exporter">Node exporter</a></li><li><a href=/posts/monitoring/blackbox/ title="Blackbox exporter">Blackbox exporter</a></li></ul></li></div></ul></div></div></div></section><section class=content-section id=content-section><div class=content><div class="container p-0 read-area"><div class="hero-area col-sm-12" id=hero-area style=background-image:url(https://resettech.net/posts/ansible/wordpress_deploy/post.jpg)></div><div class=page-content><div class="author-profile ml-auto align-self-lg-center"><img class=rounded-circle src=/images/authors/reset_smith_hua4f6218794f907357bf1ed85aa384e41_361770_120x120_fit_q75_box.jpg alt="Author Image"><h5 class=author-name>Reset_Smith</h5><p>October 10, 2022</p></div><div class=title><h1>Ansible: Automate your WordPress deployments</h1></div><div class=post-content id=post-content><p>Ansible is a framework for automating deployment and maintenance of remote systems. This tutorial will go through the creation of my own WordPress playbook for Ansible. You can find all of my WordPress playbooks in Github in my <a href=https://github.com/ResetSmith/playbooks>Playbooks repository</a>.</p><h2 id=the-playbook>The Playbook</h2><p>The WordPress installer playbook I created is the wp_install.yml playbook. The playbook handles the installation and configuration of Apache, MySQL, PHP, and WordPress on top of an Ubuntu server (Tested on 22.04). This playbook is friendly to being run on multiple targets at once as long as the prerequisites have been completed.</p><p>This tutorial will go through the playbook in sections, but you can find a complete copy of the <a href=https://github.com/ResetSmith/playbooks/blob/main/wordpress/wp_install.yml>playbook in Github</a>.</p><hr><h2 id=the-header-section>The Header Section</h2><p>Starting from the top there is the section containing the Inventory File and Variable definitions along with the first directive to run the playbook as Sudo.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>---
+</span></span><span style=display:flex><span>- <span style=color:#f92672>hosts</span>: <span style=color:#ae81ff>all</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>become</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>vars_files</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#ae81ff>../secrets/mysql_vars.yml</span>
+</span></span></code></pre></div><p>So for this playbook I have the hosts set to &lsquo;all&rsquo;. I do have my Ansible hosts file setup for different groups but by-and-large the bulk of my servers are WordPress servers so I leave the hosts directive set to &lsquo;all&rsquo; so this playbook will happily run on any server I target regardless of which group within the hosts file it belongs to.</p><p>The &lsquo;become: true&rsquo; directive is about running commands as Sudo, and running it at this level applies Sudo to every task below. This is one of my first playbooks I wrote, and since then have gotten away from applying Sudo at this level, and instead prefer to add this directive to the particular tasks that actually need it. At some point I will revisit this playbook and update the Sudo method but for now this works, and you just need to recognize that all the tasks below will be performed as Sudo.</p><p>The &lsquo;vars_files:&rsquo; directive looks at a Variable file I have saved in another location. If you are following my same Playbook folder organization the &lsquo;mysql_vars.yml&rsquo; file should be located in /playbooks/secrets/mysql_vars.yml, which you will need to create if you have cloned by playbooks from github. The vars file contains the variables needed for the Geerlingguy.mysql role we&rsquo;ll be running later. But below is an example of what that file should look like, I&rsquo;ll go into more detail further on.</p><h5 id=example-mysql_varsyml><em>Example mysql_vars.yml</em></h5><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># These are the variables needed for the GeerlingGuy MySQL role</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># MySQL root access password</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>mysql_root_password</span>: <span style=color:#ae81ff>$MYSQL_PASSWORD</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Uncomment the line below if you need to overwrite an existing root user password</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># mysql_root_password_update: true</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>mysql_enabled_on_startup</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># This creates the database needed for WordPress</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>mysql_databases</span>:
+</span></span><span style=display:flex><span>  - {<span style=color:#f92672>name: &#39;wordpress&#39;, encoding: &#39;utf8&#39;, collation</span>: <span style=color:#e6db74>&#39;utf8_general_ci&#39;</span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># This creates the user WordPress will use to access the database</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>mysql_users</span>:
+</span></span><span style=display:flex><span>  - {<span style=color:#f92672>name: &#39;$WP_USER_NAME&#39;, password: &#39;#WP_USER_PASSWORD&#39;, host: &#39;%&#39;, priv</span>: <span style=color:#e6db74>&#39;wordpress.*:ALL&#39;</span>}
+</span></span></code></pre></div><p>That&rsquo;s it for the &lsquo;header&rsquo; section of the wp_install, next up is the &lsquo;Tasks&rsquo; section. The Tasks section of the playbook is list of directives that are actually taking some kind of action. This will become more clear as you review the directives themselves.</p><hr><h2 id=initial-tasks>Initial Tasks</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>  <span style=color:#f92672>tasks</span>:
+</span></span><span style=display:flex><span><span style=color:#75715e># Checks for server updates and runs them</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Updating apt repo and cache on all servers</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>apt</span>: <span style=color:#ae81ff>update_cache=yes force_apt_get=yes cache_valid_time=3600</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Updating packages</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>apt</span>: <span style=color:#ae81ff>upgrade=dist force_apt_get=yes</span>
+</span></span></code></pre></div><p>This is the start of our Ansible playbooks tasks section, as you can tell by the &rsquo;tasks:&rsquo; directive and underneath that the tasks are listed out in order that they should run. The first of these two tasks checks for updates, the &lsquo;cache_valid_time&rsquo; directive says that if the last check for updates occurred in the last 3600 seconds (60 minutes) then do not pull updates from the web/repos. The second task here simply installs the updates found by the previous task.</p><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Installs dependencies needed for WordPress: Apache, MySQL and PHP</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Installing Apache and PHP</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>apt</span>: <span style=color:#ae81ff>name={{ item }} update_cache=yes state=latest</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>loop</span>: [ <span style=color:#e6db74>&#39;apache2&#39;</span>, <span style=color:#e6db74>&#39;python3-pymysql&#39;</span>, <span style=color:#e6db74>&#39;php&#39;</span>, <span style=color:#e6db74>&#39;php-mysql&#39;</span>, <span style=color:#e6db74>&#39;libapache2-mod-php&#39;</span> ]
+</span></span><span style=display:flex><span><span style=color:#75715e># Installs PHP extensions needed for WordPress</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Installing PHP extensions</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>apt</span>: <span style=color:#ae81ff>name={{ item }} update_cache=yes state=latest</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>loop</span>: [ <span style=color:#e6db74>&#39;php-curl&#39;</span>, <span style=color:#e6db74>&#39;php-gd&#39;</span>, <span style=color:#e6db74>&#39;php-mbstring&#39;</span>, <span style=color:#e6db74>&#39;php-xml&#39;</span>, <span style=color:#e6db74>&#39;php-xmlrpc&#39;</span>, <span style=color:#e6db74>&#39;php-soap&#39;</span>, <span style=color:#e6db74>&#39;php-intl&#39;</span>, <span style=color:#e6db74>&#39;php-zip&#39;</span>, <span style=color:#e6db74>&#39;php-imagick&#39;</span> ]
+</span></span><span style=display:flex><span><span style=color:#75715e># Restarts the system prior to running the geerlingguy.mysql role</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Restarting system prior to running Geerlingguy.MySQL role</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>reboot</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>connect_timeout</span>: <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>reboot_timeout</span>: <span style=color:#ae81ff>300</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>post_reboot_delay</span>: <span style=color:#ae81ff>30</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>test_command</span>: <span style=color:#ae81ff>uptime</span>
+</span></span></code></pre></div><p>Now that we have the updates out of the way the next two tasks take care of installing some of the necessary dependencies for a WordPress installation. The first task installs Apache2 and PHP, along with the python3 MySQL Driver, the PHP MySQL module, and the PHP module for Apache2. The second task installs the PHP plugins needed by WordPress. The final task in this sequence reboots the server prior to moving on to the next tasks. I&rsquo;ve found this restart is necessary to prevent errors further into the installation.</p><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Uses the pre-created role by GeerlingGuy to install mysql</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># The role is installed by Ansible in the &#39;/etc/ansible/galaxy.roles/&#39; folder</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Variables needed for this role are defined in &#39;/etc/ansible/playbooks/secrets/mysql_vars.yml&#39;</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Using geerlingguy.mysql role to install and configure mysql</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>include_role</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>geerlingguy.mysql</span>
+</span></span></code></pre></div><p>After the restart the next Task is to install MySQL. I had quite a bit of trouble getting the MySQL installation to work correctly via Ansible, and eventually settled on using an Ansible Role for MySQL installations created by <a href=https://github.com/geerlingguy>Jeff Geerling</a> who has written many Ansible Roles for public use. The specific role I am using here is <a href=https://github.com/geerlingguy/ansible-role-mysql>Ansible-role-mysql</a>. You will need to have downloaded and installed this role prior to running this playbook, along with creating the necessary variable file created at the start of this tutorial. The MySQL role has quite a few tasks to go through, so just let it do it&rsquo;s thing and once completed the playbook will move on the next tasks.</p><hr><h2 id=apache-configuration-tasks>Apache Configuration Tasks</h2><p>Now that we have most the of the necessary pieces installed, the next tasks will focus on editing or creating the configuration files for previously installed applications.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Apache Configuration</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Creates Apache VirtualHost file, using the ansible hostname</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># The ansible hostname is determined automatically from the server&#39;s hostname</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># The server&#39;s hostname is set during creation in DigitalOcean or by using the &#39;hostnamectl&#39; command on the server prior to running this playbook</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Creating the Apache VirtualHost file</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>src</span>: <span style=color:#e6db74>&#34;files/apache.conf.j2&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>dest</span>: <span style=color:#ae81ff>/etc/apache2/sites-available/wordpress.conf</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>notify</span>: <span style=color:#ae81ff>Reload Apache</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Enables the Apache rewrite module, necessary for WordPress</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Enabling the Apache rewrite module</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>shell</span>: <span style=color:#ae81ff>/usr/sbin/a2enmod rewrite</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>notify</span>: <span style=color:#ae81ff>Reload Apache</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Enables the new Apache VirtualHost file and disables the default one</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Enabling the new site in Apache</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>shell</span>: <span style=color:#ae81ff>/usr/sbin/a2ensite wordpress.conf</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>notify</span>: <span style=color:#ae81ff>Reload Apache</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Disabling the default Apache site</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>shell</span>: <span style=color:#ae81ff>/usr/sbin/a2dissite 000-default.conf</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>notify</span>: <span style=color:#ae81ff>Restart Apache</span>
+</span></span></code></pre></div><p>The first set of tasks in the &lsquo;configuration&rsquo; section focuses on Apache. The initial task creates a simple Apache VirtualHost file to help route web traffic requests to our eventual WordPress website. The VirtualHost file is copied from an existing file that can be found on Github within my <a href=https://github.com/ResetSmith/playbooks/blob/main/wordpress/files/apache.conf.j2>WordPress playbooks files</a> folder (It would also be downloaded automatically if you clone this playbook from github). Within the conf file you should update the &lsquo;ServerAdmin&rsquo; directive to your own email address, the rest of the conf file should be left alone.</p><div class="alert alert-info"><strong>Ansible Facts</strong><br>Be aware that the &lsquo;ServerName&rsquo; and &lsquo;ServerAlias&rsquo; directives are being set programmatically by Ansible based on what your Server&rsquo;s hostname is set to. Make sure to have the server hostname defined properly prior to running this playbook.</div><p>After creating the new wordpress.conf file, the next task enables the Apache rewrite module required by WordPress. Then Ansible goes on to tell Apache to enable the newly created wordpress.conf and disables the 000-default.conf file that Apache ships with.</p><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Adds Apache connections to the list for Fail2Ban to monitor</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># This task checks for a Fail2Ban installation in the default location</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Checks for Fail2Ban installation</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>stat</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/usr/bin/fail2ban-client</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>register</span>: <span style=color:#ae81ff>f2b_check</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># The following task is skipped if no Fail2Ban installation is found</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Adding Apache connections to Fail2Ban firewall monitoring list</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>f2b_check.stat.exists</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>blockinfile</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/etc/fail2ban/jail.local</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>block</span>: |<span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          # Apache jail
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          #
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          [apache]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          enabled   = true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          port      = http,https
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          filter    = apache-auth
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          logpath   = /var/log/apache*/*error.log
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          maxretry  = 3
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          [apache-overflows]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          enabled   = true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          filter    = apache-overflows
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          logpath   = /var/log/apache*/*error.log
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          [apache-badbots]
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          enabled   = true
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          filter    = apache-badbots
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          logpath   = /var/log/apache*/*access.log</span>          
+</span></span><span style=display:flex><span>      <span style=color:#f92672>notify</span>: <span style=color:#ae81ff>Restart Fail2ban</span>
+</span></span></code></pre></div><p>This block is only relevant if you are using Fail2Ban to help manage your Firewall. The initial task in this section checks if Fail2Ban is installed on the server (in the default location). If it is then it will add a few rules for monitoring Apache traffic. If a Fail2Ban installation is not found then nothing is changed.</p><hr><h2 id=wordpress-installation-tasks>WordPress Installation Tasks</h2><p>The next several tasks are all for the installation of WordPress.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Install WordPress</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># If an existing WordPress installation is found at /var/www/wordpress then the next several tasks are skipped</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Checks for existing WordPress installation</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>stat</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>register</span>: <span style=color:#ae81ff>wp_check</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Creates WordPress root folder and assigns the correct permissions</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Creating the WordPress root directory</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>file</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>directory</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>owner</span>: <span style=color:#e6db74>&#34;www-data&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>group</span>: <span style=color:#e6db74>&#34;www-data&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>mode</span>: <span style=color:#e6db74>&#39;0755&#39;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Downloads WordPress and installs the files to the wordpress root directory</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Downloading and unpacking the latest version of WordPress</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>unarchive</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>src</span>: <span style=color:#ae81ff>https://wordpress.org/latest.tar.gz</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>dest</span>: <span style=color:#ae81ff>/var/www/</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>remote_src</span>: <span style=color:#66d9ef>yes</span>
+</span></span></code></pre></div><p>The initial task in this sequence checks for an existing WordPress installation in the same location (/var/www/wordpress), if one is found then the next several tasks are skipped. The next task creates the wordpress folder assigns the correct permissions and gives ownership to the Apache www-data user account. The final task in that sequence downloads WordPress into the /var/www/wordpress folder.</p><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Copies the &#39;wp-config.php&#39; and &#39;.htaccess&#39; files to the wordpress root directory</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Variables used in the wp-config.php file are pulled from /secrets/mysql_vars.yml</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Copying updated wp-config.php from file</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>src</span>: <span style=color:#e6db74>&#34;files/wp-config.php.j2&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>dest</span>: <span style=color:#ae81ff>/var/www/wordpress/wp-config.php</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Updating the MySQL database reference in wp-config.php</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists    </span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>replace</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress/wp-config.php</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>regexp</span>: <span style=color:#e6db74>&#39;MYSQL_DBNAME&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>replace</span>: <span style=color:#e6db74>&#34;{{ item.name }}&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>with_items</span>: <span style=color:#e6db74>&#34;{{ mysql_databases }}&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Updating the MySQL user name in wp-config.php</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists      </span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>replace</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress/wp-config.php</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>regexp</span>: <span style=color:#e6db74>&#39;MYSQL_UNAME&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>replace</span>: <span style=color:#e6db74>&#34;{{ item.name }}&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>with_items</span>: <span style=color:#e6db74>&#34;{{ mysql_users }}&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Updating the MySQL user password in wp-config.php</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists       </span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>replace</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress/wp-config.php</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>regexp</span>: <span style=color:#e6db74>&#39;MYSQL_PASS&#39;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>replace</span>: <span style=color:#e6db74>&#34;{{ item.password }}&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>with_items</span>: <span style=color:#e6db74>&#34;{{ mysql_users }}&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Copies .htaccess</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Copy .htaccess from file</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>template</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>src</span>: <span style=color:#e6db74>&#34;files/htaccess.j2&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>dest</span>: <span style=color:#ae81ff>/var/www/wordpress/.htaccess</span>
+</span></span></code></pre></div><p>This long block handles much of the configuration for the WordPress website. The first task in the list copies the pre-made wp-config.php and then the next several tasks programmatically fill in the necessary MySQL variables with the information from the mysql_vars.yml file defined at the beginning. The next task in that sequence creates the .htaccess file WordPress needs by copying it as well.</p><div class="alert alert-info"><strong>.htaccess File</strong><br>The .htaccess file I provide for this playbook includes a section of custom PHP values. Often I have run up against the incredibly low limits for file upload sizes and execution time in WordPress. So the .htaccess file in this playbook includes customized PHP limits to reduce those annoyances. If these cause you problems you can either modify or eliminate the Custom PHP values section of the .htaccess file.</div><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Updates ownership and permissions for the WordPress files and directories</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Setting ownership of the WordPress directory</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>file</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/var/www/wordpress</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>directory</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>recurse</span>: <span style=color:#66d9ef>yes</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>owner</span>: <span style=color:#ae81ff>www-data</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>group</span>: <span style=color:#ae81ff>www-data</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Correcting permissions for wordpress directories</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>shell</span>: <span style=color:#e6db74>&#34;/usr/bin/find /var/www/wordpress/ -type d -exec chmod 755 {} \\;&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Correcting permissions for wordpress files</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_check.stat.exists</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>shell</span>: <span style=color:#e6db74>&#34;/usr/bin/find /var/www/wordpress/ -type f -exec chmod 644 {} \\;&#34;</span>
+</span></span></code></pre></div><p>This task block is the end of the WordPress installation. It makes sure that the &lsquo;wordpress&rsquo; folder is owned by the Apache user. The other tasks in the block ensure that both the subfolders and files have the correct read/write permissions.</p><hr><h2 id=optional-tasks>Optional Tasks</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># UFW Configuration</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Opens up the necessary port on the firewall to allow HTTP traffic in</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Opening port 80(HTTP) and 443(HTTPS) on firewall to allow web traffic</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>ufw</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>rule</span>: <span style=color:#ae81ff>allow</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Apache Full</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Installs wp-cli tool</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># This is an addon which helps manage Wordpress from the terminal</span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Checking to see if the wp-cli tool is already installed</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>stat</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/usr/local/bin/wp</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>register</span>: <span style=color:#ae81ff>wp_cli_check</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Downloading and installing the wp-cli tool</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>when</span>: <span style=color:#ae81ff>not wp_cli_check.stat.exists      </span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>get_url</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>url</span>: <span style=color:#ae81ff>https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>dest</span>: <span style=color:#ae81ff>/usr/local/bin/wp</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>mode</span>: <span style=color:#e6db74>&#39;755&#39;</span>
+</span></span></code></pre></div><p>These two sets of task blocks are purely optional depending on your setup. If you are using the default Firewall that ships with Ubuntu, UFW (uncomplicated firewall), then the first task simply opens up both Ports 80 and 443 for web traffic. Port 80 is necessary for unencrypted (Non-SSL/HTTPS) traffic, and Port 443 is for encrypted (SSL/HTTPS) traffic. Although this example does not setup this website for HTTPS/443 traffic, that will be covered in a later tutorial, I usually go ahead and open it so as to simplify my installation process.</p><p>The second set of tasks there is to install the <a href=https://wp-cli.org/>WordPress CLI tool</a>. If you are not already using this to assist in managing your WordPress websites you should take a look. The wp-cli tool is a really handy tool to have when you need to fix something broken on a site and cannot get to the web-admin interface, or just need to manage users, plugins, or themes programmatically. It also has a very robust search-and-replace tool for MySQL databases that make updating URLs a piece of cake. If you are interested in using some of my other Ansible playbooks for WordPress you should have this installed as some of them use wp-cli commands in the playbooks to more easily complete WordPress tasks.</p><hr><h2 id=final-tasks>Final Tasks</h2><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># Restarts Apache and Fail2ban services to pull changes</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>handlers</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Reload Apache</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>service</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>apache2</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>reloaded</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Restart Apache</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>service</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>apache2</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>restarted</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Restart Fail2ban</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>service</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>fail2ban</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>state</span>: <span style=color:#ae81ff>restarted</span>
+</span></span></code></pre></div><p>These are the last tasks in the playbook. These &lsquo;handlers&rsquo; check to see if Ansible did anything to modify the systems listed and if so, go ahead and restart them. The services are restarted in order to apply changes that were made during the playbook. Once these tasks complete you should be able to navigate to your website now via it&rsquo;s URL and find a brand new WordPress installation waiting.</p></div><div class="row pl-3 pr-3"><div class="col-md-6 share-buttons"></div><div class="col-md-6 btn-improve-page"><a href=https://github.com/ResetSmith/ResetSmith.github.io/edit/main/content/posts/ansible/wordpress_deploy/index.md title="Improve this page" target=_blank rel=noopener><i class="fas fa-code-branch"></i>
+Improve this page</a></div></div><hr><div class="row next-prev-navigator"><div class="col-md-6 previous-article"><a href=/posts/ansible/ansible/ title="Ansible: Getting started" class="btn btn-outline-info"><div><i class="fas fa-chevron-circle-left"></i> Prev</div><div class=next-prev-text>Ansible: Getting started</div></a></div><div class="col-md-6 next-article"><a href=/posts/monitoring/prom_install/ title="Prometheus: Getting started with Prometheus and Grafana" class="btn btn-outline-info"><div>Next <i class="fas fa-chevron-circle-right"></i></div><div class=next-prev-text>Prometheus: Getting started with Prometheus and Grafana</div></a></div></div><hr></div></div></div><a id=scroll-to-top class=btn><i class="fas fa-chevron-circle-up"></i></a></section><section class=toc-section id=toc-section><div class=toc-holder><h5 class="text-center pl-3">Table of Contents</h5><hr><div class=toc><nav id=TableOfContents><ul><li><a href=#the-playbook>The Playbook</a></li><li><a href=#the-header-section>The Header Section</a></li><li><a href=#initial-tasks>Initial Tasks</a></li><li><a href=#apache-configuration-tasks>Apache Configuration Tasks</a></li><li><a href=#wordpress-installation-tasks>WordPress Installation Tasks</a></li><li><a href=#optional-tasks>Optional Tasks</a></li><li><a href=#final-tasks>Final Tasks</a></li></ul></nav></div></div></section></div><footer class="container-fluid text-center align-content-center footer pb-2"><div class="container pt-5"><div class="row text-left"><div class="col-md-4 col-sm-12"><h5>Navigation</h5><ul></ul></div><div class="col-md-4 col-sm-12"><h5>Contact me:</h5><a href="mailto:Reset_Smith@resettech.net?subject=&cc=&bcc=&body=">Reset_Smith@resettech.net</a></div><div class="col-md-4 col-sm-12"><h5>Images provided by:</h5><ul><li><a href=https://www.freepik.com>www.Freepik.com</a></li></ul></div></div></div><hr><div class=container><div class="row text-left"><div class=col-md-4><a id=theme href=https://github.com/hossainemruz/toha target=_blank rel=noopener><img src=/images/theme-logo_hu8376fd15465fef26ffe66b6bcf0ca686_13669_32x0_resize_box_3.png alt="Toha Theme Logo">
 Toha</a></div><div class="col-md-4 text-center">© 2021 Copyright.</div><div class="col-md-4 text-right"><a id=hugo href=https://gohugo.io/ target=_blank rel=noopener>Powered by
-<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script><script type=text/javascript src=/js/popper.min.js></script><script type=text/javascript src=/js/bootstrap.min.js></script><script type=text/javascript src=/js/navbar.js></script><script type=text/javascript src=/js/plyr.js></script><script type=text/javascript src=/js/main.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script><script src=/js/single.js></script><script>hljs.initHighlightingOnLoad();</script></body></html>
+<img src=/images/hugo-logo.svg alt="Hugo Logo" height=18></a></div></div></div></footer><script type=text/javascript src=/js/jquery-3.4.1.min.js></script>
+<script type=text/javascript src=/js/popper.min.js></script>
+<script type=text/javascript src=/js/bootstrap.min.js></script>
+<script type=text/javascript src=/js/navbar.js></script>
+<script type=text/javascript src=/js/plyr.js></script>
+<script type=text/javascript src=/js/main.js></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js></script>
+<script src=/js/single.js></script>
+<script>hljs.initHighlightingOnLoad()</script></body></html>
