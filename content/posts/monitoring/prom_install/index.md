@@ -16,7 +16,7 @@ menu:
 
 [Prometheus](https://prometheus.io/) is an open-source application created for systems monitoring and alerting. The Prometheus server application can produce limited visualizations of data that it collects and stores from Exporters which send it the data. Prometheus and it's Exporters are good for measuring numerical values over time, things such as: Data Storage/Memory Usage, Network Stats, and Process Monitoring.
 
-{{< figure src="grafana_ex_anon.png" caption="Grafana Example 1" >}}
+{{< figure src="grafana_ex_anon.png" caption="Example of Prometheus data displayed through a Grafana dashboard" alt="Example of a screen showing Prometheus data displayed by a Grafana dashboard.>}}
 
 Prometheus is often paired with the open-source visualization software [Grafana](https://grafana.com) which improves the end-user experience by making queries easier and better looking. In addition to the visualization app, Grafana also makes a log aggregation system called [Loki](https://grafana.com/oss/loki/). Loki is a powerful tool for monitoring activity on remote servers and makes identifiying possible issues or threats much easier.
 
