@@ -35,6 +35,7 @@ The [Ansible Docs Website](https://docs.ansible.com/ansible/latest/getting_start
         - For my purposes I have an 'ansible' user account that has a [passphrase-less SSH key](https://www.redhat.com/sysadmin/passwordless-ssh) for a matching user account on the target servers
     - An Ansible ['Inventory File'](https://docs.ansible.com/ansible/latest/getting_started/get_started_inventory.html) that lists the potential targets for your commands
 
+
 - A target Server or VM
     - With a user account with the matching public key from your Ansible Host
     - Is listed in the Ansible inventory file
