@@ -8,7 +8,7 @@ section:
   template: sections/about.html
 
 # your designation
-designation: Systems Administrator
+designation: IT Professional
 # your company information
 company:
   name: CASAT
@@ -18,7 +18,7 @@ company:
 resume: "files/rs_resume.pdf"
 
 # a summary about you
-summary: "I am a Systems Administrator with over 10 years experience in the industry. As I’ve transitioned away from user management and more towards server and remote service management, I have been trying to document as much as possible. I’m creating this blog to help collect my notes in a centralized place and to generally play around with new things.\n
+summary: "I am a IT Professional with over 10 years experience in the industry. As I’ve transitioned away from user management and more towards server and remote service management, I have been trying to document as much as possible. I’m creating this blog to help collect my notes in a centralized place and to generally play around with new things.\n
 
 At my workplace we use WordPress to create websites for our various grant projects that we work on. My responsibilities are to deploy and manage the servers for these websites along with a few other web applications that we utilize. A lot of the documentation you find here is related to these processes but should be applicable for other web projects."
 
@@ -38,19 +38,19 @@ socialLinks:
 # currently supported colors: blue, yellow, pink, green, sky, orange
 softSkills:
 - name: Linux
-  percentage: 85
+  percentage: 80
   color: pink
+- name: Bash
+  percentage: 85
+  color: yellow
 - name: Apache
   percentage: 90
-  color: yellow
-- name: Bash
-  percentage: 75
   color: green
 - name: Windows
   percentage: 80
   color: blue
-- name: Nginx
-  percentage: 60
+- name: VMware
+  percentage: 75
   color: pink
 - name: Powershell
   percentage: 60
