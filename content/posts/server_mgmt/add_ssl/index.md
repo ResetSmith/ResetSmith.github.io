@@ -16,7 +16,7 @@ Today this tutorial will walkthrough using Certbot to obtain a SSL certificate a
 
 ## Obtain certificate using Certbot
 
-We'll be using the Cerbot app to request a SSL certificate from LetsEncrypt. The first thing we'll do is install Certbot using the snapd package manger (this is preferred by Certbot as opposed to using apt). Snapd should be installed by default on Ubuntu 20.04, if you do not already have Snapd installed you can find the directions for getting it off their website (snapcraft.io)[https://snapcraft.io/docs/installing-snapd].
+We'll be using the Cerbot app to request a SSL certificate from LetsEncrypt. The first thing we'll do is install Certbot using the snapd package manger (this is preferred by Certbot as opposed to using apt). Snapd should be installed by default on Ubuntu 20.04, if you do not already have Snapd installed you can find the directions for getting it off their website [snapcraft.io](https://snapcraft.io/docs/installing-snapd).
 
 1. Update snapd
 ```
@@ -45,7 +45,7 @@ sudo certbot certonly --dry-run
 ```
 - when prompted, select 'Spin up a temporary webserver'
 - when entering the domain name, you can list multiple targets
-    - ie: casat.org, www.casat.org, *.casat.org
+    - ie: resettech.net, www.resettech.net, *.resettech.net
 
 6. If the test run passes without errors you should be good to run the 'live' command
 ```
